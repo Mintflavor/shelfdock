@@ -1,0 +1,15 @@
+name: Feature request / 기능 제안
+description: Describe a specific task ShelfDock could make easier.
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: What task are you trying to complete? / 어떤 작업인가요?
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: Suggested improvement / 개선 제안
+    validations:
+      required: true

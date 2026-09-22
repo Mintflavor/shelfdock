@@ -1,0 +1,20 @@
+ShelfDock 0.1.0-beta — third-party components
+
+ShelfDock is proprietary freeware under LICENSE.txt. Its original icon artwork is part of ShelfDock. No third-party font is redistributed; Windows supplies the fonts used by the UI.
+
+This self-contained distribution includes Microsoft .NET and Windows Desktop runtime binary components. Their applicable binary distribution license terms are reproduced under licenses/dotnet-runtime-LICENSE.txt and licenses/windowsdesktop-LICENSE.txt. Third-party component attributions from the runtime pack are in licenses/dotnet-runtime-THIRD-PARTY-NOTICES.txt.
+
+Upstream WPF and Windows Forms source projects use MIT licenses; their notices are supplied in licenses/. The upstream .NET Runtime source license is also included for attribution. Where components carry other terms, those terms prevail. ShelfDock's own restrictions do not restrict rights granted by any third-party license.
+
+Sources:
+https://github.com/dotnet/runtime
+https://github.com/dotnet/wpf
+https://github.com/dotnet/winforms
+
+Exact runtime versions are recorded in ShelfDock.runtimeconfig.json. These licenses apply to their respective components, not to ShelfDock's proprietary code.
+
+ShelfDock.Peer.exe includes Go, go-libp2p, Kademlia DHT and their transitive dependencies. Exact package versions are embedded in the executable's Go build information. Package/license links are inventoried in licenses/go/DEPENDENCIES.csv; copyright and license notices are reproduced below licenses/go/. Go's license is in licenses/go/Go-LICENSE.txt.
+
+Two unmodified dependencies are MPL-2.0: github.com/hashicorp/golang-lru v1.0.2 and github.com/libp2p/go-yamux/v5 v5.1.0. Their complete source and MPL notices are supplied in licenses/go/github.com/hashicorp/golang-lru/simplelru/ and licenses/go/github.com/libp2p/go-yamux/v5/. Recipients may use, modify and redistribute those covered files under MPL-2.0. ShelfDock's freeware restrictions do not limit these rights. This third-party source is intentionally included; no proprietary ShelfDock source is distributed.
+
+github.com/jackpal/go-nat-pmp v1.0.2 uses Apache-2.0 (its short-form LICENSE is retained). github.com/multiformats/go-base36 v0.2.0 offers Apache-2.0 OR MIT; this distribution elects Apache-2.0 and retains its original notice. A complete Apache-2.0 text is included in licenses/go/Apache-2.0.txt.

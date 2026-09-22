@@ -1,0 +1,30 @@
+name: Bug report / 오류 신고
+description: Report a reproducible ShelfDock problem.
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include private files, clipboard contents, tokens, or confidential paths. 개인정보나 업무 기밀을 첨부하지 마세요."
+  - type: input
+    id: version
+    attributes:
+      label: ShelfDock version / 버전
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Windows version, display scaling, target app / Windows·배율·대상 앱
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and expected result / 재현 방법과 기대 결과
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result / 실제 결과
+    validations:
+      required: true

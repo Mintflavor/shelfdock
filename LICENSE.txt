@@ -1,0 +1,31 @@
+ShelfDock Freeware License Agreement
+Version 1 — September 22, 2026
+Copyright (c) 2026 Mintflavor (Hyunil Park). All rights reserved except as expressly granted below.
+
+1. Scope and acceptance
+This agreement applies to the ShelfDock application and original accompanying materials distributed by Mintflavor (the Licensor). By accepting these terms and using ShelfDock, you agree to this agreement. If you do not agree, do not use it. English is the governing text, to the extent permitted by applicable law; the Korean explanation is provided for convenience. Mandatory local rights are unaffected.
+
+2. Free use
+The Licensor grants you a non-exclusive, worldwide, royalty-free license to install, run, and make backup copies of the official software on devices that you own or administer, for personal, educational, and internal business or workplace use. Internal deployment within an organization is allowed. Working on commercial projects with ShelfDock is allowed. No account, subscription, purchase, or usage expiration is required for this version.
+
+3. Unmodified free redistribution
+You may redistribute the complete, unmodified official distribution without charging for the software, provided that this agreement and all included copyright and third-party notices accompany every copy. You must not imply endorsement, authorship, or affiliation by the Licensor. A link to the official download is encouraged.
+
+4. Reserved rights
+Selling the software itself, including it in a paid product or paid distribution bundle, distributing modified versions, or sublicensing rights beyond this agreement requires the Licensor's prior written permission. No source-code access or source-code license is granted. You may not modify, decompile, disassemble, or reverse engineer the original software except to the extent applicable law permits notwithstanding this restriction. This agreement does not grant a separate right to use the ShelfDock name or logo as your own branding; truthful identification of the unmodified software is allowed.
+
+5. Third-party components
+Third-party components are governed by their respective licenses, identified in THIRD-PARTY-NOTICES.txt and accompanying notices. Nothing in this agreement limits rights granted by those licenses. Their license terms prevail for those components.
+
+6. Existing versions and future changes
+The free-use permission for a version released under this agreement has no time limit while you comply with this agreement. Future releases may have different terms, prices, or availability. Such changes do not retroactively change the free-use rights granted for this version. Updates, compatibility, continued distribution, maintenance, and support are not guaranteed.
+
+7. No warranty; limitation of liability
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR IS NOT LIABLE FOR CLAIMS, DAMAGES, OR OTHER LIABILITY ARISING FROM THE SOFTWARE OR ITS USE. THIS DOES NOT EXCLUDE LIABILITY OR CONSUMER RIGHTS THAT CANNOT LAWFULLY BE EXCLUDED.
+
+8. Termination and severability
+Your rights under this agreement terminate if you materially violate its conditions. On termination, stop using and distributing the software and remove your copies, except copies you are required by law to retain. If a provision is unenforceable, the remainder remains effective to the extent permitted by law.
+
+9. Permissions and contact
+Official project and contact entry point: https://github.com/Mintflavor/shelfdock
+Requests for additional permissions must receive explicit written approval from the Licensor; silence is not approval.

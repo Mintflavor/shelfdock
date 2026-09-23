@@ -1,4 +1,4 @@
-# Release acceptance — 0.1.0-beta candidate
+# Release acceptance — 0.1.1-beta candidate
 
 Validation date: 2026-09-23 (Asia/Seoul). **Public binary release is held as a draft.**
 
@@ -6,8 +6,8 @@ Validation date: 2026-09-23 (Asia/Seoul). **Public binary release is held as a d
 
 - Release WPF build: zero warnings / zero errors.
 - 30 storage and transfer-policy regression checks passed, including pending remote items, local removal suppression, undo and received-cache boundaries.
-- 15 Windows/WPF integration checks passed: actual FileDrop/UnicodeText/Bitmap payloads, generated PNG ownership, preferred Copy effect, invalid batch rejection, missing-file rejection, rendered layout, C# IPC against two packaged peer processes (startup, pairing, verified Unicode file reception, revocation), and real WPF window shutdown with sharing disabled.
-- 7 Go integration tests passed: authenticated pairing/revocation, live catalog/lazy file integrity and independent removal, unpaired access denial/bounded frames, persistent DPAPI identity, local Circuit Relay transfer/allowlist rejection, isolated DHT address lookup, and safe received filenames. DHT tests use a private loopback bootstrap; relay tests use three loopback nodes. These do not exercise real NAT.
+- 23 Windows/WPF integration checks passed: actual FileDrop/UnicodeText/Bitmap payloads, generated PNG ownership, preferred Copy effect, invalid batch rejection, missing-file rejection, rendered layout, C# IPC against two packaged peer processes (startup, pairing, verified Unicode file reception, revocation), and real WPF window shutdown with sharing disabled.
+- 8 Go integration tests passed: authenticated pairing/revocation, live catalog/lazy file integrity and independent removal, unpaired access denial/bounded frames, persistent DPAPI identity, local Circuit Relay transfer/allowlist rejection, isolated DHT address lookup, and safe received filenames. DHT tests use a private loopback bootstrap; relay tests use three loopback nodes. These do not exercise real NAT.
 - Separate opt-in public DHT smoke test passed on 2026-09-23: a fresh ephemeral peer reached the public routing table within the 45-second bound. This confirms bootstrap access from this PC only, not cross-network discovery, NAT traversal or public relay transfer. Run with `SHELFDOCK_PUBLIC_DHT_SMOKE=1` and `go test ./network/internal/peer -run TestPublicDHTBootstrap -count=1 -v`.
 - First-run license consent was visually inspected: acceptance is required and persists.
 - Real UI: Korean text paste, English language change, settings/help and shelf rendering; state restored after restarting.
@@ -19,13 +19,22 @@ Validation date: 2026-09-23 (Asia/Seoul). **Public binary release is held as a d
 - After this change, a five-second local sample measured 134.6 MiB working set, 79.0 MiB private memory, and 0.469% processor-normalized average CPU. This is one measurement, not a sustained performance guarantee.
 - Executable is unsigned, correctly documented. SHA-256 is supplied for integrity, not identity.
 
+## 0.1.1 additions
+
+- User reports real cross-application drag working. The specific destination apps and edge-case matrix were not provided; record this as user validation, not an automated Explorer/Chrome/Edge certification.
+- Floating icon: persisted opt-in setting, topmost independent drop window, copy-only routed drops, hover/receipt wiggle respecting OS animation preferences, click to open, close/Esc to return, move and position restore, disable and quit cleanup. Eight additional WPF assertions bring the Windows/native/IPC suite to 23 checks.
+- The Unraid Docker relay was built and started as non-root with read-only rootfs and persistent state. A forced circuit-relay integration test transferred and verified a Unicode fixture through the actual container and rejected an unallowlisted reservation.
+- Container stop exited with code 0; restarting preserved the relay Peer ID. TCP healthcheck passed. One idle sample was approximately 5.4 MiB and 0% CPU; not a capacity benchmark.
+- A bounded, reloadable allowlist denies new access on invalid/missing/empty configuration. A new Go regression test covers reload and fail-closed behavior.
+- Forced relay transfer through the configured public DNS address also passed from this PC. This may use NAT loopback and does not establish reachability from an independent external network. App identities and actual deployment addresses are kept outside the public repository.
+
 ## Required before publishing the draft
 
-- [ ] Two separate public networks: DHT-assisted discovery, configured public relay reservation, relay-only file transfer, reconnect after changed IP, restrictive NAT, source offline and interrupted download. No public server has been supplied; operator executable and guide are included instead. This gate remains mandatory.
+- [ ] Two separate public networks: DHT-assisted discovery, configured public relay reservation, relay-only file transfer, reconnect after changed IP, restrictive NAT, source offline and interrupted download. An Unraid relay is deployed and its public DNS address was tested from this PC; an independent external-network test remains pending. This gate remains mandatory.
 - [ ] Paired-device end-to-end WPF UI and sustained process-tree memory/CPU with sharing enabled. Earlier local-only performance measurements do not cover the Go process.
 
-- [ ] Explorer → shelf → Explorer: single/multiple files, Unicode names, content hashes, large file, copy only; originals remain intact.
-- [ ] Shelf → Chrome and Edge attachment input: single/multiple files and generated PNG.
+- [x] Real cross-application drag: user-confirmed working. Detailed destination/version matrix remains unrecorded.
+- [ ] New floating-icon native drop in the user's workflow (routed Windows payload tests pass).
 - [ ] Native drag Escape/rejection leaves all items; accepted drag auto-removes only unpinned items and Undo restores them.
 - [ ] Word and browser text input accept text; rejected targets can use Copy/Paste.
 - [ ] Two monitors with 100%, 150%, 200% DPI, negative origins and disconnect/reconnect; shelf stays reachable.

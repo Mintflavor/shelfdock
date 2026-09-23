@@ -1,4 +1,4 @@
-ShelfDock 0.1.0-beta — third-party components
+ShelfDock 0.1.1-beta — third-party components
 
 ShelfDock is proprietary freeware under LICENSE.txt. Its original icon artwork is part of ShelfDock. No third-party font is redistributed; Windows supplies the fonts used by the UI.
 
@@ -18,3 +18,5 @@ ShelfDock.Peer.exe includes Go, go-libp2p, Kademlia DHT and their transitive dep
 Two unmodified dependencies are MPL-2.0: github.com/hashicorp/golang-lru v1.0.2 and github.com/libp2p/go-yamux/v5 v5.1.0. Their complete source and MPL notices are supplied in licenses/go/github.com/hashicorp/golang-lru/simplelru/ and licenses/go/github.com/libp2p/go-yamux/v5/. Recipients may use, modify and redistribute those covered files under MPL-2.0. ShelfDock's freeware restrictions do not limit these rights. This third-party source is intentionally included; no proprietary ShelfDock source is distributed.
 
 github.com/jackpal/go-nat-pmp v1.0.2 uses Apache-2.0 (its short-form LICENSE is retained). github.com/multiformats/go-base36 v0.2.0 offers Apache-2.0 OR MIT; this distribution elects Apache-2.0 and retains its original notice. A complete Apache-2.0 text is included in licenses/go/Apache-2.0.txt.
+
+Linux Docker relay package: .NET/Windows Desktop components are not included. Go dependency notices, inventory and MPL sources are directly under image/licenses/ (/licenses/components/ inside the image); omit the go/ prefix from the Windows paths above.

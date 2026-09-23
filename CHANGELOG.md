@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1-beta — release candidate
+
+- Optional persistent floating drop icon, subtle drag animation, click/close navigation and saved position.
+- Linux amd64 Docker relay package, Unraid guide, reloadable device allowlist and persistent identity.
+- 61 automated checks pass. Actual container relay transfer passes; independent external-network acceptance remains pending.
+
+
 ## 0.1.0-beta — release candidate
 
 - Always-on-top Windows shelf with tray access and a configurable global shortcut.
@@ -11,4 +18,4 @@
 - LAN discovery, public DHT lookup, hole-punch support, configurable Circuit Relay v2 and an allowlisted Windows relay executable.
 - Persistent local removals, independent received copies, scoped received-cache cleanup and dependency license/source notices.
 
-Unsigned. External-network NAT/DHT/relay, external-app drag, clean-machine and mixed-DPI acceptance gates remain open; see QA.md. The release is a draft until those gates pass.
+Unsigned. External-network NAT/DHT/relay, clean-machine and mixed-DPI acceptance gates remain open; see QA.md. The release is a draft until those gates pass.

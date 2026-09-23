@@ -6,10 +6,13 @@ Validation date: 2026-09-23 (Asia/Seoul). **Public binary release is held as a d
 
 - Release WPF build: zero warnings / zero errors.
 - 30 storage and transfer-policy regression checks passed, including pending remote items, local removal suppression, undo and received-cache boundaries.
-- 10 Windows/WPF integration checks passed: actual FileDrop/UnicodeText/Bitmap payloads, generated PNG ownership, preferred Copy effect, invalid batch rejection, missing-file rejection, rendered layout.
+- 14 Windows/WPF integration checks passed: actual FileDrop/UnicodeText/Bitmap payloads, generated PNG ownership, preferred Copy effect, invalid batch rejection, missing-file rejection, rendered layout, and C# IPC against two packaged peer processes (startup, pairing, verified Unicode file reception, revocation).
 - 7 Go integration tests passed: authenticated pairing/revocation, live catalog/lazy file integrity and independent removal, unpaired access denial/bounded frames, persistent DPAPI identity, local Circuit Relay transfer/allowlist rejection, isolated DHT address lookup, and safe received filenames. DHT tests use a private loopback bootstrap; relay tests use three loopback nodes. These do not exercise real NAT.
+- Separate opt-in public DHT smoke test passed on 2026-09-23: a fresh ephemeral peer reached the public routing table within the 45-second bound. This confirms bootstrap access from this PC only, not cross-network discovery, NAT traversal or public relay transfer. Run with `SHELFDOCK_PUBLIC_DHT_SMOKE=1` and `go test ./network/internal/peer -run TestPublicDHTBootstrap -count=1 -v`.
 - First-run license consent was visually inspected: acceptance is required and persists.
 - Real UI: Korean text paste, English language change, settings/help and shelf rendering; state restored after restarting.
+- New paired-device dialog visually inspected in Korean, with sharing off by default and explicit current/future shelf sharing and networking disclosure.
+- Private GitHub Actions build and packaging passed for the initial P2P candidate. Final revision validation is tracked in the private Actions history.
 - Runtime is bundled. The running process loaded coreclr.dll from its application directory. The system-wide dotnet installation has .NET 8, not .NET 10; the SDK used to build is workspace-local.
 - Package guard rejected a Core PDB on its first run. Release symbols were disabled and the clean candidate passed the source/debug/data artifact guard.
 - Native notification icon replaces Windows Forms to avoid loading a second UI framework.

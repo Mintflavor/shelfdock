@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2-beta — release candidate
+
+- PC invitation links with explicit confirmation and running-instance delivery.
+- Generate QR codes and save lossless PNG invitations; no QR scanning/import.
+- 13 focused invitation checks and release packaging passed. Relay allowlisting is unchanged.
+- See [invitation guide](INVITATIONS.md).
+
+
 ## 0.1.1-beta — release candidate
 
 - Optional persistent floating drop icon, subtle drag animation, click/close navigation and saved position.

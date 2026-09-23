@@ -1,4 +1,6 @@
-# ShelfDock 0.1.1-beta
+# ShelfDock 0.1.2-beta
+
+초대 링크·QR 사용법 / Invitation links and QR: [INVITATIONS.md](INVITATIONS.md)
 
 ## 한국어
 

@@ -20,3 +20,5 @@ Two unmodified dependencies are MPL-2.0: github.com/hashicorp/golang-lru v1.0.2 
 github.com/jackpal/go-nat-pmp v1.0.2 uses Apache-2.0 (its short-form LICENSE is retained). github.com/multiformats/go-base36 v0.2.0 offers Apache-2.0 OR MIT; this distribution elects Apache-2.0 and retains its original notice. A complete Apache-2.0 text is included in licenses/go/Apache-2.0.txt.
 
 Linux Docker relay package: .NET/Windows Desktop components are not included. Go dependency notices, inventory and MPL sources are directly under image/licenses/ (/licenses/components/ inside the image); omit the go/ prefix from the Windows paths above.
+
+Windows app 0.1.2 adds QRCoder 1.8.0 (MIT), https://github.com/Shane32/QRCoder. Its copyright and license are included in licenses/QRCoder-LICENSE.txt. QR decoding (ZXing.Net) is used only by tests and is not shipped in the application.

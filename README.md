@@ -10,7 +10,7 @@ ShelfDock is a floating, always-on-top shelf for Windows. Collect files, screens
 
 The first Windows 11 x64 beta is being validated. The release candidate remains a draft until the published [release checklist](QA.md) is complete. There is no public binary download yet.
 
-Once available, download `ShelfDock-v0.1.1-beta-win-x64.zip` from Releases, extract the entire ZIP, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. The beta is unsigned; Windows may not verify its publisher. Do not disable security protections.
+Once available, download `ShelfDock-v0.1.3-beta-win-x64.zip` from Releases, extract the entire ZIP, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. The beta is unsigned; Windows may not verify its publisher. Do not disable security protections.
 
 ## What it does
 

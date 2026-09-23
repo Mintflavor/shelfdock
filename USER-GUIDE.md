@@ -1,4 +1,4 @@
-# ShelfDock 0.1.2-beta
+# ShelfDock 0.1.3-beta
 
 초대 링크·QR 사용법 / Invitation links and QR: [INVITATIONS.md](INVITATIONS.md)
 
@@ -29,7 +29,7 @@ Windows 11 x64용 무료 작업 선반입니다. ZIP 전체를 폴더에 풀고 
 
 업데이트는 GitHub Releases에서 새 ZIP을 다운로드해 종료한 앱의 폴더를 교체합니다. 사용자 데이터 폴더는 유지합니다. 자동 업데이트와 사용 추적은 없습니다.
 
-기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 페어링·인터넷 DHT·사용자 운영 릴레이를 설정합니다. 원격 파일을 먼저 다운로드하고 검증이 끝나면 드래그하세요. 전체 설명과 외부망 검증 상태는 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
+기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 페어링·인터넷 DHT·사용자 운영 릴레이를 설정합니다. 원격 파일을 한 번 끌어 놓으면 대상 앱의 데이터 요청 시 다운로드·검증 후 전달합니다. 원형 진행 표시를 확인하세요. 대상 앱이 기다리거나 거부하면 다운로드 버튼으로 먼저 받은 뒤 드래그하세요. 전체 설명과 외부망 검증 상태는 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
 
 설정에서 **ShelfDock 아이콘을 화면에 항상 표시**를 켜면 작은 아이콘이 최상단에 유지됩니다. 아이콘에 파일·텍스트를 드롭하면 선반에 추가되며 가볍게 흔들립니다. 클릭하면 메인 선반을 열고 닫기/Esc를 누르면 아이콘으로 돌아갑니다. 아이콘을 끌어 위치를 옮길 수 있고 위치는 저장됩니다. Windows에서 애니메이션을 꺼 두면 흔들림도 생략합니다. 옵션을 끄면 기존 트레이 방식으로 돌아갑니다.
 
@@ -58,7 +58,11 @@ Updates are manual: quit, download the next ZIP from Releases, and replace the a
 
 Official releases and feedback: https://github.com/Mintflavor/shelfdock
 
-Paired-device sharing is off by default. Open ⇄ to configure pairing, public DHT discovery and your own relay. Download remote files before dragging. See [P2P-GUIDE.md](P2P-GUIDE.md) for privacy, relay operation and pending external-network validation.
+Paired-device sharing is off by default. Open ⇄ to configure pairing, public DHT discovery and your own relay. Drag a remote file once to download, verify and deliver when the target requests data. Circular progress shows reception. Targets may wait or reject delayed data; use Download first as a fallback. See [P2P-GUIDE.md](P2P-GUIDE.md) for privacy, relay operation and pending external-network validation.
 
 Enable **Keep a floating ShelfDock icon on screen** in Settings for a persistent topmost drop target. Drop files/text onto it, click to open the shelf, and Close/Esc to return to the icon. Drag the icon to reposition it; its position is saved. The subtle drag animation follows Windows animation preferences. Disabling the option restores tray-only behavior. Docker relay setup: [RELAY-DOCKER.md](RELAY-DOCKER.md).
 License: LICENSE.txt (English governs); LICENSE.ko.md explains it in Korean.
+
+## 0.1.3 변경 / Changes
+설정은 변경 즉시 반영됩니다(텍스트는 입력을 잠시 멈춘 뒤 적용). 잘못된 단축키나 연결 실패는 오류로 표시합니다. 고정 항목은 맨 위에, 원본 또는 받은 캐시가 없으면 연한 빨강으로 표시합니다.
+Settings apply automatically, text fields after a short pause. Invalid shortcuts/failed connections display errors. Pinned items appear first; missing local files are pale red. See CHANGELOG.md.

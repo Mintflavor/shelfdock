@@ -4,12 +4,12 @@
 
 ## 한국어
 
-공유는 기본적으로 꺼져 있습니다. 선반의 ⇄ 버튼에서 공유를 켜고 연결 설정을 적용합니다. 공유 중에는 **현재와 이후의 로컬 선반 내용 모두**가 페어링한 기기에 전달됩니다. 항목별 공개 범위 설정은 아직 없습니다. 파일 경로 자체는 전송하지 않습니다.
+공유는 기본적으로 꺼져 있습니다. 선반의 ⇄ 버튼에서 공유를 켭니다. 설정 변경은 자동 적용됩니다. 공유 중에는 **현재와 이후의 로컬 선반 내용 모두**가 페어링한 기기에 전달됩니다. 항목별 공개 범위 설정은 아직 없습니다. 파일 경로 자체는 전송하지 않습니다.
 
 1. 두 Windows PC에서 공유를 켭니다. 인터넷 사용 시 공개 DHT 검색을 선택합니다.
 2. 한 기기에서 일회용 코드를 만들고, 신뢰하는 경로로 다른 기기에 전달합니다. 코드는 10분 뒤 만료되며 한 번만 사용할 수 있습니다. 코드를 가진 기기에 연결 권한이 생깁니다.
 3. 다른 기기의 코드 입력란에 붙여넣고 페어링합니다. 이후에는 같은 사용자 프로필과 기기 키를 유지하는 동안 재실행해도 연결이 유지됩니다.
-4. 텍스트는 바로 표시됩니다. 8 MiB 이하의 캡처 이미지는 자동으로 받습니다. 일반 파일과 큰 캡처는 메타데이터만 표시합니다. 다운로드 버튼 또는 드래그 시도로 받은 후, 검증 완료 안내가 나오면 다시 드래그합니다.
+4. 텍스트는 바로 표시됩니다. 8 MiB 이하의 캡처 이미지는 자동으로 받습니다. 일반 파일과 큰 캡처는 메타데이터만 표시합니다. 한 번의 드래그에서 대상 앱이 데이터를 요청하면 다운로드·검증 후 전달합니다. 지연 전달을 거부하는 앱에서는 다운로드 버튼으로 먼저 받은 뒤 드래그하세요.
 5. 기기 상태에서 direct / relay / offline을 확인합니다. 연결 해제는 이후 접근을 막으며 이미 받은 사본은 회수하지 않습니다.
 
 송신 기기가 온라인이고 원본이 남아 있어야 아직 받지 않은 파일을 다운로드할 수 있습니다. 송신 선반에서 제거해도 이미 전달된 항목 ID의 파일 참조는 남겨 둡니다. 원본 파일 변경·삭제나 캡처 캐시 정리 후에는 다운로드할 수 없습니다. 선반은 백업 서비스가 아닙니다. 원격 항목을 내 선반에서 제거해도 다른 기기에는 영향을 주지 않으며 재동기화로 다시 나타나지 않습니다.
@@ -28,7 +28,7 @@ Windows 서버에서 전체 배포 ZIP을 유지한 채 다음 명령을 실행�
 .\ShelfDock.Peer.exe --relay --root C:\ShelfDockRelay\state --listen /ip4/0.0.0.0/tcp/4001 --announce /ip4/203.0.113.10/tcp/4001 --allow-peer PEER_A,PEER_B
 ```
 
-운영자가 서버 방화벽·클라우드 보안 그룹에서 **선택한 TCP 4001 포트만** 허용해야 합니다. 보안 기능 전체를 끄지 마세요. 실행 후 `ready` JSON의 `peer`가 릴레이 ID입니다. 두 앱에 다음 주소를 입력하고 적용한 뒤, `릴레이 예약: True`를 확인하고 새 페어링 코드를 만듭니다.
+운영자가 서버 방화벽·클라우드 보안 그룹에서 **선택한 TCP 4001 포트만** 허용해야 합니다. 보안 기능 전체를 끄지 마세요. 실행 후 `ready` JSON의 `peer`가 릴레이 ID입니다. 두 앱에 다음 주소를 입력하고 자동 적용된 뒤, `릴레이 예약: True`를 확인하고 새 페어링 코드를 만듭니다.
 
 ```text
 /ip4/203.0.113.10/tcp/4001/p2p/RELAY_PEER_ID
@@ -52,11 +52,11 @@ Windows 서버에서 전체 배포 ZIP을 유지한 채 다음 명령을 실행�
 
 ## English
 
-Sharing is off by default. Open ⇄ Devices, enable sharing, and Apply. All current and future local shelf items are shared with paired devices; per-item sharing controls are not available. Create a single-use, ten-minute code on one device and enter it on the other over a trusted channel. Pairing persists across restarts. Never publish pairing codes.
+Sharing is off by default. Open ⇄ Devices, enable sharing; changes apply automatically. All current and future local shelf items are shared with paired devices; per-item sharing controls are not available. Create a single-use, ten-minute code on one device and enter it on the other over a trusted channel. Pairing persists across restarts. Never publish pairing codes.
 
-Text mirrors immediately; captures up to 8 MiB download automatically. Other files appear as metadata. Click Download or attempt a drag, wait for verification, then drag again. The source must be online and its original file must remain available. Removing a shelf item does not delete copies elsewhere. Local removal is remembered so synchronization does not resurrect the item. This is not a backup service.
+Text mirrors immediately; captures up to 8 MiB download automatically. Other files appear as metadata. Drag once to download, verify and deliver on request. Targets may wait during reception; use Download first if delayed transfer is rejected. The source must be online and its original file must remain available. Removing a shelf item does not delete copies elsewhere. Local removal is remembered so synchronization does not resurrect the item. This is not a backup service.
 
-There is no included public relay service. To run your own Windows relay, retain the complete distribution and use the command above with your real public IP and both device IDs. Permit only its chosen TCP port through the server firewall and cloud security group. Read the relay peer ID from its ready JSON; enter the resulting `/ip4/PUBLIC_IP/tcp/4001/p2p/RELAY_ID` on both clients, Apply, wait for relay reservation, then generate a fresh pairing code. Stop with Ctrl+C. Keep the state directory and run as the same Windows user to retain the DPAPI-protected identity. The operator pays hosting and bandwidth costs. No service installation is automated.
+There is no included public relay service. To run your own Windows relay, retain the complete distribution and use the command above with your real public IP and both device IDs. Permit only its chosen TCP port through the server firewall and cloud security group. Read the relay peer ID from its ready JSON; enter the resulting `/ip4/PUBLIC_IP/tcp/4001/p2p/RELAY_ID` on both clients, wait for automatic application and for relay reservation, then generate a fresh pairing code. Stop with Ctrl+C. Keep the state directory and run as the same Windows user to retain the DPAPI-protected identity. The operator pays hosting and bandwidth costs. No service installation is automated.
 
 The allowlisted relay supports 16 reservations, up to four circuits per peer, and 30 minutes/8 GiB per circuit including overhead. Large transfers may exceed that limit; resume is not supported. Hole punching cannot guarantee connectivity through every firewall or NAT.
 
@@ -64,4 +64,4 @@ DHT/mDNS expose peer IDs and network addresses, never the shelf catalog. TCP and
 
 Limits: 16 devices, 500 shelf items, 8 GiB/file, 1 MiB UTF-8/shared text item, approximately 6 MiB published catalog, 2,000 retained export references. Downloads live under `%LOCALAPPDATA%\ShelfDock\Received`; retired owned files are eligible for deletion after seven days only when no active item, backup or session undo refers to them. Original files are never cleanup targets.
 
-Local automated DHT/relay tests do not prove public-network compatibility. External NAT/relay, cross-application drag, clean-Windows and mixed-DPI acceptance gates remain pending; the binary release stays a draft. No mobile support, QR pairing, folder transfer, cloud storage, telemetry, or automatic update.
+Local automated DHT/relay tests do not prove public-network compatibility. External NAT/relay, cross-application drag, clean-Windows and mixed-DPI acceptance gates remain pending; the binary release stays a draft. No mobile support, QR scanning, folder transfer, cloud storage, telemetry, or automatic update.

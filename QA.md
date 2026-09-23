@@ -52,3 +52,7 @@ The current Windows UI tool refuses a drag whose endpoint is another application
 4. Enable auto-remove; try accepted, cancelled and rejected drops, pinned items and Ctrl+Z.
 5. Test display configurations and a clean VM. Record app/browser/Windows versions and results here.
 6. Once all gates pass, update public availability text and QA record, then publish the existing release as a prerelease. Do not create a duplicate release or expose the private source repository.
+
+## User confirmation — 2026-09-24
+
+Confirmed for 0.1.3: Korean filenames, icon consistency, pinned sorting, missing-file styling, automatic settings, connection settings and progress. Large-file native drag/WAN/clean Windows/DPI/performance remain unconfirmed. 0.1.4 passed 38 Core and 16 Windows workflow checks plus release packaging; explicit received-cache deletion still needs user confirmation.

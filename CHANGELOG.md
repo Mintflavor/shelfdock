@@ -2,6 +2,14 @@
 
 All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work. Platform-specific unreleased work must name its branch; never mark a draft as a public release.
 
+## 0.1.4-beta — 2026-09-24 (draft)
+
+- Windows: explicitly removing a received file/image now deletes its app-owned Received cache and empty download folder after the shelf state is saved. Sender originals and exported copies are untouched.
+- Undo restores deleted downloads as metadata for downloading again. Locked files are queued persistently and retried on restart; files referenced by another live item remain protected. Late download completion after removal discards the cache.
+- Accepted-drop automatic cleanup retains the prior delayed policy because targets may still read the file. Existing retired caches are not mass-deleted retroactively.
+- PASSED: 38 Core safety checks, 16 Windows workflow checks, self-contained publish and ZIP guard. Added deletion/undo/failed-save/locked-file/late-download/shared-reference coverage; Cache packaging avoids unrelated Go/invitation suites.
+- User verified on 2026-09-24 for 0.1.3: Korean filenames, icon consistency, pinned ordering, missing-file styling, automatic settings, connection settings, and progress. This does not establish large-file native drag, WAN, clean-machine, DPI or performance acceptance.
+
 ## 0.1.3-beta — 2026-09-23 (draft)
 
 - Shared peer: optional byte-progress IPC events for downloads; existing peer wire protocols remain v1. Verification completes only with a successful fetch reply.

@@ -66,3 +66,11 @@ License: LICENSE.txt (English governs); LICENSE.ko.md explains it in Korean.
 ## 0.1.3 변경 / Changes
 설정은 변경 즉시 반영됩니다(텍스트는 입력을 잠시 멈춘 뒤 적용). 잘못된 단축키나 연결 실패는 오류로 표시합니다. 고정 항목은 맨 위에, 원본 또는 받은 캐시가 없으면 연한 빨강으로 표시합니다.
 Settings apply automatically, text fields after a short pause. Invalid shortcuts/failed connections display errors. Pinned items appear first; missing local files are pale red. See CHANGELOG.md.
+
+## 0.1.4 수신 캐시 / Received cache
+
+다른 피어에서 받은 항목을 Delete/제거 버튼으로 지우면 AppData의 해당 수신 파일도 삭제합니다. 송신자의 원본과 다른 폴더로 복사한 파일은 그대로입니다. 되돌리기는 항목을 복원하며 삭제한 파일은 상대가 온라인일 때 다시 받아야 합니다. 사용 중이라 삭제하지 못한 파일은 다음 앱 시작 시 재시도합니다. 다른 선반 항목이 같은 파일을 참조하면 보존합니다.
+
+드롭 후 자동 정돈은 대상 앱의 읽기·업로드를 보호하기 위해 기존 7일 보관 정책을 유지합니다. 이전 버전에서 이미 제거한 캐시를 이번 업데이트가 일괄 삭제하지는 않습니다.
+
+Explicit Remove/Delete also deletes the corresponding app-owned received file. Sender originals and exported copies remain untouched. Undo restores metadata; deleted content must be fetched again while the sender is available. Locked files retry on restart; another live reference protects the file. Accepted-drop auto-remove keeps the prior seven-day retention to protect target readers. No retroactive bulk cleanup of old retired caches.

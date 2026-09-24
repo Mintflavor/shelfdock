@@ -1,6 +1,6 @@
-# ShelfDock 0.1.3-beta
+# ShelfDock 0.2.0-beta
 
-초대 링크·QR 사용법 / Invitation links and QR: [INVITATIONS.md](INVITATIONS.md)
+8자리 OTP 연결 / OTP pairing: [OTP-GUIDE.md](OTP-GUIDE.md)
 
 ## 한국어
 

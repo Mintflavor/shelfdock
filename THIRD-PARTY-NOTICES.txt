@@ -21,4 +21,6 @@ github.com/jackpal/go-nat-pmp v1.0.2 uses Apache-2.0 (its short-form LICENSE is 
 
 Linux Docker relay package: .NET/Windows Desktop components are not included. Go dependency notices, inventory and MPL sources are directly under image/licenses/ (/licenses/components/ inside the image); omit the go/ prefix from the Windows paths above.
 
-Windows app 0.1.2 adds QRCoder 1.8.0 (MIT), https://github.com/Shane32/QRCoder. Its copyright and license are included in licenses/QRCoder-LICENSE.txt. QR decoding (ZXing.Net) is used only by tests and is not shipped in the application.
+ShelfDock 0.2.0 removes QRCoder/QR generation. OTP uses salsa.debian.org/vasudev/gospake2 (MIT) and github.com/gorilla/websocket (BSD-2-Clause); exact versions and notices are in licenses/go/.
+
+For gospake2 revision d91629950ad1, ShelfDock elects MIT from the upstream MIT OR GPL-3.0-or-later choice explicitly stated in gospake2.go/types.go headers. The full original dual-license document and LICENSE-ELECTION.txt are included. This election is pinned and reviewed again on upgrades.

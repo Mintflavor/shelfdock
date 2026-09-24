@@ -53,6 +53,18 @@ The current Windows UI tool refuses a drag whose endpoint is another application
 5. Test display configurations and a clean VM. Record app/browser/Windows versions and results here.
 6. Once all gates pass, update public availability text and QA record, then publish the existing release as a prerelease. Do not create a duplicate release or expose the private source repository.
 
-## User confirmation — 2026-09-24
+## 0.1.3 focused verification — 2026-09-23
 
-Confirmed for 0.1.3: Korean filenames, icon consistency, pinned sorting, missing-file styling, automatic settings, connection settings and progress. Large-file native drag/WAN/clean Windows/DPI/performance remain unconfirmed. 0.1.4 passed 38 Core and 16 Windows workflow checks plus release packaging; explicit received-cache deletion still needs user confirmation.
+PASSED: 30 Core, 16 Windows workflow, 2 Go transfer/progress checks; release self-contained publish and ZIP guard. Native deferred data tests fetch a 16MiB real peer file and read its verified IStream, check CF_HDROP, progress, original preservation, failed fetch retention and Unicode names under CP949. WPF rendering inspected for missing red/pin/progress/icon presentation.
+
+NOT RUN: Explorer/Chrome/Edge actual large-file drop, independent WAN/NAT, clean OS, DPI, performance and Mac compatibility. The earlier user-confirmed drag refers to the baseline flow. No blanket acceptance claim is made for the new deferred drag.
+
+## User validation — 2026-09-24, 0.1.3
+
+USER CONFIRMED: Korean filenames, consistent icon, pinned ordering, missing-original styling, automatic settings, connection settings and progress display. No app/file-size matrix supplied. Large-file native drag, cancellation/failure, WAN, clean-machine, DPI and performance gates remain unconfirmed.
+
+## 0.2.0 OTP verification — 2026-09-24
+
+PASSED: Go networking suite and focused OTP wrong-code/tamper/reject/cancel/expiry/both-approval/save-failure tests; 38 Core safety checks; 19 Windows workflow checks plus OTP IPC assertions and 16MiB transfer; self-contained publish; package source/debug/secret guard and MIT dual-license election notices. Real WSS two-peer approval from the same LAN, TLS trust/hostname validation, certificate renewal dry-run, namespace rejection and HTTP 429 burst limiting passed. All three rendezvous containers healthy.
+
+NOT RUN: independent WAN, two physical PC OTP UI flow, native large-file target matrix, clean Windows/DPI/performance, macOS OTP UI/runtime and independent cryptographic audit. Release remains draft. Earlier packaging attempts stopped at a test timeout and dual-license classification; both were corrected and the affected checks passed. No race-detector result is claimed.

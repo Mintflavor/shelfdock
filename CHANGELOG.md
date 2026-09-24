@@ -2,6 +2,14 @@
 
 All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work. Platform-specific unreleased work must name its branch; never mark a draft as a public release.
 
+## 0.2.0-beta — 2026-09-24 (draft)
+
+- Replaced invitation links/QR/legacy token IPC and network handler with eight-character OTP, shared SPAKE2 authentication, signed peer identity, matching verification number, both approvals and absolute 60-second expiry. Existing trust/file protocols remain compatible.
+- Added cancellation, stale-session protection, retry throttle, bounded messages, failed-save rollback and explicit incomplete-final-ack recovery instructions. Routing is two public characters plus six random secret characters; no eight-secret-character claim.
+- Windows OTP interface replaces link/QR controls; own legacy URL registration is removed. QRCoder and test QR decoder removed; new PAKE license notices included.
+- Rendezvous 0.2.0 deployed: valid TLS on TCP 4000, certificate renewal and periodic reload, isolated memory-only backend, ShelfDock-only namespace, 60/65-second session controls, message limits, per-IP handshake/connection limits and global connection cap. Existing libp2p relay unchanged.
+- PASSED: local Go networking/OTP tests, real WSS two-peer authentication from LAN, Windows workflow/OTP integration, certificate renewal dry-run, rejected foreign namespace and HTTP 429 burst limiting. Independent WAN, full native drag matrix, clean OS/DPI/performance and crypto audit remain pending. Self-contained publish, 38 Core safety checks, 19 Windows workflow checks plus OTP IPC assertions and package source/debug/secret guard passed. PAKE MIT option explicitly elected with upstream notices retained.
+
 ## 0.1.4-beta — 2026-09-24 (draft)
 
 - Windows: explicitly removing a received file/image now deletes its app-owned Received cache and empty download folder after the shelf state is saved. Sender originals and exported copies are untouched.

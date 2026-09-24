@@ -1,20 +1,20 @@
 # ShelfDock — 기기 연결 / Device sharing
 
-0.1.2부터 초대 링크와 QR을 지원합니다. 최신 절차 / Invitation links and QR: [INVITATIONS.md](INVITATIONS.md)
+0.2.0부터 새 연결은 8자리 OTP만 지원합니다. / New pairing uses OTP only: [OTP-GUIDE.md](OTP-GUIDE.md)
 
 ## 한국어
 
 공유는 기본적으로 꺼져 있습니다. 선반의 ⇄ 버튼에서 공유를 켭니다. 설정 변경은 자동 적용됩니다. 공유 중에는 **현재와 이후의 로컬 선반 내용 모두**가 페어링한 기기에 전달됩니다. 항목별 공개 범위 설정은 아직 없습니다. 파일 경로 자체는 전송하지 않습니다.
 
 1. 두 Windows PC에서 공유를 켭니다. 인터넷 사용 시 공개 DHT 검색을 선택합니다.
-2. 한 기기에서 일회용 코드를 만들고, 신뢰하는 경로로 다른 기기에 전달합니다. 코드는 10분 뒤 만료되며 한 번만 사용할 수 있습니다. 코드를 가진 기기에 연결 권한이 생깁니다.
-3. 다른 기기의 코드 입력란에 붙여넣고 페어링합니다. 이후에는 같은 사용자 프로필과 기기 키를 유지하는 동안 재실행해도 연결이 유지됩니다.
+2. 한 기기에서 8자리 코드를 만들고 다른 기기에 직접 입력합니다. 생성 후 60초 안에 양쪽에서 기기 정보·확인 번호를 비교하고 승인해야 합니다.
+3. 양쪽 승인이 끝나면 페어링됩니다. 이후에는 같은 사용자 프로필과 기기 키를 유지하는 동안 재실행해도 연결이 유지됩니다.
 4. 텍스트는 바로 표시됩니다. 8 MiB 이하의 캡처 이미지는 자동으로 받습니다. 일반 파일과 큰 캡처는 메타데이터만 표시합니다. 한 번의 드래그에서 대상 앱이 데이터를 요청하면 다운로드·검증 후 전달합니다. 지연 전달을 거부하는 앱에서는 다운로드 버튼으로 먼저 받은 뒤 드래그하세요.
 5. 기기 상태에서 direct / relay / offline을 확인합니다. 연결 해제는 이후 접근을 막으며 이미 받은 사본은 회수하지 않습니다.
 
 송신 기기가 온라인이고 원본이 남아 있어야 아직 받지 않은 파일을 다운로드할 수 있습니다. 송신 선반에서 제거해도 이미 전달된 항목 ID의 파일 참조는 남겨 둡니다. 원본 파일 변경·삭제나 캡처 캐시 정리 후에는 다운로드할 수 없습니다. 선반은 백업 서비스가 아닙니다. 원격 항목을 내 선반에서 제거해도 다른 기기에는 영향을 주지 않으며 재동기화로 다시 나타나지 않습니다.
 
-파일은 SHA-256으로 전송 무결성을 확인한 뒤 로컬 캐시에 확정 저장합니다. SHA-256 검증은 악성 파일 검사나 게시자 인증이 아닙니다. 수신 파일은 자동 실행하지 않습니다. 수신 캐시는 항목 제거 후 최소 7일 보관하며 활성 목록·백업·실행 중 되돌리기가 참조하면 정리하지 않습니다.
+파일은 SHA-256으로 전송 무결성을 확인한 뒤 로컬 캐시에 확정 저장합니다. SHA-256 검증은 악성 파일 검사나 게시자 인증이 아닙니다. 수신 파일은 자동 실행하지 않습니다. 수신 캐시는 직접 제거하면 함께 삭제합니다. 드롭 후 자동 정돈은 대상 앱의 읽기를 위해 기존 7일 보관 정책을 유지합니다.
 
 ### 외부망 릴레이 운영
 
@@ -52,7 +52,7 @@ Windows 서버에서 전체 배포 ZIP을 유지한 채 다음 명령을 실행�
 
 ## English
 
-Sharing is off by default. Open ⇄ Devices, enable sharing; changes apply automatically. All current and future local shelf items are shared with paired devices; per-item sharing controls are not available. Create a single-use, ten-minute code on one device and enter it on the other over a trusted channel. Pairing persists across restarts. Never publish pairing codes.
+Sharing is off by default. Open ⇄ Devices, enable sharing; changes apply automatically. All current and future local shelf items are shared with paired devices; per-item sharing controls are not available. Generate an eight-character OTP, enter it on the other device, compare identities/verification numbers and approve on BOTH devices within 60 seconds. Pairing persists across restarts. Never publish pairing codes.
 
 Text mirrors immediately; captures up to 8 MiB download automatically. Other files appear as metadata. Drag once to download, verify and deliver on request. Targets may wait during reception; use Download first if delayed transfer is rejected. The source must be online and its original file must remain available. Removing a shelf item does not delete copies elsewhere. Local removal is remembered so synchronization does not resurrect the item. This is not a backup service.
 

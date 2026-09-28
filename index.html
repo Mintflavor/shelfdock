@@ -103,7 +103,7 @@
           <img src="assets/favicon.ico" alt="ShelfDock Logo" class="w-7 h-7 rounded group-hover:scale-105 transition-transform" />
           <span class="text-xl font-bold tracking-tight text-white font-sans">ShelfDock</span>
         </a>
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono font-medium">
+        <span id="header-version" class="inline-flex items-center px-2 py-0.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono font-medium">
           v0.2.0 Beta
         </span>
       </div>
@@ -160,9 +160,9 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-6">
-        <a href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm shadow-xl shadow-brand-cyan/20 hover:shadow-brand-cyan/35 hover:scale-[1.02] active:scale-95 transition-all">
+        <a id="hero-download-btn" href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm shadow-xl shadow-brand-cyan/20 hover:shadow-brand-cyan/35 hover:scale-[1.02] active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[20px]">desktop_windows</span>
-          <span data-i18n="hero.ctaDownload">Windows 11 x64 다운로드 (v0.2.0 Beta)</span>
+          <span id="hero-download-text" data-i18n="hero.ctaDownload">Windows 11 x64 다운로드 (v0.2.0 Beta)</span>
         </a>
 
         <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-sm font-semibold hover:border-slate-500 hover:bg-slate-800 transition-all active:scale-95">
@@ -192,7 +192,7 @@
         <div class="h-10 px-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between select-none">
           <div class="flex items-center gap-2.5">
             <img src="assets/favicon.ico" class="w-4 h-4 rounded" alt="App Icon" />
-            <span class="text-xs font-mono text-slate-200 font-semibold">ShelfDock v0.2.0-beta — Temporary Shelf</span>
+            <span id="mockup-title" class="text-xs font-mono text-slate-200 font-semibold">ShelfDock v0.2.0-beta — Temporary Shelf</span>
           </div>
           <!-- Window Controls -->
           <div class="flex items-center gap-2">
@@ -439,7 +439,7 @@
             </div>
             <div>
               <h3 class="text-2xl font-bold text-white">Windows 11 x64</h3>
-              <p class="text-xs font-mono text-brand-cyan">ShelfDock v0.2.0 Beta (Portable Zip)</p>
+              <p id="download-card-version" class="text-xs font-mono text-brand-cyan">ShelfDock v0.2.0 Beta (Portable Zip)</p>
             </div>
           </div>
 
@@ -448,13 +448,13 @@
           </p>
 
           <div class="space-y-3">
-            <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-brand-cyan/20">
+            <a id="download-btn" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-brand-cyan/20">
               <span class="material-symbols-outlined text-[20px]">download</span>
-              <span data-i18n="download.winBtn">GitHub Releases에서 다운로드 (v0.2.0 Beta)</span>
+              <span id="download-btn-text" data-i18n="download.winBtn">GitHub Releases에서 다운로드 (v0.2.0 Beta)</span>
             </a>
             <div class="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
-              <span data-i18n="download.packageNotice">패키지: ShelfDock-v0.2.0-beta-win-x64.zip</span>
-              <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors flex items-center gap-1">
+              <span id="download-package-notice" data-i18n="download.packageNotice">패키지: ShelfDock-v0.2.0-beta-win-x64.zip</span>
+              <a id="release-notes-link" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors flex items-center gap-1">
                 <span>릴리스 노트 보기</span>
                 <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
               </a>
@@ -567,6 +567,12 @@
 
   <!-- Vanilla JS: Bilingual Toggle & Shortcut Listener -->
   <script>
+    let activeVersion = "v0.2.0 Beta";
+    let activeTag = "v0.2.0-beta";
+    let activeReleaseUrl = "https://github.com/Mintflavor/shelfdock/releases";
+    let activePackageName = "ShelfDock-v0.2.0-beta-win-x64.zip";
+    let activeAssetDownloadUrl = null;
+
     const translations = {
       ko: {
         "nav.features": "주요 기능",
@@ -578,7 +584,7 @@
         "hero.headlinePart1": "작업 사이에 파일과 캡처, 문구를",
         "hero.headlinePart2": "잠깐 놓아두는 데스크톱 선반",
         "hero.subtitle": "여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선으로 동작합니다.",
-        "hero.ctaDownload": "Windows 11 x64 다운로드 (v0.2.0 Beta)",
+        "hero.ctaDownload": "Windows 11 x64 다운로드 ({version})",
         "hero.ctaGithub": "GitHub 배포 저장소",
         "hero.ctaSponsor": "Polar 후원하기",
         "hero.shortcutDesc": "로 어디서든 즉시 선반 호출",
@@ -619,8 +625,8 @@
         "download.title": "설치 없이 바로 가볍게 실행하세요",
         "download.subtitle": ".NET 별도 설치나 관리자 권한 없이, 압축 해제 후 즉시 실행할 수 있는 무설치 포터블 패키지를 제공합니다.",
         "download.winDesc": "별도의 인스톨러 없이 압축을 풀고 ShelfDock.exe를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.",
-        "download.winBtn": "GitHub Releases에서 다운로드 (v0.2.0 Beta)",
-        "download.packageNotice": "패키지: ShelfDock-v0.2.0-beta-win-x64.zip",
+        "download.winBtn": "GitHub Releases에서 다운로드 ({version})",
+        "download.packageNotice": "패키지: {package}",
         "download.macBadge": "출시 준비 중 (Coming Soon)",
         "download.macDesc": "동일한 로컬 우선 철학과 8자리 OTP 호환을 지원하는 네이티브 macOS (SwiftUI + AppKit) 선반 유틸리티를 개발 중입니다.",
         "download.macUpdateTitle": "진행 상황 확인",
@@ -646,7 +652,7 @@
         "hero.headlinePart1": "A temporary desktop shelf to hold",
         "hero.headlinePart2": "files, captures, and text between tasks",
         "hero.subtitle": "Collect references across multiple windows and drag them out to target apps whenever you're ready. No accounts, no cloud storage, 100% local-first.",
-        "hero.ctaDownload": "Download for Windows 11 x64 (v0.2.0 Beta)",
+        "hero.ctaDownload": "Download for Windows 11 x64 ({version})",
         "hero.ctaGithub": "GitHub Repository",
         "hero.ctaSponsor": "Sponsor on Polar",
         "hero.shortcutDesc": "to summon the shelf instantly",
@@ -688,8 +694,8 @@
         "download.title": "Run Immediately Without an Installer",
         "download.subtitle": "Portable, standalone zip package. No .NET runtime installation or administrator privileges required.",
         "download.winDesc": "Unzip the package and run ShelfDock.exe directly. The tray icon and desktop shelf are active within a second.",
-        "download.winBtn": "Download from GitHub Releases (v0.2.0 Beta)",
-        "download.packageNotice": "Package: ShelfDock-v0.2.0-beta-win-x64.zip",
+        "download.winBtn": "Download from GitHub Releases ({version})",
+        "download.packageNotice": "Package: {package}",
         "download.macBadge": "Coming Soon",
         "download.macDesc": "A native macOS menu-bar shelf utility (SwiftUI + AppKit) supporting the same local philosophy and OTP protocol is under active development.",
         "download.macUpdateTitle": "Track Progress",
@@ -714,7 +720,9 @@
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (data[key]) {
-          el.innerHTML = data[key];
+          let text = data[key];
+          text = text.replace("{version}", activeVersion).replace("{package}", activePackageName);
+          el.innerHTML = text;
         }
       });
 
@@ -732,9 +740,87 @@
       localStorage.setItem("shelfdock_lang", lang);
     }
 
+    function updateVersionDOM() {
+      const headerVersion = document.getElementById("header-version");
+      if (headerVersion) headerVersion.textContent = activeVersion;
+
+      const mockupTitle = document.getElementById("mockup-title");
+      if (mockupTitle) mockupTitle.textContent = `ShelfDock ${activeTag} — Temporary Shelf`;
+
+      const downloadCardVer = document.getElementById("download-card-version");
+      if (downloadCardVer) downloadCardVer.textContent = `ShelfDock ${activeVersion} (Portable Zip)`;
+
+      const downloadBtn = document.getElementById("download-btn");
+      if (downloadBtn && activeAssetDownloadUrl) {
+        downloadBtn.href = activeAssetDownloadUrl;
+      } else if (downloadBtn && activeReleaseUrl) {
+        downloadBtn.href = activeReleaseUrl;
+      }
+
+      const releaseNotesLink = document.getElementById("release-notes-link");
+      if (releaseNotesLink && activeReleaseUrl) {
+        releaseNotesLink.href = activeReleaseUrl;
+      }
+
+      const currentLang = localStorage.getItem("shelfdock_lang") || "ko";
+      setLanguage(currentLang);
+    }
+
+    async function syncLatestRelease() {
+      try {
+        const cacheKey = "shelfdock_release_cache";
+        const cached = sessionStorage.getItem(cacheKey);
+        let release = null;
+
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Date.now() - parsed.timestamp < 10 * 60 * 1000) {
+            release = parsed.data;
+          }
+        }
+
+        if (!release) {
+          const res = await fetch("https://api.github.com/repos/Mintflavor/shelfdock/releases");
+          if (res.ok) {
+            const releases = await res.json();
+            if (Array.isArray(releases) && releases.length > 0) {
+              release = releases[0];
+              sessionStorage.setItem(cacheKey, JSON.stringify({
+                timestamp: Date.now(),
+                data: release
+              }));
+            }
+          }
+        }
+
+        if (release) {
+          activeTag = release.tag_name || activeTag;
+          activeVersion = activeTag.replace(/^v/, "v") + (release.prerelease ? " Beta" : "");
+          activeReleaseUrl = release.html_url || activeReleaseUrl;
+
+          if (Array.isArray(release.assets) && release.assets.length > 0) {
+            const winZip = release.assets.find(a => a.name.toLowerCase().includes("win") && a.name.endsWith(".zip")) || release.assets[0];
+            if (winZip) {
+              activePackageName = winZip.name;
+              activeAssetDownloadUrl = winZip.browser_download_url;
+            }
+          } else {
+            activePackageName = `ShelfDock-${activeTag}-win-x64.zip`;
+          }
+
+          updateVersionDOM();
+        }
+      } catch (err) {
+        console.debug("Latest release sync fallback:", err);
+      }
+    }
+
     // Initialize Language from localStorage or query
     const savedLang = localStorage.getItem("shelfdock_lang") || "ko";
     setLanguage(savedLang);
+
+    // Sync latest release asynchronously
+    syncLatestRelease();
 
     // Easter Egg: Shortcut Key Listener
     document.addEventListener("keydown", (e) => {

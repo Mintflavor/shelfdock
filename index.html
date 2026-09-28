@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark scroll-smooth" lang="ko">
+<html class="scroll-smooth" lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -12,6 +12,21 @@
   <meta property="og:description" content="작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 데스크톱 선반. 계정·광고·추적·클라우드 없이 로컬 우선으로 동작합니다." />
   <meta property="og:image" content="assets/workflow-preview.png" />
   <meta property="og:type" content="website" />
+
+  <!-- Immediate Theme Initialization (Prevents FOUT) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('shelfdock_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- Fonts: Inter / Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,7 +65,15 @@
   <style>
     /* Custom Keycap Style */
     kbd.keycap {
+      background-color: #f8fafc;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid #94a3b8;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+    .dark kbd.keycap {
       background-color: #0B0F17;
+      color: #f8fafc;
       border: 1px solid #334155;
       border-bottom: 2px solid #475569;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -60,32 +83,50 @@
     .bg-grid-ambient {
       background-size: 36px 36px;
       background-image: 
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    }
+    .dark .bg-grid-ambient {
+      background-image: 
         linear-gradient(to right, rgba(51, 65, 85, 0.14) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(51, 65, 85, 0.14) 1px, transparent 1px);
     }
 
-    /* Top Radial Cyan Glow */
+    /* Top Radial Glow */
     .top-radial-glow {
+      background: radial-gradient(ellipse 70% 45% at 50% -5%, rgba(13, 148, 136, 0.08), transparent 70%);
+    }
+    .dark .top-radial-glow {
       background: radial-gradient(ellipse 70% 45% at 50% -5%, rgba(0, 209, 255, 0.14), transparent 70%);
     }
 
     /* Card Glow */
     .glow-card {
       position: relative;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(51, 65, 85, 0.6);
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
       backdrop-filter: blur(16px);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glow-card:hover {
+      border-color: rgba(13, 148, 136, 0.4);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08), 0 0 16px -2px rgba(13, 148, 136, 0.08);
+      transform: translateY(-2px);
+    }
+    .dark .glow-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    }
+    .dark .glow-card:hover {
       border-color: rgba(56, 189, 248, 0.45);
       box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.8), 0 0 24px -4px rgba(0, 209, 255, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
       transform: translateY(-2px);
     }
   </style>
 </head>
-<body class="bg-[#0B0F17] text-slate-100 antialiased selection:bg-brand-cyan/20 selection:text-brand-cyan min-h-screen flex flex-col font-sans relative overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 dark:bg-[#0B0F17] dark:text-slate-100 antialiased selection:bg-brand-cyan/20 selection:text-brand-cyan min-h-screen flex flex-col font-sans relative overflow-x-hidden transition-colors duration-200">
 
   <!-- Background Ambience -->
   <div class="fixed inset-0 pointer-events-none z-0">
@@ -94,44 +135,49 @@
   </div>
 
   <!-- Header -->
-  <header class="sticky top-0 z-50 bg-[#0B0F17]/80 backdrop-blur-md border-b border-slate-800/80">
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-[#0B0F17]/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
     <div class="flex justify-between items-center w-full px-6 py-3.5 max-w-[1240px] mx-auto">
       
       <!-- Brand & Version -->
       <div class="flex items-center gap-3">
         <a href="#" class="flex items-center gap-2.5 group">
           <img src="assets/favicon.ico" alt="ShelfDock Logo" class="w-7 h-7 rounded group-hover:scale-105 transition-transform" />
-          <span class="text-xl font-bold tracking-tight text-white font-sans">ShelfDock</span>
+          <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">ShelfDock</span>
         </a>
-        <span id="header-version" class="inline-flex items-center px-2 py-0.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono font-medium">
+        <span id="header-version" class="inline-flex items-center px-2 py-0.5 rounded-full border border-teal-500/30 dark:border-brand-cyan/30 bg-teal-500/10 dark:bg-brand-cyan/10 text-teal-700 dark:text-brand-cyan text-xs font-mono font-medium">
           v0.2.0 Beta
         </span>
       </div>
 
       <!-- Navigation Links -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-        <a href="#features" class="hover:text-brand-cyan transition-colors" data-i18n="nav.features">주요 기능</a>
-        <a href="#workflow" class="hover:text-brand-cyan transition-colors" data-i18n="nav.workflow">워크플로우</a>
-        <a href="#privacy" class="hover:text-brand-cyan transition-colors" data-i18n="nav.privacy">프라이버시</a>
-        <a href="#download" class="hover:text-brand-cyan transition-colors" data-i18n="nav.download">다운로드</a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-400">
+        <a href="#features" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="nav.features">주요 기능</a>
+        <a href="#workflow" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="nav.workflow">워크플로우</a>
+        <a href="#privacy" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="nav.privacy">프라이버시</a>
+        <a href="#download" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="nav.download">다운로드</a>
       </nav>
 
-      <!-- Trailing Controls: Lang Switcher, Polar Badge, Download CTA -->
-      <div class="flex items-center gap-3">
+      <!-- Trailing Controls: Theme Toggle, Lang Switcher, Polar Badge, Download CTA -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Theme Toggle Button -->
+        <button id="btn-theme-toggle" onclick="toggleTheme()" aria-label="화면 모드 전환" title="화면 모드 전환 (Light / Dark)" class="flex items-center justify-center p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-brand-cyan hover:border-slate-300 dark:hover:border-slate-700 active:scale-95 transition-all">
+          <span id="theme-toggle-icon" class="material-symbols-outlined text-[18px]">dark_mode</span>
+        </button>
+
         <!-- Language Switcher -->
-        <div class="flex items-center bg-slate-900 rounded-lg border border-slate-800 p-0.5 text-xs font-mono">
-          <button id="btn-lang-ko" onclick="setLanguage('ko')" class="px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all">KO</button>
-          <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2 py-1 rounded text-slate-400 hover:text-white transition-all">EN</button>
+        <div class="flex items-center bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-0.5 text-xs font-mono">
+          <button id="btn-lang-ko" onclick="setLanguage('ko')" class="px-2 py-1 rounded bg-white dark:bg-slate-800 text-teal-700 dark:text-brand-cyan font-bold shadow-sm dark:shadow-none transition-all">KO</button>
+          <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2 py-1 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">EN</button>
         </div>
 
         <!-- Polar.sh Sponsor Badge -->
-        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/10 border border-pink-500/30 text-xs font-mono text-pink-300 hover:bg-pink-500/20 hover:border-pink-500/50 hover:text-pink-200 transition-all active:scale-95">
-          <span class="material-symbols-outlined text-[15px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/10 border border-pink-500/20 dark:border-pink-500/30 text-xs font-mono text-pink-700 dark:text-pink-300 hover:bg-pink-500/15 dark:hover:bg-pink-500/20 hover:border-pink-500/50 hover:text-pink-800 dark:hover:text-pink-200 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[15px] text-pink-500 dark:text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
           <span class="hidden sm:inline" data-i18n="header.sponsor">Polar.sh 후원</span>
         </a>
 
         <!-- Download Button -->
-        <a href="#download" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-semibold text-xs shadow-md shadow-brand-cyan/15 hover:brightness-110 active:scale-95 transition-all">
+        <a href="#download" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 dark:from-brand-cyan dark:to-brand-teal text-white dark:text-[#0B0F17] font-semibold text-xs shadow-md shadow-teal-600/20 dark:shadow-brand-cyan/15 hover:brightness-110 active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[16px]">download</span>
           <span data-i18n="header.download">다운로드</span>
         </a>
@@ -146,99 +192,98 @@
     <!-- 1. Hero Section -->
     <section class="max-w-[1240px] mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 flex flex-col items-center text-center">
       
-
       <!-- Main Headline -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold max-w-4xl tracking-tight text-white leading-tight mb-6">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold max-w-4xl tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
         <span data-i18n="hero.headlinePart1">작업 사이에 파일과 캡처, 문구를</span><br class="hidden sm:inline"/>
-        <span class="bg-gradient-to-r from-brand-cyan via-teal-300 to-emerald-300 bg-clip-text text-transparent" data-i18n="hero.headlinePart2">잠깐 놓아두는 데스크톱 선반</span>
+        <span class="bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-600 dark:from-brand-cyan dark:via-teal-300 dark:to-emerald-300 bg-clip-text text-transparent" data-i18n="hero.headlinePart2">잠깐 놓아두는 데스크톱 선반</span>
       </h1>
 
       <!-- Subtitle -->
-      <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-9 leading-relaxed" data-i18n="hero.subtitle">
+      <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-9 leading-relaxed" data-i18n="hero.subtitle">
         여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선으로 동작합니다.
       </p>
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-6">
-        <a id="hero-download-btn" href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm shadow-xl shadow-brand-cyan/20 hover:shadow-brand-cyan/35 hover:scale-[1.02] active:scale-95 transition-all">
+        <a id="hero-download-btn" href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-teal-600 to-teal-500 dark:from-brand-cyan dark:to-brand-teal text-white dark:text-[#0B0F17] font-bold text-sm shadow-xl shadow-teal-600/20 dark:shadow-brand-cyan/20 hover:scale-[1.02] active:scale-95 transition-all">
           <span class="material-symbols-outlined text-[20px]">desktop_windows</span>
           <span id="hero-download-text" data-i18n="hero.ctaDownload">Windows 11 x64 다운로드 (v0.2.0 Beta)</span>
         </a>
 
-        <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-sm font-semibold hover:border-slate-500 hover:bg-slate-800 transition-all active:scale-95">
+        <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-slate-300 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95 shadow-sm">
           <span class="material-symbols-outlined text-[18px]">code</span>
           <span data-i18n="hero.ctaGithub">GitHub 배포 저장소</span>
         </a>
 
-        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-pink-500/40 text-pink-300 text-sm font-semibold hover:border-pink-500 hover:bg-pink-500/10 transition-all active:scale-95">
-          <span class="material-symbols-outlined text-[18px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white dark:bg-slate-900 border border-pink-500/30 dark:border-pink-500/40 text-pink-600 dark:text-pink-300 text-sm font-semibold hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-pink-500/10 transition-all active:scale-95 shadow-sm">
+          <span class="material-symbols-outlined text-[18px] text-pink-500 dark:text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
           <span data-i18n="hero.ctaSponsor">Polar 후원하기</span>
         </a>
       </div>
 
       <!-- Quick Shortcut Trigger Pill -->
-      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-14">
-        <kbd class="keycap px-2 py-1 rounded text-white">Ctrl</kbd>
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400 mb-14">
+        <kbd class="keycap px-2 py-1 rounded">Ctrl</kbd>
         <span>+</span>
-        <kbd class="keycap px-2 py-1 rounded text-white">Alt</kbd>
+        <kbd class="keycap px-2 py-1 rounded">Alt</kbd>
         <span>+</span>
-        <kbd class="keycap px-2 py-1 rounded text-white">S</kbd>
-        <span class="ml-1.5 text-slate-400 font-sans" data-i18n="hero.shortcutDesc">로 어디서든 즉시 선반 호출</span>
+        <kbd class="keycap px-2 py-1 rounded">S</kbd>
+        <span class="ml-1.5 font-sans" data-i18n="hero.shortcutDesc">로 어디서든 즉시 선반 호출</span>
       </div>
 
       <!-- Real Windows App Showcase in Clean Desktop Window Frame -->
-      <div class="w-full max-w-[840px] rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur-2xl shadow-2xl shadow-black/90 overflow-hidden text-left relative">
+      <div class="w-full max-w-[840px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/80 backdrop-blur-2xl shadow-2xl shadow-slate-300/40 dark:shadow-black/90 overflow-hidden text-left relative">
         <!-- Windows 11 Title Bar -->
-        <div class="h-10 px-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between select-none">
+        <div class="h-10 px-4 bg-slate-100/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between select-none">
           <div class="flex items-center gap-2.5">
             <img src="assets/favicon.ico" class="w-4 h-4 rounded" alt="App Icon" />
-            <span id="mockup-title" class="text-xs font-mono text-slate-200 font-semibold">ShelfDock v0.2.0-beta — Temporary Shelf</span>
+            <span id="mockup-title" class="text-xs font-mono text-slate-700 dark:text-slate-200 font-semibold">ShelfDock v0.2.0-beta — Temporary Shelf</span>
           </div>
           <!-- Window Controls -->
           <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
-            <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-700 inline-block"></span>
             <span class="w-3 h-3 rounded-full bg-red-400/80 inline-block"></span>
           </div>
         </div>
 
         <!-- Window Body: Real App UI Graphic with Callout Highlights -->
-        <div class="p-6 md:p-8 bg-gradient-to-b from-slate-900/50 to-slate-950/90 flex flex-col md:flex-row items-center gap-8">
+        <div class="p-6 md:p-8 bg-gradient-to-b from-slate-50/70 to-white dark:from-slate-900/50 dark:to-slate-950/90 flex flex-col md:flex-row items-center gap-8">
           <!-- Actual Screenshot Image -->
           <div class="w-full md:w-auto shrink-0 flex justify-center">
-            <div class="rounded-xl border border-slate-700/80 shadow-2xl overflow-hidden bg-slate-900 relative group">
+            <div class="rounded-xl border border-slate-200 dark:border-slate-700/80 shadow-2xl overflow-hidden bg-slate-100 dark:bg-slate-900 relative group">
               <img src="assets/workflow-preview.png" alt="ShelfDock 실제 실행 화면" class="w-[310px] sm:w-[330px] h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
             </div>
           </div>
 
           <!-- Feature Callouts beside Screenshot -->
           <div class="flex-grow space-y-4 text-left">
-            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
-              <div class="flex items-center gap-2 text-brand-cyan text-sm font-semibold mb-1">
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 shadow-sm">
+              <div class="flex items-center gap-2 text-teal-600 dark:text-brand-cyan text-sm font-semibold mb-1">
                 <span class="material-symbols-outlined text-[18px]">drag_pan</span>
                 <span data-i18n="showcase.callout1Title">화면 상시 플로팅 아이콘 &amp; 선반</span>
               </div>
-              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout1Desc">
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="showcase.callout1Desc">
                 파일 탐색기 파일, 텍스트, 화면 캡처 이미지를 드롭하고 클릭 한 번으로 선반을 엽니다. 닫으면 다시 가벼운 플로팅 아이콘으로 축소됩니다.
               </p>
             </div>
 
-            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
-              <div class="flex items-center gap-2 text-teal-400 text-sm font-semibold mb-1">
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 shadow-sm">
+              <div class="flex items-center gap-2 text-teal-700 dark:text-teal-400 text-sm font-semibold mb-1">
                 <span class="material-symbols-outlined text-[18px]">verified</span>
                 <span data-i18n="showcase.callout2Title">선반 관리 및 비파괴적 복사</span>
               </div>
-              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout2Desc">
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="showcase.callout2Desc">
                 가져오기(Get), 복사(Copy), 고정(Pin), 실행 취소(Undo) 지원. 선반에서 아이템을 지우더라도 원본 파일은 결코 삭제되지 않습니다.
               </p>
             </div>
 
-            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
-              <div class="flex items-center gap-2 text-sky-400 text-sm font-semibold mb-1">
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 shadow-sm">
+              <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 text-sm font-semibold mb-1">
                 <span class="material-symbols-outlined text-[18px]">key</span>
                 <span data-i18n="showcase.callout3Title">8자리 OTP 기기 간 P2P 공유</span>
               </div>
-              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout3Desc">
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="showcase.callout3Desc">
                 계정이나 클라우드 없이, 동일 네트워크 내 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 안전하게 선반을 동기화합니다.
               </p>
             </div>
@@ -246,25 +291,25 @@
         </div>
 
         <!-- Window Footer -->
-        <div class="px-5 py-2.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
-          <div class="flex items-center gap-2 text-brand-cyan">
+        <div class="px-5 py-2.5 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+          <div class="flex items-center gap-2 text-teal-600 dark:text-brand-cyan">
             <span class="material-symbols-outlined text-[15px]">verified_user</span>
             <span data-i18n="showcase.verifiedStatus">Download verified / 다운로드 검증 완료</span>
           </div>
-          <span class="text-slate-500">Windows 11 x64 Portable</span>
+          <span class="text-slate-400 dark:text-slate-500">Windows 11 x64 Portable</span>
         </div>
       </div>
 
     </section>
 
     <!-- 2. Workflow Section (3 Steps) -->
-    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="workflow">
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-200/80 dark:border-slate-800/80" id="workflow">
       <div class="text-center max-w-2xl mx-auto mb-14">
-        <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="workflow.tag">3-Step Frictionless Flow</span>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-4" data-i18n="workflow.title">
+        <span class="text-xs font-mono text-teal-600 dark:text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="workflow.tag">3-Step Frictionless Flow</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-4" data-i18n="workflow.title">
           방해받지 않는 자연스러운 데스크톱 작업 흐름
         </h2>
-        <p class="text-sm sm:text-base text-slate-400" data-i18n="workflow.subtitle">
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400" data-i18n="workflow.subtitle">
           클립보드 매니저처럼 복잡하지 않고, 일반 폴더처럼 어지럽혀지지 않는 가벼운 임시 작업 선반입니다.
         </p>
       </div>
@@ -275,54 +320,54 @@
         <!-- Step 1 Card -->
         <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-brand-cyan">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-slate-800/80 border border-teal-100 dark:border-slate-700 flex items-center justify-center mb-6 text-teal-600 dark:text-brand-cyan">
               <span class="material-symbols-outlined text-[26px]">drag_click</span>
             </div>
-            <span class="text-xs font-mono text-brand-cyan block mb-2 font-semibold">STEP 01 / DROP &amp; HOLD</span>
-            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step1Title">어디서나 드롭 &amp; 보관</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step1Desc">
-              탐색기의 여러 파일, 스크린샷 캡처 이미지, 웹 브라우저의 텍스트 조각을 화면 위 플로팅 아이콘이나 <kbd class="keycap px-1.5 py-0.5 rounded text-xs text-slate-200">Ctrl+Alt+S</kbd> 로 즉시 선반에 놓아두세요.
+            <span class="text-xs font-mono text-teal-600 dark:text-brand-cyan block mb-2 font-semibold">STEP 01 / DROP &amp; HOLD</span>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3" data-i18n="workflow.step1Title">어디서나 드롭 &amp; 보관</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step1Desc">
+              탐색기의 여러 파일, 스크린샷 캡처 이미지, 웹 브라우저의 텍스트 조각을 화면 위 플로팅 아이콘이나 <kbd class="keycap px-1.5 py-0.5 rounded text-xs">Ctrl+Alt+S</kbd> 로 즉시 선반에 놓아두세요.
             </p>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center justify-between">
             <span data-i18n="workflow.step1Tag">플로팅 아이콘 지원</span>
-            <span class="material-symbols-outlined text-brand-cyan text-sm">check</span>
+            <span class="material-symbols-outlined text-teal-600 dark:text-brand-cyan text-sm">check</span>
           </div>
         </div>
 
         <!-- Step 2 Card -->
         <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-teal-400">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-slate-800/80 border border-teal-100 dark:border-slate-700 flex items-center justify-center mb-6 text-teal-700 dark:text-teal-400">
               <span class="material-symbols-outlined text-[26px]">swap_horiz</span>
             </div>
-            <span class="text-xs font-mono text-teal-400 block mb-2 font-semibold">STEP 02 / SAFE PIPELINE</span>
-            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step2Title">대상 앱으로 안전 복사</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step2Desc">
+            <span class="text-xs font-mono text-teal-700 dark:text-teal-400 block mb-2 font-semibold">STEP 02 / SAFE PIPELINE</span>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3" data-i18n="workflow.step2Title">대상 앱으로 안전 복사</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step2Desc">
               메일 작성 창, 메신저, 포토샵, 터미널 등으로 원하는 항목을 다중 선택해 끌어다 놓으세요. 원본 파일은 절대 삭제되지 않고 오직 복사만 일어납니다.
             </p>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center justify-between">
             <span data-i18n="workflow.step2Tag">원본 절대 보존 (Read-Only)</span>
-            <span class="material-symbols-outlined text-teal-400 text-sm">shield</span>
+            <span class="material-symbols-outlined text-teal-600 dark:text-teal-400 text-sm">shield</span>
           </div>
         </div>
 
         <!-- Step 3 Card -->
         <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-sky-400">
+            <div class="w-12 h-12 rounded-xl bg-sky-50 dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700 flex items-center justify-center mb-6 text-sky-600 dark:text-sky-400">
               <span class="material-symbols-outlined text-[26px]">key</span>
             </div>
-            <span class="text-xs font-mono text-sky-400 block mb-2 font-semibold">STEP 03 / LOCAL P2P OTP</span>
-            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step3Title">8자리 OTP 로컬 기기 공유</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step3Desc">
+            <span class="text-xs font-mono text-sky-600 dark:text-sky-400 block mb-2 font-semibold">STEP 03 / LOCAL P2P OTP</span>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3" data-i18n="workflow.step3Title">8자리 OTP 로컬 기기 공유</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step3Desc">
               로그인이나 계정 생성 없이, 동일 Wi-Fi나 LAN 내의 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 직접 P2P 전송합니다.
             </p>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
-            <span class="font-mono text-brand-cyan tracking-wider font-bold">OTP-v2 PAKE</span>
-            <span class="material-symbols-outlined text-sky-400 text-sm">wifi_tethering</span>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center justify-between">
+            <span class="font-mono text-teal-600 dark:text-brand-cyan tracking-wider font-bold">OTP-v2 PAKE</span>
+            <span class="material-symbols-outlined text-sky-600 dark:text-sky-400 text-sm">wifi_tethering</span>
           </div>
         </div>
 
@@ -330,15 +375,15 @@
     </section>
 
     <!-- 3. Features & Privacy Philosophy (Bento Grid) -->
-    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="privacy">
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-200/80 dark:border-slate-800/80" id="privacy">
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="privacy.tag">Zero Cloud, Total Privacy</span>
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight" data-i18n="privacy.title">
+          <span class="text-xs font-mono text-teal-600 dark:text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="privacy.tag">Zero Cloud, Total Privacy</span>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight" data-i18n="privacy.title">
             100% 로컬 우선, 프라이버시 타협 없는 설계
           </h2>
         </div>
-        <p class="text-sm sm:text-base text-slate-400 max-w-md" data-i18n="privacy.subtitle">
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md" data-i18n="privacy.subtitle">
           불필요한 클라우드 업로드나 외부 통신 없이 오직 내 PC 환경 안에서 쾌적하게 구동됩니다.
         </p>
       </div>
@@ -349,14 +394,14 @@
         <!-- Bento 1: 무계정 무광고 무추적 (Span 7) -->
         <div class="md:col-span-7 glow-card rounded-2xl p-8 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-brand-cyan">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-slate-800/80 border border-teal-100 dark:border-slate-700 flex items-center justify-center text-teal-600 dark:text-brand-cyan">
               <span class="material-symbols-outlined text-[28px]">no_accounts</span>
             </div>
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-brand-cyan border border-brand-cyan/30" data-i18n="privacy.card1Badge">No Tracking</span>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-teal-50 dark:bg-slate-800 text-teal-700 dark:text-brand-cyan border border-teal-200 dark:border-brand-cyan/30" data-i18n="privacy.card1Badge">No Tracking</span>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card1Title">무계정 · 무광고 · 무추적</h3>
-            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card1Desc">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3" data-i18n="privacy.card1Title">무계정 · 무광고 · 무추적</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="privacy.card1Desc">
               로그인이나 회원가입 절차가 없습니다. 구글 애널리틱스, 센트리(Sentry), 텔레메트리나 백그라운드 사용량 추적 코드가 단 한 줄도 포함되어 있지 않습니다.
             </p>
           </div>
@@ -365,14 +410,14 @@
         <!-- Bento 2: 클라우드 저장 없음 (Span 5) -->
         <div class="md:col-span-5 glow-card rounded-2xl p-8 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-teal-400">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-slate-800/80 border border-teal-100 dark:border-slate-700 flex items-center justify-center text-teal-700 dark:text-teal-400">
               <span class="material-symbols-outlined text-[28px]">cloud_off</span>
             </div>
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-teal-400 border border-teal-500/30" data-i18n="privacy.card2Badge">Local Memory</span>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-teal-50 dark:bg-slate-800 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-500/30" data-i18n="privacy.card2Badge">Local Memory</span>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card2Title">클라우드 저장 없음</h3>
-            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card2Desc">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3" data-i18n="privacy.card2Title">클라우드 저장 없음</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="privacy.card2Desc">
               선반에 올려둔 모든 파일과 텍스트 스니펫은 사용자의 로컬 메모리와 로컬 디스크에만 임시 보관됩니다. 외부 서버로 데이터가 절대 업로드되지 않습니다.
             </p>
           </div>
@@ -381,14 +426,14 @@
         <!-- Bento 3: 원본 보존 복사 전용 (Span 5) -->
         <div class="md:col-span-5 glow-card rounded-2xl p-8 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-sky-400">
+            <div class="w-12 h-12 rounded-xl bg-sky-50 dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700 flex items-center justify-center text-sky-600 dark:text-sky-400">
               <span class="material-symbols-outlined text-[28px]">lock_reset</span>
             </div>
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-sky-400 border border-sky-500/30" data-i18n="privacy.card3Badge">Non-Destructive</span>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-sky-50 dark:bg-slate-800 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30" data-i18n="privacy.card3Badge">Non-Destructive</span>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card3Title">원본 보존 복사 전용</h3>
-            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card3Desc">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3" data-i18n="privacy.card3Title">원본 보존 복사 전용</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="privacy.card3Desc">
               선반에서 아이템을 삭제하거나 외부로 내보내더라도 원래 파일은 절대 삭제되지 않는 비파괴적(Non-Destructive) 버퍼 구조입니다.
             </p>
           </div>
@@ -397,14 +442,14 @@
         <!-- Bento 4: 로컬 암호화 P2P 전송 (Span 7) -->
         <div class="md:col-span-7 glow-card rounded-2xl p-8 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
-            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-indigo-400">
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-slate-800/80 border border-indigo-100 dark:border-slate-700 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
               <span class="material-symbols-outlined text-[28px]">security</span>
             </div>
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-indigo-400 border border-indigo-500/30" data-i18n="privacy.card4Badge">PAKE + TLS P2P</span>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/30" data-i18n="privacy.card4Badge">PAKE + TLS P2P</span>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card4Title">로컬 암호화 P2P 전송</h3>
-            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card4Desc">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3" data-i18n="privacy.card4Title">로컬 암호화 P2P 전송</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="privacy.card4Desc">
               기기간 선반 공유는 기본적으로 꺼져 있으며, 필요 시 사용자가 직접 켠 후 8자리 OTP로 양방향 승인을 완료해야만 종단간 암호화 세션이 활성화됩니다.
             </p>
           </div>
@@ -414,13 +459,13 @@
     </section>
 
     <!-- 4. Download & System Requirements -->
-    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="download">
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-200/80 dark:border-slate-800/80" id="download">
       <div class="text-center max-w-2xl mx-auto mb-14">
-        <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="download.tag">Portable &amp; Fast</span>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-4" data-i18n="download.title">
+        <span class="text-xs font-mono text-teal-600 dark:text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="download.tag">Portable &amp; Fast</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-4" data-i18n="download.title">
           설치 없이 바로 가볍게 실행하세요
         </h2>
-        <p class="text-sm sm:text-base text-slate-400" data-i18n="download.subtitle">
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400" data-i18n="download.subtitle">
           .NET 별도 설치나 관리자 권한 없이, 압축 해제 후 즉시 실행할 수 있는 무설치 포터블 패키지를 제공합니다.
         </p>
       </div>
@@ -428,33 +473,33 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Windows 11 Featured Card (Col 7) -->
-        <div class="lg:col-span-7 rounded-2xl border-2 border-brand-cyan/50 bg-slate-900/90 backdrop-blur-xl p-8 relative shadow-2xl shadow-brand-cyan/10">
-          <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-brand-cyan text-[#0B0F17] text-xs font-mono font-bold uppercase tracking-wider">
+        <div class="lg:col-span-7 rounded-2xl border-2 border-teal-500/40 dark:border-brand-cyan/50 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl p-8 relative shadow-xl shadow-teal-500/5 dark:shadow-2xl dark:shadow-brand-cyan/10">
+          <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-teal-600 dark:bg-brand-cyan text-white dark:text-[#0B0F17] text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
             추천 (Featured)
           </div>
 
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan">
+            <div class="w-14 h-14 rounded-2xl bg-teal-50 dark:bg-brand-cyan/10 border border-teal-200 dark:border-brand-cyan/30 flex items-center justify-center text-teal-600 dark:text-brand-cyan">
               <span class="material-symbols-outlined text-[32px]">desktop_windows</span>
             </div>
             <div>
-              <h3 class="text-2xl font-bold text-white">Windows 11 x64</h3>
-              <p id="download-card-version" class="text-xs font-mono text-brand-cyan">ShelfDock v0.2.0 Beta (Portable Zip)</p>
+              <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Windows 11 x64</h3>
+              <p id="download-card-version" class="text-xs font-mono text-teal-700 dark:text-brand-cyan font-semibold">ShelfDock v0.2.0 Beta (Portable Zip)</p>
             </div>
           </div>
 
-          <p class="text-sm text-slate-300 mb-6 leading-relaxed" data-i18n="download.winDesc">
-            별도의 인스톨러 없이 압축을 풀고 <code class="text-brand-cyan font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ShelfDock.exe</code>를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.
+          <p class="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed" data-i18n="download.winDesc">
+            별도의 인스톨러 없이 압축을 풀고 <code class="text-teal-700 dark:text-brand-cyan font-mono bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800">ShelfDock.exe</code>를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.
           </p>
 
           <div class="space-y-3">
-            <a id="download-btn" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-brand-cyan/20">
+            <a id="download-btn" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-teal-600 to-teal-500 dark:from-brand-cyan dark:to-brand-teal text-white dark:text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-teal-600/20 dark:shadow-brand-cyan/20">
               <span class="material-symbols-outlined text-[20px]">download</span>
               <span id="download-btn-text" data-i18n="download.winBtn">GitHub Releases에서 다운로드 (v0.2.0 Beta)</span>
             </a>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400 px-1">
               <span id="download-package-notice" data-i18n="download.packageNotice">패키지: ShelfDock-v0.2.0-beta-win-x64.zip</span>
-              <a id="release-notes-link" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors flex items-center gap-1">
+              <a id="release-notes-link" href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors flex items-center gap-1">
                 <span>릴리스 노트 보기</span>
                 <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
               </a>
@@ -463,32 +508,32 @@
         </div>
 
         <!-- macOS Card (Coming Soon - Col 5) -->
-        <div class="lg:col-span-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md p-8 flex flex-col justify-between h-full">
+        <div class="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-8 flex flex-col justify-between h-full shadow-sm dark:shadow-none">
           <div>
             <div class="flex items-center justify-between mb-6">
-              <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400">
+              <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400">
                 <span class="material-symbols-outlined text-[28px]">laptop_mac</span>
               </div>
-              <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 text-xs font-mono border border-slate-700" data-i18n="download.macBadge">
+              <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-mono border border-slate-200 dark:border-slate-700" data-i18n="download.macBadge">
                 출시 준비 중 (Coming Soon)
               </span>
             </div>
-            <h3 class="text-2xl font-bold text-white mb-2">macOS 버전</h3>
-            <p class="text-xs font-mono text-brand-cyan mb-4">Apple Silicon &amp; Intel</p>
-            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="download.macDesc">
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">macOS 버전</h3>
+            <p class="text-xs font-mono text-teal-600 dark:text-brand-cyan mb-4 font-semibold">Apple Silicon &amp; Intel</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6" data-i18n="download.macDesc">
               동일한 로컬 우선 철학과 8자리 OTP 호환을 지원하는 네이티브 macOS (SwiftUI + AppKit) 선반 유틸리티를 개발 중입니다.
             </p>
           </div>
 
-          <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 space-y-2">
-            <div class="flex items-center gap-2 text-slate-300 font-semibold">
-              <span class="material-symbols-outlined text-brand-cyan text-sm">notifications</span>
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 dark:text-slate-400 space-y-2">
+            <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-semibold">
+              <span class="material-symbols-outlined text-teal-600 dark:text-brand-cyan text-sm">notifications</span>
               <span data-i18n="download.macUpdateTitle">진행 상황 확인</span>
             </div>
             <p class="leading-relaxed" data-i18n="download.macUpdateDesc">
               GitHub 저장소의 Watch 또는 Releases를 통해 macOS 지원 버전 배포 소식을 가장 먼저 받아보실 수 있습니다.
             </p>
-            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 text-brand-cyan hover:underline mt-2">
+            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 text-teal-600 dark:text-brand-cyan hover:underline mt-2">
               <span>GitHub 저장소 바로가기</span>
               <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
             </a>
@@ -499,32 +544,32 @@
     </section>
 
     <!-- 5. Polar.sh Sponsor Section -->
-    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="sponsor">
-      <div class="rounded-3xl border border-pink-500/30 bg-gradient-to-b from-slate-900/90 to-slate-950 p-8 md:p-12 relative overflow-hidden shadow-2xl">
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-200/80 dark:border-slate-800/80" id="sponsor">
+      <div class="rounded-3xl border border-pink-500/25 dark:border-pink-500/30 bg-gradient-to-b from-white to-pink-50/50 dark:from-slate-900/90 dark:to-slate-950 p-8 md:p-12 relative overflow-hidden shadow-xl dark:shadow-2xl">
         <!-- Ambient corner glows -->
         <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-pink-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-brand-cyan/10 blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div class="max-w-xl text-left">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-300 text-xs font-mono mb-4">
-              <span class="material-symbols-outlined text-[15px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-100/70 dark:bg-pink-500/10 border border-pink-200 dark:border-pink-500/30 text-pink-700 dark:text-pink-300 text-xs font-mono mb-4">
+              <span class="material-symbols-outlined text-[15px] text-pink-500 dark:text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
               <span data-i18n="sponsor.tag">Polar.sh 독립 개발자 후원</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3" data-i18n="sponsor.title">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-3" data-i18n="sponsor.title">
               개인 개발자를 위한 따뜻한 커피 한 잔의 힘
             </h2>
-            <p class="text-sm sm:text-base text-slate-300 leading-relaxed" data-i18n="sponsor.desc">
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="sponsor.desc">
               ShelfDock은 완전 무료 프리웨어 소프트웨어입니다. 광고나 유료 구독 없이 지속적으로 버그를 수정하고 완성도를 높여갈 수 있도록, Polar에서 커피 한 잔으로 힘을 보태주세요.
             </p>
           </div>
 
           <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
-            <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-white font-bold text-sm shadow-xl shadow-pink-500/25 active:scale-95 transition-all">
+            <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-bold text-sm shadow-xl shadow-pink-500/25 active:scale-95 transition-all">
               <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
               <span data-i18n="sponsor.btn">Polar에서 후원하기</span>
             </a>
-            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-sm font-semibold hover:border-slate-500 hover:bg-slate-800 transition-colors">
+            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-slate-300 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm">
               <span class="material-symbols-outlined text-[18px]">star</span>
               <span>GitHub Star</span>
             </a>
@@ -536,36 +581,36 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-800/80">
+  <footer class="bg-slate-100/90 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/80 transition-colors duration-200">
     <div class="flex flex-col md:flex-row justify-between items-center w-full px-6 py-10 max-w-[1240px] mx-auto gap-6 text-center md:text-left">
       
       <!-- Brand & License Notice -->
       <div>
         <div class="flex items-center justify-center md:justify-start gap-2.5 mb-2">
           <img src="assets/favicon.ico" alt="Logo" class="w-5 h-5 rounded" />
-          <span class="text-base font-bold text-white font-sans">ShelfDock</span>
-          <span class="text-xs font-mono text-slate-500">| Mintflavor</span>
+          <span class="text-base font-bold text-slate-900 dark:text-white font-sans">ShelfDock</span>
+          <span class="text-xs font-mono text-slate-400 dark:text-slate-500">| Mintflavor</span>
         </div>
-        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="footer.license">
+        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="footer.license">
           개인·교육·회사 내부 업무에서 무료로 사용할 수 있는 프리웨어입니다. (소스 비공개 / Not MIT)
         </p>
       </div>
 
       <!-- Links -->
-      <div class="flex flex-wrap items-center justify-center gap-5 text-xs font-mono text-slate-400">
-        <a href="USER-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.userGuide">사용 안내</a>
-        <a href="OTP-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.otpGuide">OTP 가이드</a>
-        <a href="P2P-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.p2pGuide">P2P 가이드</a>
-        <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors">Releases</a>
-        <a href="https://github.com/Mintflavor/shelfdock/issues" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors" data-i18n="footer.issues">문제 신고</a>
-        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="hover:text-pink-400 transition-colors">Polar 후원</a>
-        <a href="LICENSE.ko.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.licenseLink">라이선스 안내</a>
+      <div class="flex flex-wrap items-center justify-center gap-5 text-xs font-mono text-slate-500 dark:text-slate-400">
+        <a href="USER-GUIDE.md" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="footer.userGuide">사용 안내</a>
+        <a href="OTP-GUIDE.md" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="footer.otpGuide">OTP 가이드</a>
+        <a href="P2P-GUIDE.md" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="footer.p2pGuide">P2P 가이드</a>
+        <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors">Releases</a>
+        <a href="https://github.com/Mintflavor/shelfdock/issues" target="_blank" rel="noreferrer" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="footer.issues">문제 신고</a>
+        <a href="https://buy.polar.sh/polar_cl_gWF0gViLplnVSaLORukbdyFw8OXMEVcxtL7X70Hb8Bq" target="_blank" rel="noreferrer" class="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Polar 후원</a>
+        <a href="LICENSE.ko.md" class="hover:text-teal-600 dark:hover:text-brand-cyan transition-colors" data-i18n="footer.licenseLink">라이선스 안내</a>
       </div>
 
     </div>
   </footer>
 
-  <!-- Vanilla JS: Bilingual Toggle & Shortcut Listener -->
+  <!-- Vanilla JS: Bilingual Toggle, Theme Mode & Shortcut Listener -->
   <script>
     let activeVersion = "v0.2.0 Beta";
     let activeTag = "v0.2.0-beta";
@@ -713,6 +758,42 @@
       }
     };
 
+    /* Theme Toggle & Persistence */
+    function updateThemeUI(theme) {
+      const icon = document.getElementById("theme-toggle-icon");
+      const btn = document.getElementById("btn-theme-toggle");
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+        if (icon) icon.textContent = "light_mode";
+        if (btn) btn.setAttribute("title", "라이트 모드로 전환 (Switch to Light Mode)");
+      } else {
+        document.documentElement.classList.remove("dark");
+        if (icon) icon.textContent = "dark_mode";
+        if (btn) btn.setAttribute("title", "다크 모드로 전환 (Switch to Dark Mode)");
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextTheme = isDark ? "light" : "dark";
+      localStorage.setItem("shelfdock_theme", nextTheme);
+      updateThemeUI(nextTheme);
+    }
+
+    // Initialize Theme
+    const savedTheme = localStorage.getItem("shelfdock_theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme ? savedTheme : (prefersDark ? "dark" : "light");
+    updateThemeUI(initialTheme);
+
+    // Watch OS theme change if user has no manual override
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("shelfdock_theme")) {
+        updateThemeUI(e.matches ? "dark" : "light");
+      }
+    });
+
+    /* Language Switcher */
     function setLanguage(lang) {
       const data = translations[lang];
       if (!data) return;
@@ -729,12 +810,12 @@
       const btnKo = document.getElementById("btn-lang-ko");
       const btnEn = document.getElementById("btn-lang-en");
       if (lang === "ko") {
-        btnKo.className = "px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all";
-        btnEn.className = "px-2 py-1 rounded text-slate-400 hover:text-white transition-all";
+        btnKo.className = "px-2 py-1 rounded bg-white dark:bg-slate-800 text-teal-700 dark:text-brand-cyan font-bold shadow-sm dark:shadow-none transition-all";
+        btnEn.className = "px-2 py-1 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all";
         document.documentElement.lang = "ko";
       } else {
-        btnEn.className = "px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all";
-        btnKo.className = "px-2 py-1 rounded text-slate-400 hover:text-white transition-all";
+        btnEn.className = "px-2 py-1 rounded bg-white dark:bg-slate-800 text-teal-700 dark:text-brand-cyan font-bold shadow-sm dark:shadow-none transition-all";
+        btnKo.className = "px-2 py-1 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all";
         document.documentElement.lang = "en";
       }
       localStorage.setItem("shelfdock_lang", lang);
@@ -827,7 +908,7 @@
       if (e.ctrlKey && e.altKey && (e.key === "s" || e.key === "S")) {
         e.preventDefault();
         const toast = document.createElement("div");
-        toast.className = "fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-brand-cyan text-brand-cyan text-xs font-mono shadow-2xl flex items-center gap-2 transition-all";
+        toast.className = "fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-teal-500 dark:border-brand-cyan text-teal-700 dark:text-brand-cyan text-xs font-mono shadow-2xl flex items-center gap-2 transition-all";
         toast.innerHTML = '<span class="material-symbols-outlined text-[16px]">layers</span> ShelfDock 호출 단축키 감지됨 (Ctrl+Alt+S)';
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 2600);

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>ShelfDock — 작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 Windows 선반</title>
+  <meta name="description" content="여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선 Windows 11 데스크톱 선반 유틸리티." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ShelfDock — 데스크톱 임시 보관 선반 유틸리티" />
+  <meta property="og:description" content="작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 Windows 선반. 계정·광고·추적·클라우드 없이 로컬 우선으로 동작합니다." />
+  <meta property="og:image" content="assets/workflow-preview.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: Inter / Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal: "#0D9488",
+              cyan: "#00D1FF",
+              accent: "#38BDF8",
+              dark: "#0B0F17",
+              card: "#0F172A",
+              border: "#1E293B",
+              hover: "#334155"
+            }
+          },
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "system-ui", "-apple-system", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom Keycap Style */
+    kbd.keycap {
+      background-color: #0B0F17;
+      border: 1px solid #334155;
+      border-bottom: 2px solid #475569;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Ambient Subtle Grid Backdrop */
+    .bg-grid-ambient {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(51, 65, 85, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51, 65, 85, 0.14) 1px, transparent 1px);
+    }
+
+    /* Top Radial Cyan Glow */
+    .top-radial-glow {
+      background: radial-gradient(ellipse 70% 45% at 50% -5%, rgba(0, 209, 255, 0.14), transparent 70%);
+    }
+
+    /* Card Glow */
+    .glow-card {
+      position: relative;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glow-card:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.8), 0 0 24px -4px rgba(0, 209, 255, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="bg-[#0B0F17] text-slate-100 antialiased selection:bg-brand-cyan/20 selection:text-brand-cyan min-h-screen flex flex-col font-sans relative overflow-x-hidden">
+
+  <!-- Background Ambience -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute inset-0 bg-grid-ambient"></div>
+    <div class="absolute inset-0 top-radial-glow"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#0B0F17]/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="flex justify-between items-center w-full px-6 py-3.5 max-w-[1240px] mx-auto">
+      
+      <!-- Brand & Version -->
+      <div class="flex items-center gap-3">
+        <a href="#" class="flex items-center gap-2.5 group">
+          <img src="assets/favicon.ico" alt="ShelfDock Logo" class="w-7 h-7 rounded group-hover:scale-105 transition-transform" />
+          <span class="text-xl font-bold tracking-tight text-white font-sans">ShelfDock</span>
+        </a>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono font-medium">
+          v0.2.0 Beta
+        </span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="#features" class="hover:text-brand-cyan transition-colors" data-i18n="nav.features">주요 기능</a>
+        <a href="#workflow" class="hover:text-brand-cyan transition-colors" data-i18n="nav.workflow">워크플로우</a>
+        <a href="#privacy" class="hover:text-brand-cyan transition-colors" data-i18n="nav.privacy">프라이버시</a>
+        <a href="#download" class="hover:text-brand-cyan transition-colors" data-i18n="nav.download">다운로드</a>
+      </nav>
+
+      <!-- Trailing Controls: Lang Switcher, Polar Badge, Download CTA -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-slate-900 rounded-lg border border-slate-800 p-0.5 text-xs font-mono">
+          <button id="btn-lang-ko" onclick="setLanguage('ko')" class="px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all">KO</button>
+          <button id="btn-lang-en" onclick="setLanguage('en')" class="px-2 py-1 rounded text-slate-400 hover:text-white transition-all">EN</button>
+        </div>
+
+        <!-- Polar.sh Sponsor Badge -->
+        <a href="https://polar.sh/Mintflavor" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/10 border border-pink-500/30 text-xs font-mono text-pink-300 hover:bg-pink-500/20 hover:border-pink-500/50 hover:text-pink-200 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[15px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span class="hidden sm:inline" data-i18n="header.sponsor">Polar.sh 후원</span>
+        </a>
+
+        <!-- Download Button -->
+        <a href="#download" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-semibold text-xs shadow-md shadow-brand-cyan/15 hover:brightness-110 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[16px]">download</span>
+          <span data-i18n="header.download">다운로드</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 flex-grow">
+
+    <!-- 1. Hero Section -->
+    <section class="max-w-[1240px] mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 flex flex-col items-center text-center">
+      
+      <!-- Announcement Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-brand-cyan/30 backdrop-blur-md mb-8 hover:border-brand-cyan/60 transition-colors">
+        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+        <span class="text-xs font-mono text-brand-cyan" data-i18n="hero.badge">Windows 11 전용 가벼운 로컬 선반 유틸리티 v0.2.0 Beta</span>
+        <span class="material-symbols-outlined text-brand-cyan text-sm">arrow_forward</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold max-w-4xl tracking-tight text-white leading-tight mb-6">
+        <span data-i18n="hero.headlinePart1">작업 사이에 파일과 캡처, 문구를</span><br class="hidden sm:inline"/>
+        <span class="bg-gradient-to-r from-brand-cyan via-teal-300 to-emerald-300 bg-clip-text text-transparent" data-i18n="hero.headlinePart2">잠깐 놓아두는 데스크톱 선반</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-9 leading-relaxed" data-i18n="hero.subtitle">
+        여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선으로 동작합니다.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-6">
+        <a href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm shadow-xl shadow-brand-cyan/20 hover:shadow-brand-cyan/35 hover:scale-[1.02] active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[20px]">desktop_windows</span>
+          <span data-i18n="hero.ctaDownload">Windows 11 x64 다운로드 (v0.2.0 Beta)</span>
+        </a>
+
+        <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-sm font-semibold hover:border-slate-500 hover:bg-slate-800 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">code</span>
+          <span data-i18n="hero.ctaGithub">GitHub 배포 저장소</span>
+        </a>
+
+        <a href="https://polar.sh/Mintflavor" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-pink-500/40 text-pink-300 text-sm font-semibold hover:border-pink-500 hover:bg-pink-500/10 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span data-i18n="hero.ctaSponsor">Polar 후원하기</span>
+        </a>
+      </div>
+
+      <!-- Quick Shortcut Trigger Pill -->
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-14">
+        <kbd class="keycap px-2 py-1 rounded text-white">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="keycap px-2 py-1 rounded text-white">Alt</kbd>
+        <span>+</span>
+        <kbd class="keycap px-2 py-1 rounded text-white">S</kbd>
+        <span class="ml-1.5 text-slate-400 font-sans" data-i18n="hero.shortcutDesc">로 어디서든 즉시 선반 호출</span>
+      </div>
+
+      <!-- Real Windows App Showcase in Clean Desktop Window Frame -->
+      <div class="w-full max-w-[840px] rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur-2xl shadow-2xl shadow-black/90 overflow-hidden text-left relative">
+        <!-- Windows 11 Title Bar -->
+        <div class="h-10 px-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between select-none">
+          <div class="flex items-center gap-2.5">
+            <img src="assets/favicon.ico" class="w-4 h-4 rounded" alt="App Icon" />
+            <span class="text-xs font-mono text-slate-200 font-semibold">ShelfDock v0.2.0-beta — Temporary Shelf</span>
+          </div>
+          <!-- Window Controls -->
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-red-400/80 inline-block"></span>
+          </div>
+        </div>
+
+        <!-- Window Body: Real App UI Graphic with Callout Highlights -->
+        <div class="p-6 md:p-8 bg-gradient-to-b from-slate-900/50 to-slate-950/90 flex flex-col md:flex-row items-center gap-8">
+          <!-- Actual Screenshot Image -->
+          <div class="w-full md:w-auto shrink-0 flex justify-center">
+            <div class="rounded-xl border border-slate-700/80 shadow-2xl overflow-hidden bg-slate-900 relative group">
+              <img src="assets/workflow-preview.png" alt="ShelfDock 실제 실행 화면" class="w-[310px] sm:w-[330px] h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
+            </div>
+          </div>
+
+          <!-- Feature Callouts beside Screenshot -->
+          <div class="flex-grow space-y-4 text-left">
+            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center gap-2 text-brand-cyan text-sm font-semibold mb-1">
+                <span class="material-symbols-outlined text-[18px]">drag_pan</span>
+                <span data-i18n="showcase.callout1Title">화면 상시 플로팅 아이콘 &amp; 선반</span>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout1Desc">
+                파일 탐색기 파일, 텍스트, 화면 캡처 이미지를 드롭하고 클릭 한 번으로 선반을 엽니다. 닫으면 다시 가벼운 플로팅 아이콘으로 축소됩니다.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center gap-2 text-teal-400 text-sm font-semibold mb-1">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+                <span data-i18n="showcase.callout2Title">선반 관리 및 비파괴적 복사</span>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout2Desc">
+                가져오기(Get), 복사(Copy), 고정(Pin), 실행 취소(Undo) 지원. 선반에서 아이템을 지우더라도 원본 파일은 결코 삭제되지 않습니다.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
+              <div class="flex items-center gap-2 text-sky-400 text-sm font-semibold mb-1">
+                <span class="material-symbols-outlined text-[18px]">key</span>
+                <span data-i18n="showcase.callout3Title">8자리 OTP 기기 간 P2P 공유</span>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="showcase.callout3Desc">
+                계정이나 클라우드 없이, 동일 네트워크 내 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 안전하게 선반을 동기화합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Window Footer -->
+        <div class="px-5 py-2.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+          <div class="flex items-center gap-2 text-brand-cyan">
+            <span class="material-symbols-outlined text-[15px]">verified_user</span>
+            <span data-i18n="showcase.verifiedStatus">Download verified / 다운로드 검증 완료</span>
+          </div>
+          <span class="text-slate-500">Windows 11 x64 Portable</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. Workflow Section (3 Steps) -->
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="workflow">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="workflow.tag">3-Step Frictionless Flow</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-4" data-i18n="workflow.title">
+          방해받지 않는 자연스러운 데스크톱 작업 흐름
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400" data-i18n="workflow.subtitle">
+          클립보드 매니저처럼 복잡하지 않고, 일반 폴더처럼 어지럽혀지지 않는 가벼운 임시 작업 선반입니다.
+        </p>
+      </div>
+
+      <!-- 3 Steps Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Step 1 Card -->
+        <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-brand-cyan">
+              <span class="material-symbols-outlined text-[26px]">drag_click</span>
+            </div>
+            <span class="text-xs font-mono text-brand-cyan block mb-2 font-semibold">STEP 01 / DROP &amp; HOLD</span>
+            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step1Title">어디서나 드롭 &amp; 보관</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step1Desc">
+              탐색기의 여러 파일, 스크린샷 캡처 이미지, 웹 브라우저의 텍스트 조각을 화면 위 플로팅 아이콘이나 <kbd class="keycap px-1.5 py-0.5 rounded text-xs text-slate-200">Ctrl+Alt+S</kbd> 로 즉시 선반에 놓아두세요.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+            <span data-i18n="workflow.step1Tag">플로팅 아이콘 지원</span>
+            <span class="material-symbols-outlined text-brand-cyan text-sm">check</span>
+          </div>
+        </div>
+
+        <!-- Step 2 Card -->
+        <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-teal-400">
+              <span class="material-symbols-outlined text-[26px]">swap_horiz</span>
+            </div>
+            <span class="text-xs font-mono text-teal-400 block mb-2 font-semibold">STEP 02 / SAFE PIPELINE</span>
+            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step2Title">대상 앱으로 안전 복사</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step2Desc">
+              메일 작성 창, 메신저, 포토샵, 터미널 등으로 원하는 항목을 다중 선택해 끌어다 놓으세요. 원본 파일은 절대 삭제되지 않고 오직 복사만 일어납니다.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+            <span data-i18n="workflow.step2Tag">원본 절대 보존 (Read-Only)</span>
+            <span class="material-symbols-outlined text-teal-400 text-sm">shield</span>
+          </div>
+        </div>
+
+        <!-- Step 3 Card -->
+        <div class="glow-card rounded-2xl p-7 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 text-sky-400">
+              <span class="material-symbols-outlined text-[26px]">key</span>
+            </div>
+            <span class="text-xs font-mono text-sky-400 block mb-2 font-semibold">STEP 03 / LOCAL P2P OTP</span>
+            <h3 class="text-lg font-bold text-white mb-3" data-i18n="workflow.step3Title">8자리 OTP 로컬 기기 공유</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6" data-i18n="workflow.step3Desc">
+              로그인이나 계정 생성 없이, 동일 Wi-Fi나 LAN 내의 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 직접 P2P 전송합니다.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+            <span class="font-mono text-brand-cyan tracking-wider font-bold">OTP-v2 PAKE</span>
+            <span class="material-symbols-outlined text-sky-400 text-sm">wifi_tethering</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. Features & Privacy Philosophy (Bento Grid) -->
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="privacy">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="privacy.tag">Zero Cloud, Total Privacy</span>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight" data-i18n="privacy.title">
+            100% 로컬 우선, 프라이버시 타협 없는 설계
+          </h2>
+        </div>
+        <p class="text-sm sm:text-base text-slate-400 max-w-md" data-i18n="privacy.subtitle">
+          불필요한 클라우드 업로드나 외부 통신 없이 오직 내 PC 환경 안에서 쾌적하게 구동됩니다.
+        </p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+        
+        <!-- Bento 1: 무계정 무광고 무추적 (Span 7) -->
+        <div class="md:col-span-7 glow-card rounded-2xl p-8 flex flex-col justify-between">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-brand-cyan">
+              <span class="material-symbols-outlined text-[28px]">no_accounts</span>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-brand-cyan border border-brand-cyan/30" data-i18n="privacy.card1Badge">No Tracking</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card1Title">무계정 · 무광고 · 무추적</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="privacy.card1Desc">
+              로그인이나 회원가입 절차가 없습니다. 구글 애널리틱스, 센트리(Sentry), 텔레메트리나 백그라운드 사용량 추적 코드가 단 한 줄도 포함되어 있지 않습니다.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-400">
+              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 텔레메트리 제로</span>
+              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 클립보드 자동수집 없음</span>
+              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 100% 오프라인 작동</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: 클라우드 저장 없음 (Span 5) -->
+        <div class="md:col-span-5 glow-card rounded-2xl p-8 flex flex-col justify-between">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-teal-400">
+              <span class="material-symbols-outlined text-[28px]">cloud_off</span>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-teal-400 border border-teal-500/30" data-i18n="privacy.card2Badge">Local Memory</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card2Title">클라우드 저장 없음</h3>
+            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card2Desc">
+              선반에 올려둔 모든 파일과 텍스트 스니펫은 사용자의 로컬 메모리와 로컬 디스크에만 임시 보관됩니다. 외부 서버로 데이터가 절대 업로드되지 않습니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bento 3: 원본 보존 복사 전용 (Span 5) -->
+        <div class="md:col-span-5 glow-card rounded-2xl p-8 flex flex-col justify-between">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-sky-400">
+              <span class="material-symbols-outlined text-[28px]">lock_reset</span>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-sky-400 border border-sky-500/30" data-i18n="privacy.card3Badge">Non-Destructive</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card3Title">원본 보존 복사 전용</h3>
+            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card3Desc">
+              선반에서 아이템을 삭제하거나 외부로 내보내더라도 원래 파일은 절대 삭제되지 않는 비파괴적(Non-Destructive) 버퍼 구조입니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bento 4: 로컬 암호화 P2P 전송 (Span 7) -->
+        <div class="md:col-span-7 glow-card rounded-2xl p-8 flex flex-col justify-between">
+          <div class="flex items-start justify-between mb-6">
+            <div class="w-12 h-12 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-indigo-400">
+              <span class="material-symbols-outlined text-[28px]">security</span>
+            </div>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-indigo-400 border border-indigo-500/30" data-i18n="privacy.card4Badge">PAKE + TLS P2P</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card4Title">로컬 암호화 P2P 전송</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="privacy.card4Desc">
+              기기간 선반 공유는 기본적으로 꺼져 있으며, 필요 시 사용자가 직접 켠 후 8자리 OTP로 양방향 승인을 완료해야만 종단간 암호화 세션이 활성화됩니다.
+            </p>
+            <div class="flex items-center gap-3 text-xs font-mono text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <span class="material-symbols-outlined text-brand-cyan text-sm">lock</span>
+              <span data-i18n="privacy.card4Pill">Explicit Approval within 60s · No Plaintext Storage</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. Download & System Requirements -->
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="download">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-mono text-brand-cyan uppercase tracking-wider mb-2 block" data-i18n="download.tag">Portable &amp; Fast</span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-4" data-i18n="download.title">
+          설치 없이 바로 가볍게 실행하세요
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400" data-i18n="download.subtitle">
+          .NET 별도 설치나 관리자 권한 없이, 압축 해제 후 즉시 실행할 수 있는 무설치 포터블 패키지를 제공합니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Windows 11 Featured Card (Col 7) -->
+        <div class="lg:col-span-7 rounded-2xl border-2 border-brand-cyan/50 bg-slate-900/90 backdrop-blur-xl p-8 relative shadow-2xl shadow-brand-cyan/10">
+          <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-brand-cyan text-[#0B0F17] text-xs font-mono font-bold uppercase tracking-wider">
+            추천 (Featured)
+          </div>
+
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan">
+              <span class="material-symbols-outlined text-[32px]">desktop_windows</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-white">Windows 11 x64</h3>
+              <p class="text-xs font-mono text-brand-cyan">ShelfDock v0.2.0 Beta (Portable Zip)</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-300 mb-6 leading-relaxed" data-i18n="download.winDesc">
+            별도의 인스톨러 없이 압축을 풀고 <code class="text-brand-cyan font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ShelfDock.exe</code>를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.
+          </p>
+
+          <div class="space-y-3 mb-8">
+            <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-brand-cyan/20">
+              <span class="material-symbols-outlined text-[20px]">download</span>
+              <span data-i18n="download.winBtn">GitHub Releases에서 다운로드 (v0.2.0 Beta)</span>
+            </a>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
+              <span data-i18n="download.packageNotice">패키지: ShelfDock-v0.2.0-beta-win-x64.zip</span>
+              <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors flex items-center gap-1">
+                <span>릴리스 노트 보기</span>
+                <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Requirements Checklist -->
+          <div class="pt-6 border-t border-slate-800">
+            <span class="text-xs font-mono text-slate-400 block mb-3" data-i18n="download.reqTitle">시스템 요구 사양</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
+                <span>Windows 11 64-bit (22H2 이상)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
+                <span>최소 메모리 120MB 미만</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
+                <span>.NET 런타임 추가 설치 불필요</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
+                <span>관리자 권한 요구 없음</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- macOS Card (Coming Soon - Col 5) -->
+        <div class="lg:col-span-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md p-8 flex flex-col justify-between h-full">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400">
+                <span class="material-symbols-outlined text-[28px]">laptop_mac</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 text-xs font-mono border border-slate-700" data-i18n="download.macBadge">
+                출시 준비 중 (Coming Soon)
+              </span>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">macOS 버전</h3>
+            <p class="text-xs font-mono text-brand-cyan mb-4">Apple Silicon &amp; Intel</p>
+            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="download.macDesc">
+              동일한 로컬 우선 철학과 8자리 OTP 호환을 지원하는 네이티브 macOS (SwiftUI + AppKit) 선반 유틸리티를 개발 중입니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-slate-400 space-y-2">
+            <div class="flex items-center gap-2 text-slate-300 font-semibold">
+              <span class="material-symbols-outlined text-brand-cyan text-sm">notifications</span>
+              <span data-i18n="download.macUpdateTitle">진행 상황 확인</span>
+            </div>
+            <p class="leading-relaxed" data-i18n="download.macUpdateDesc">
+              GitHub 저장소의 Watch 또는 Releases를 통해 macOS 지원 버전 배포 소식을 가장 먼저 받아보실 수 있습니다.
+            </p>
+            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 text-brand-cyan hover:underline mt-2">
+              <span>GitHub 저장소 바로가기</span>
+              <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Polar.sh Sponsor Section -->
+    <section class="max-w-[1240px] mx-auto px-6 py-20 border-t border-slate-800/80" id="sponsor">
+      <div class="rounded-3xl border border-pink-500/30 bg-gradient-to-b from-slate-900/90 to-slate-950 p-8 md:p-12 relative overflow-hidden shadow-2xl">
+        <!-- Ambient corner glows -->
+        <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-pink-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-brand-cyan/10 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="max-w-xl text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-300 text-xs font-mono mb-4">
+              <span class="material-symbols-outlined text-[15px] text-pink-400" style="font-variation-settings: 'FILL' 1;">favorite</span>
+              <span data-i18n="sponsor.tag">Polar.sh 독립 개발자 후원</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3" data-i18n="sponsor.title">
+              개인 개발자를 위한 따뜻한 커피 한 잔의 힘
+            </h2>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed" data-i18n="sponsor.desc">
+              ShelfDock은 완전 무료 프리웨어 소프트웨어입니다. 광고나 유료 구독 없이 지속적으로 버그를 수정하고 완성도를 높여갈 수 있도록, Polar에서 커피 한 잔으로 힘을 보태주세요.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+            <a href="https://polar.sh/Mintflavor" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-white font-bold text-sm shadow-xl shadow-pink-500/25 active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+              <span data-i18n="sponsor.btn">Polar에서 후원하기</span>
+            </a>
+            <a href="https://github.com/Mintflavor/shelfdock" target="_blank" rel="noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-sm font-semibold hover:border-slate-500 hover:bg-slate-800 transition-colors">
+              <span class="material-symbols-outlined text-[18px]">star</span>
+              <span>GitHub Star</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800/80">
+    <div class="flex flex-col md:flex-row justify-between items-center w-full px-6 py-10 max-w-[1240px] mx-auto gap-6 text-center md:text-left">
+      
+      <!-- Brand & License Notice -->
+      <div>
+        <div class="flex items-center justify-center md:justify-start gap-2.5 mb-2">
+          <img src="assets/favicon.ico" alt="Logo" class="w-5 h-5 rounded" />
+          <span class="text-base font-bold text-white font-sans">ShelfDock</span>
+          <span class="text-xs font-mono text-slate-500">| Mintflavor</span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="footer.license">
+          개인·교육·회사 내부 업무에서 무료로 사용할 수 있는 프리웨어입니다. (소스 비공개 / Not MIT)
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div class="flex flex-wrap items-center justify-center gap-5 text-xs font-mono text-slate-400">
+        <a href="USER-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.userGuide">사용 안내</a>
+        <a href="OTP-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.otpGuide">OTP 가이드</a>
+        <a href="P2P-GUIDE.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.p2pGuide">P2P 가이드</a>
+        <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors">Releases</a>
+        <a href="https://github.com/Mintflavor/shelfdock/issues" target="_blank" rel="noreferrer" class="hover:text-brand-cyan transition-colors" data-i18n="footer.issues">문제 신고</a>
+        <a href="https://polar.sh/Mintflavor" target="_blank" rel="noreferrer" class="hover:text-pink-400 transition-colors">Polar 후원</a>
+        <a href="LICENSE.ko.md" class="hover:text-brand-cyan transition-colors" data-i18n="footer.licenseLink">라이선스 안내</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Vanilla JS: Bilingual Toggle & Shortcut Listener -->
+  <script>
+    const translations = {
+      ko: {
+        "nav.features": "주요 기능",
+        "nav.workflow": "워크플로우",
+        "nav.privacy": "프라이버시",
+        "nav.download": "다운로드",
+        "header.sponsor": "Polar.sh 후원",
+        "header.download": "다운로드",
+        "hero.badge": "Windows 11 전용 가벼운 로컬 선반 유틸리티 v0.2.0 Beta",
+        "hero.headlinePart1": "작업 사이에 파일과 캡처, 문구를",
+        "hero.headlinePart2": "잠깐 놓아두는 데스크톱 선반",
+        "hero.subtitle": "여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선으로 동작합니다.",
+        "hero.ctaDownload": "Windows 11 x64 다운로드 (v0.2.0 Beta)",
+        "hero.ctaGithub": "GitHub 배포 저장소",
+        "hero.ctaSponsor": "Polar 후원하기",
+        "hero.shortcutDesc": "로 어디서든 즉시 선반 호출",
+        "showcase.callout1Title": "화면 상시 플로팅 아이콘 & 선반",
+        "showcase.callout1Desc": "파일 탐색기 파일, 텍스트, 화면 캡처 이미지를 드롭하고 클릭 한 번으로 선반을 엽니다. 닫으면 다시 가벼운 플로팅 아이콘으로 축소됩니다.",
+        "showcase.callout2Title": "선반 관리 및 비파괴적 복사",
+        "showcase.callout2Desc": "가져오기(Get), 복사(Copy), 고정(Pin), 실행 취소(Undo) 지원. 선반에서 아이템을 지우더라도 원본 파일은 결코 삭제되지 않습니다.",
+        "showcase.callout3Title": "8자리 OTP 기기 간 P2P 공유",
+        "showcase.callout3Desc": "계정이나 클라우드 없이, 동일 네트워크 내 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 안전하게 선반을 동기화합니다.",
+        "showcase.verifiedStatus": "Download verified / 다운로드 검증 완료",
+        "workflow.tag": "3-Step Frictionless Flow",
+        "workflow.title": "방해받지 않는 자연스러운 데스크톱 작업 흐름",
+        "workflow.subtitle": "클립보드 매니저처럼 복잡하지 않고, 일반 폴더처럼 어지럽혀지지 않는 가벼운 임시 작업 선반입니다.",
+        "workflow.step1Title": "어디서나 드롭 & 보관",
+        "workflow.step1Desc": "탐색기의 여러 파일, 스크린샷 캡처 이미지, 웹 브라우저의 텍스트 조각을 화면 위 플로팅 아이콘이나 Ctrl+Alt+S 로 즉시 선반에 놓아두세요.",
+        "workflow.step1Tag": "플로팅 아이콘 지원",
+        "workflow.step2Title": "대상 앱으로 안전 복사",
+        "workflow.step2Desc": "메일 작성 창, 메신저, 포토샵, 터미널 등으로 원하는 항목을 다중 선택해 끌어다 놓으세요. 원본 파일은 절대 삭제되지 않고 오직 복사만 일어납니다.",
+        "workflow.step2Tag": "원본 절대 보존 (Read-Only)",
+        "workflow.step3Title": "8자리 OTP 로컬 기기 공유",
+        "workflow.step3Desc": "로그인이나 계정 생성 없이, 동일 Wi-Fi나 LAN 내의 다른 PC와 8자리 일회용 OTP와 양방향 60초 승인으로 직접 P2P 전송합니다.",
+        "privacy.tag": "Zero Cloud, Total Privacy",
+        "privacy.title": "100% 로컬 우선, 프라이버시 타협 없는 설계",
+        "privacy.subtitle": "불필요한 클라우드 업로드나 외부 통신 없이 오직 내 PC 환경 안에서 쾌적하게 구동됩니다.",
+        "privacy.card1Badge": "No Tracking",
+        "privacy.card1Title": "무계정 · 무광고 · 무추적",
+        "privacy.card1Desc": "로그인이나 회원가입 절차가 없습니다. 구글 애널리틱스, 센트리(Sentry), 텔레메트리나 백그라운드 사용량 추적 코드가 단 한 줄도 포함되어 있지 않습니다.",
+        "privacy.card2Badge": "Local Memory",
+        "privacy.card2Title": "클라우드 저장 없음",
+        "privacy.card2Desc": "선반에 올려둔 모든 파일과 텍스트 스니펫은 사용자의 로컬 메모리와 로컬 디스크에만 임시 보관됩니다. 외부 서버로 데이터가 절대 업로드되지 않습니다.",
+        "privacy.card3Badge": "Non-Destructive",
+        "privacy.card3Title": "원본 보존 복사 전용",
+        "privacy.card3Desc": "선반에서 아이템을 삭제하거나 외부로 내보내더라도 원래 파일은 절대 삭제되지 않는 비파괴적(Non-Destructive) 버퍼 구조입니다.",
+        "privacy.card4Badge": "PAKE + TLS P2P",
+        "privacy.card4Title": "로컬 암호화 P2P 전송",
+        "privacy.card4Desc": "기기간 선반 공유는 기본적으로 꺼져 있으며, 필요 시 사용자가 직접 켠 후 8자리 OTP로 양방향 승인을 완료해야만 종단간 암호화 세션이 활성화됩니다.",
+        "privacy.card4Pill": "Explicit Approval within 60s · No Plaintext Storage",
+        "download.tag": "Portable & Fast",
+        "download.title": "설치 없이 바로 가볍게 실행하세요",
+        "download.subtitle": ".NET 별도 설치나 관리자 권한 없이, 압축 해제 후 즉시 실행할 수 있는 무설치 포터블 패키지를 제공합니다.",
+        "download.winDesc": "별도의 인스톨러 없이 압축을 풀고 ShelfDock.exe를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.",
+        "download.winBtn": "GitHub Releases에서 다운로드 (v0.2.0 Beta)",
+        "download.packageNotice": "패키지: ShelfDock-v0.2.0-beta-win-x64.zip",
+        "download.reqTitle": "시스템 요구 사양",
+        "download.macBadge": "출시 준비 중 (Coming Soon)",
+        "download.macDesc": "동일한 로컬 우선 철학과 8자리 OTP 호환을 지원하는 네이티브 macOS (SwiftUI + AppKit) 선반 유틸리티를 개발 중입니다.",
+        "download.macUpdateTitle": "진행 상황 확인",
+        "download.macUpdateDesc": "GitHub 저장소의 Watch 또는 Releases를 통해 macOS 지원 버전 배포 소식을 가장 먼저 받아보실 수 있습니다.",
+        "sponsor.tag": "Polar.sh 독립 개발자 후원",
+        "sponsor.title": "개인 개발자를 위한 따뜻한 커피 한 잔의 힘",
+        "sponsor.desc": "ShelfDock은 완전 무료 프리웨어 소프트웨어입니다. 광고나 유료 구독 없이 지속적으로 버그를 수정하고 완성도를 높여갈 수 있도록, Polar에서 커피 한 잔으로 힘을 보태주세요.",
+        "sponsor.btn": "Polar에서 후원하기",
+        "footer.license": "개인·교육·회사 내부 업무에서 무료로 사용할 수 있는 프리웨어입니다. (소스 비공개 / Not MIT)",
+        "footer.userGuide": "사용 안내",
+        "footer.otpGuide": "OTP 가이드",
+        "footer.p2pGuide": "P2P 가이드",
+        "footer.issues": "문제 신고",
+        "footer.licenseLink": "라이선스 안내"
+      },
+      en: {
+        "nav.features": "Features",
+        "nav.workflow": "Workflow",
+        "nav.privacy": "Privacy",
+        "nav.download": "Download",
+        "header.sponsor": "Sponsor on Polar",
+        "header.download": "Download",
+        "hero.badge": "Lightweight Desktop Shelf for Windows 11 — v0.2.0 Beta",
+        "hero.headlinePart1": "A temporary desktop shelf to hold",
+        "hero.headlinePart2": "files, captures, and text between tasks",
+        "hero.subtitle": "Collect references across multiple windows and drag them out to target apps whenever you're ready. No accounts, no cloud storage, 100% local-first.",
+        "hero.ctaDownload": "Download for Windows 11 x64 (v0.2.0 Beta)",
+        "hero.ctaGithub": "GitHub Repository",
+        "hero.ctaSponsor": "Sponsor on Polar",
+        "hero.shortcutDesc": "to summon the shelf instantly",
+        "showcase.callout1Title": "Persistent Floating Icon & Shelf",
+        "showcase.callout1Desc": "Drop Explorer files, clipboard captures, and text snippets to the floating dock. One click expands the shelf; closing collapses it back.",
+        "showcase.callout2Title": "Shelf Management & Copy-Only Pipeline",
+        "showcase.callout2Desc": "Support for Get, Copy, Pin, and Undo. Removing items from the shelf never deletes your original files.",
+        "showcase.callout3Title": "8-Digit OTP Local P2P Sharing",
+        "showcase.callout3Desc": "Sync shelves between local PCs with an 8-character OTP and mutual 60-second approvals—no accounts or third-party cloud required.",
+        "showcase.verifiedStatus": "Download verified / SHA-256 Validated",
+        "workflow.tag": "3-Step Frictionless Flow",
+        "workflow.title": "A Fluid Desktop Flow That Never Gets in Your Way",
+        "workflow.subtitle": "Less cluttered than traditional clipboard managers, cleaner than saving temp junk to your desktop.",
+        "workflow.step1Title": "Drop & Hold Anywhere",
+        "workflow.step1Desc": "Drop files from Explorer, screenshot clippings (Win+Shift+S), or browser text snippets directly onto the floating dock or summon with Ctrl+Alt+S.",
+        "workflow.step1Tag": "Persistent Floating Dock",
+        "workflow.step2Title": "Safe Copy to Target Apps",
+        "workflow.step2Desc": "Batch drag selected items into email drafts, Slack, Photoshop, or terminal. Original files remain completely untouched.",
+        "workflow.step2Tag": "Read-Only Copy Protected",
+        "workflow.step3Title": "8-Digit OTP P2P Sharing",
+        "workflow.step3Desc": "Transfer items directly to peer devices on the same LAN/Wi-Fi with mutual 60-second OTP approval and end-to-end encryption.",
+        "workflow.step3Tag": "OTP-v2 PAKE Handshake",
+        "privacy.tag": "Zero Cloud, Total Privacy",
+        "privacy.title": "100% Local-First, No Privacy Compromises",
+        "privacy.subtitle": "Engineered to run strictly within your local workstation without background analytics or data leakage.",
+        "privacy.card1Badge": "No Tracking",
+        "privacy.card1Title": "No Accounts · No Ads · No Telemetry",
+        "privacy.card1Desc": "Zero sign-up forms. Zero Google Analytics, Sentry, or background usage tracking code. Works entirely offline.",
+        "privacy.card2Badge": "Local Memory",
+        "privacy.card2Title": "No Cloud Content Storage",
+        "privacy.card2Desc": "All items and snippets live strictly in local RAM and your system temporary directory. Not a single byte is sent to external servers.",
+        "privacy.card3Badge": "Non-Destructive",
+        "privacy.card3Title": "Copy-Only Original Preservation",
+        "privacy.card3Desc": "Dropping or clearing shelf items never deletes your original files. A safe, non-destructive buffer for peace of mind.",
+        "privacy.card4Badge": "PAKE + TLS P2P",
+        "privacy.card4Title": "Encrypted Local P2P Transfer",
+        "privacy.card4Desc": "Device sharing is disabled by default. When enabled, transfers use authenticated 8-character OTPs and TLS-encrypted direct connections.",
+        "privacy.card4Pill": "Mutual Approval within 60s · No Plaintext Storage",
+        "download.tag": "Portable & Fast",
+        "download.title": "Run Immediately Without an Installer",
+        "download.subtitle": "Portable, standalone zip package. No .NET runtime installation or administrator privileges required.",
+        "download.winDesc": "Unzip the package and run ShelfDock.exe directly. The tray icon and desktop shelf are active within a second.",
+        "download.winBtn": "Download from GitHub Releases (v0.2.0 Beta)",
+        "download.packageNotice": "Package: ShelfDock-v0.2.0-beta-win-x64.zip",
+        "download.reqTitle": "System Requirements",
+        "download.macBadge": "Coming Soon",
+        "download.macDesc": "A native macOS menu-bar shelf utility (SwiftUI + AppKit) supporting the same local philosophy and OTP protocol is under active development.",
+        "download.macUpdateTitle": "Track Progress",
+        "download.macUpdateDesc": "Watch the GitHub repository or releases to get notified when the macOS version is ready.",
+        "sponsor.tag": "Sponsor Independent Development on Polar.sh",
+        "sponsor.title": "Support Independent Development with a Cup of Coffee",
+        "sponsor.desc": "ShelfDock is completely free freeware. To support ongoing maintenance, refinement, and platform support without ads, please consider buying a coffee on Polar.",
+        "sponsor.btn": "Sponsor on Polar.sh",
+        "footer.license": "Free for personal, educational, and internal workplace use. (Proprietary freeware / Not MIT)",
+        "footer.userGuide": "User Guide",
+        "footer.otpGuide": "OTP Guide",
+        "footer.p2pGuide": "P2P Guide",
+        "footer.issues": "Issues",
+        "footer.licenseLink": "License Terms"
+      }
+    };
+
+    function setLanguage(lang) {
+      const data = translations[lang];
+      if (!data) return;
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (data[key]) {
+          el.innerHTML = data[key];
+        }
+      });
+
+      const btnKo = document.getElementById("btn-lang-ko");
+      const btnEn = document.getElementById("btn-lang-en");
+      if (lang === "ko") {
+        btnKo.className = "px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all";
+        btnEn.className = "px-2 py-1 rounded text-slate-400 hover:text-white transition-all";
+        document.documentElement.lang = "ko";
+      } else {
+        btnEn.className = "px-2 py-1 rounded bg-slate-800 text-brand-cyan font-bold transition-all";
+        btnKo.className = "px-2 py-1 rounded text-slate-400 hover:text-white transition-all";
+        document.documentElement.lang = "en";
+      }
+      localStorage.setItem("shelfdock_lang", lang);
+    }
+
+    // Initialize Language from localStorage or query
+    const savedLang = localStorage.getItem("shelfdock_lang") || "ko";
+    setLanguage(savedLang);
+
+    // Easter Egg: Shortcut Key Listener
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.altKey && (e.key === "s" || e.key === "S")) {
+        e.preventDefault();
+        const toast = document.createElement("div");
+        toast.className = "fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-brand-cyan text-brand-cyan text-xs font-mono shadow-2xl flex items-center gap-2 transition-all";
+        toast.innerHTML = '<span class="material-symbols-outlined text-[16px]">layers</span> ShelfDock 호출 단축키 감지됨 (Ctrl+Alt+S)';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2600);
+      }
+    });
+  </script>
+</body>
+</html>

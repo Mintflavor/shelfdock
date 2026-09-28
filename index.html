@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>ShelfDock — 작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 Windows 선반</title>
-  <meta name="description" content="여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선 Windows 11 데스크톱 선반 유틸리티." />
+  <title>ShelfDock — 작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 데스크톱 선반</title>
+  <meta name="description" content="여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선 데스크톱 선반 유틸리티." />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="ShelfDock — 데스크톱 임시 보관 선반 유틸리티" />
-  <meta property="og:description" content="작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 Windows 선반. 계정·광고·추적·클라우드 없이 로컬 우선으로 동작합니다." />
+  <meta property="og:description" content="작업 사이에 파일과 캡처, 문구를 잠깐 놓아두는 데스크톱 선반. 계정·광고·추적·클라우드 없이 로컬 우선으로 동작합니다." />
   <meta property="og:image" content="assets/workflow-preview.png" />
   <meta property="og:type" content="website" />
 
@@ -146,12 +146,6 @@
     <!-- 1. Hero Section -->
     <section class="max-w-[1240px] mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 flex flex-col items-center text-center">
       
-      <!-- Announcement Pill -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-brand-cyan/30 backdrop-blur-md mb-8 hover:border-brand-cyan/60 transition-colors">
-        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-        <span class="text-xs font-mono text-brand-cyan" data-i18n="hero.badge">Windows 11 전용 가벼운 로컬 선반 유틸리티 v0.2.0 Beta</span>
-        <span class="material-symbols-outlined text-brand-cyan text-sm">arrow_forward</span>
-      </div>
 
       <!-- Main Headline -->
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold max-w-4xl tracking-tight text-white leading-tight mb-6">
@@ -362,14 +356,9 @@
           </div>
           <div>
             <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card1Title">무계정 · 무광고 · 무추적</h3>
-            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="privacy.card1Desc">
+            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card1Desc">
               로그인이나 회원가입 절차가 없습니다. 구글 애널리틱스, 센트리(Sentry), 텔레메트리나 백그라운드 사용량 추적 코드가 단 한 줄도 포함되어 있지 않습니다.
             </p>
-            <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-400">
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 텔레메트리 제로</span>
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 클립보드 자동수집 없음</span>
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800">✓ 100% 오프라인 작동</span>
-            </div>
           </div>
         </div>
 
@@ -415,13 +404,9 @@
           </div>
           <div>
             <h3 class="text-xl font-bold text-white mb-3" data-i18n="privacy.card4Title">로컬 암호화 P2P 전송</h3>
-            <p class="text-sm text-slate-300 leading-relaxed mb-6" data-i18n="privacy.card4Desc">
+            <p class="text-sm text-slate-300 leading-relaxed" data-i18n="privacy.card4Desc">
               기기간 선반 공유는 기본적으로 꺼져 있으며, 필요 시 사용자가 직접 켠 후 8자리 OTP로 양방향 승인을 완료해야만 종단간 암호화 세션이 활성화됩니다.
             </p>
-            <div class="flex items-center gap-3 text-xs font-mono text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
-              <span class="material-symbols-outlined text-brand-cyan text-sm">lock</span>
-              <span data-i18n="privacy.card4Pill">Explicit Approval within 60s · No Plaintext Storage</span>
-            </div>
           </div>
         </div>
 
@@ -462,7 +447,7 @@
             별도의 인스톨러 없이 압축을 풀고 <code class="text-brand-cyan font-mono bg-slate-950 px-2 py-0.5 rounded border border-slate-800">ShelfDock.exe</code>를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.
           </p>
 
-          <div class="space-y-3 mb-8">
+          <div class="space-y-3">
             <a href="https://github.com/Mintflavor/shelfdock/releases" target="_blank" rel="noreferrer" class="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-teal text-[#0B0F17] font-bold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-brand-cyan/20">
               <span class="material-symbols-outlined text-[20px]">download</span>
               <span data-i18n="download.winBtn">GitHub Releases에서 다운로드 (v0.2.0 Beta)</span>
@@ -473,29 +458,6 @@
                 <span>릴리스 노트 보기</span>
                 <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
               </a>
-            </div>
-          </div>
-
-          <!-- Requirements Checklist -->
-          <div class="pt-6 border-t border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block mb-3" data-i18n="download.reqTitle">시스템 요구 사양</span>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
-                <span>Windows 11 64-bit (22H2 이상)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
-                <span>최소 메모리 120MB 미만</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
-                <span>.NET 런타임 추가 설치 불필요</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-brand-cyan text-[16px]">check_circle</span>
-                <span>관리자 권한 요구 없음</span>
-              </div>
             </div>
           </div>
         </div>
@@ -613,7 +575,6 @@
         "nav.download": "다운로드",
         "header.sponsor": "Polar.sh 후원",
         "header.download": "다운로드",
-        "hero.badge": "Windows 11 전용 가벼운 로컬 선반 유틸리티 v0.2.0 Beta",
         "hero.headlinePart1": "작업 사이에 파일과 캡처, 문구를",
         "hero.headlinePart2": "잠깐 놓아두는 데스크톱 선반",
         "hero.subtitle": "여러 창을 오가며 필요한 자료를 모으고, 준비되면 원하는 앱으로 한 번에 꺼내 쓰세요. 계정 없음, 클라우드 저장 없음, 100% 로컬 우선으로 동작합니다.",
@@ -654,14 +615,12 @@
         "privacy.card4Badge": "PAKE + TLS P2P",
         "privacy.card4Title": "로컬 암호화 P2P 전송",
         "privacy.card4Desc": "기기간 선반 공유는 기본적으로 꺼져 있으며, 필요 시 사용자가 직접 켠 후 8자리 OTP로 양방향 승인을 완료해야만 종단간 암호화 세션이 활성화됩니다.",
-        "privacy.card4Pill": "Explicit Approval within 60s · No Plaintext Storage",
         "download.tag": "Portable & Fast",
         "download.title": "설치 없이 바로 가볍게 실행하세요",
         "download.subtitle": ".NET 별도 설치나 관리자 권한 없이, 압축 해제 후 즉시 실행할 수 있는 무설치 포터블 패키지를 제공합니다.",
         "download.winDesc": "별도의 인스톨러 없이 압축을 풀고 ShelfDock.exe를 실행하면 트레이 아이콘과 선반이 즉시 활성화됩니다.",
         "download.winBtn": "GitHub Releases에서 다운로드 (v0.2.0 Beta)",
         "download.packageNotice": "패키지: ShelfDock-v0.2.0-beta-win-x64.zip",
-        "download.reqTitle": "시스템 요구 사양",
         "download.macBadge": "출시 준비 중 (Coming Soon)",
         "download.macDesc": "동일한 로컬 우선 철학과 8자리 OTP 호환을 지원하는 네이티브 macOS (SwiftUI + AppKit) 선반 유틸리티를 개발 중입니다.",
         "download.macUpdateTitle": "진행 상황 확인",
@@ -684,7 +643,6 @@
         "nav.download": "Download",
         "header.sponsor": "Sponsor on Polar",
         "header.download": "Download",
-        "hero.badge": "Lightweight Desktop Shelf for Windows 11 — v0.2.0 Beta",
         "hero.headlinePart1": "A temporary desktop shelf to hold",
         "hero.headlinePart2": "files, captures, and text between tasks",
         "hero.subtitle": "Collect references across multiple windows and drag them out to target apps whenever you're ready. No accounts, no cloud storage, 100% local-first.",
@@ -726,14 +684,12 @@
         "privacy.card4Badge": "PAKE + TLS P2P",
         "privacy.card4Title": "Encrypted Local P2P Transfer",
         "privacy.card4Desc": "Device sharing is disabled by default. When enabled, transfers use authenticated 8-character OTPs and TLS-encrypted direct connections.",
-        "privacy.card4Pill": "Mutual Approval within 60s · No Plaintext Storage",
         "download.tag": "Portable & Fast",
         "download.title": "Run Immediately Without an Installer",
         "download.subtitle": "Portable, standalone zip package. No .NET runtime installation or administrator privileges required.",
         "download.winDesc": "Unzip the package and run ShelfDock.exe directly. The tray icon and desktop shelf are active within a second.",
         "download.winBtn": "Download from GitHub Releases (v0.2.0 Beta)",
         "download.packageNotice": "Package: ShelfDock-v0.2.0-beta-win-x64.zip",
-        "download.reqTitle": "System Requirements",
         "download.macBadge": "Coming Soon",
         "download.macDesc": "A native macOS menu-bar shelf utility (SwiftUI + AppKit) supporting the same local philosophy and OTP protocol is under active development.",
         "download.macUpdateTitle": "Track Progress",

@@ -20,3 +20,12 @@ When promoting a draft release to a public pre-release (or publishing pre-releas
 4. **Download & Launch Guide (다운로드 및 실행 안내)**: Table with package filename, size, SHA-256 digest, and essential SmartScreen / Gatekeeper right-click bypass tips.
 Do not clutter public pre-release notes with internal test matrices, prompt dumps, or lengthy developer logs.
 
+## Public documentation hygiene and legacy pruning
+
+When releasing a new version or promoting a pre-release:
+- Audit all files in the public repository to ensure they match the active release.
+- Delete obsolete one-off release notes (e.g. `RELEASE-*.md`) and retired protocol memos (e.g. `INVITATIONS.md`, `OTP-REVIEW.md`).
+- Replace historical draft disclaimers ("binary held as draft", "untested on external WAN") with verified acceptance results once passed.
+- Ensure `CHANGELOG.md`, `USER-GUIDE.md`, `QA.md`, and `P2P-GUIDE.md` reflect multi-platform support and confirmed real-world validation.
+
+

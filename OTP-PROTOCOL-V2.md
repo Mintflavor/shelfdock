@@ -1,6 +1,6 @@
-# ShelfDock pairing v2 — 0.2.0-beta
+# ShelfDock Pairing Protocol v2 (OTP)
 
-This replaces invitation v1 for new pairing at the user's explicit request. Existing trust and file protocols remain unchanged. Windows uses shared Go code; Mac must use the same IPC/protocol. Legacy invite/pair IPC and the /shelfdock/pair/1.0.0 stream handler are absent from the production peer. Historical transport fixtures remain test-only.
+This replaces invitation v1 for new pairing at the user's explicit request. Existing trust and file protocols remain unchanged. Windows and macOS use compatible Go peer IPC/protocol. Legacy invite/pair IPC and the /shelfdock/pair/1.0.0 stream handler are absent from the production peer. Historical transport fixtures remain test-only.
 
 ## Code and rendezvous
 
@@ -35,6 +35,6 @@ UI must clear code on terminal state and on dialog close, sanitize remote displa
 
 ## Evidence
 
-Local Go tests cover both approvals, matching identity/transcript, durable trust, wrong code, ciphertext tampering, rejection, cancellation/stale IDs, expiry, one-sided approval, retry limit, invalid input, public WS rejection, absent legacy stream handler and trust-save failure. Real WSS mailbox pairing passed from this LAN; independent WAN remains unverified. Windows IPC/UI tests cover removal of invitation/QR controls, OTP input, disabled approval, actual pair and verified remote file delivery. No independent cryptographic audit is claimed.
+Local Go tests cover both approvals, matching identity/transcript, durable trust, wrong code, ciphertext tampering, rejection, cancellation/stale IDs, expiry, one-sided approval, retry limit, invalid input, public WS rejection, absent legacy stream handler and trust-save failure. Real WSS mailbox pairing and WAN file transfer verified on independent real-world public networks (`PASSED — USER CONFIRMED`). Windows and macOS IPC/UI tests cover OTP input, disabled approval, actual pair and verified remote file delivery. No independent cryptographic audit is claimed.
 
 Sources: [Wormhole William](https://github.com/psanford/wormhole-william), [gospake2](https://salsa.debian.org/vasudev/gospake2), [mailbox server](https://github.com/magic-wormhole/magic-wormhole-mailbox-server).

@@ -876,7 +876,9 @@
 
         if (release) {
           activeTag = release.tag_name || activeTag;
-          activeVersion = activeTag.replace(/^v/, "v") + (release.prerelease ? " Beta" : "");
+          const baseVersion = activeTag.replace(/[-_]?(beta|alpha|rc\d*)$/i, "");
+          const isBeta = release.prerelease || /[-_]?(beta|alpha|rc\d*)/i.test(activeTag);
+          activeVersion = baseVersion + (isBeta ? " Beta" : "");
           activeReleaseUrl = release.html_url || activeReleaseUrl;
 
           if (Array.isArray(release.assets) && release.assets.length > 0) {

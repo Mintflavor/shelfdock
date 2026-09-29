@@ -4,7 +4,7 @@
 
 여러 창을 오가며 필요한 자료를 모으고, 준비되면 대상 앱으로 꺼내 쓰세요.
 
-[English](README.md) · [사용 안내](USER-GUIDE.md) · [릴리스](https://github.com/Mintflavor/shelfdock/releases) · [문제 신고](https://github.com/Mintflavor/shelfdock/issues)
+[English](README.md) · [사용 안내](USER-GUIDE.md) · [개인정보 처리방침](PRIVACY.ko.md) · [릴리스](https://github.com/Mintflavor/shelfdock/releases) · [문제 신고](https://github.com/Mintflavor/shelfdock/issues)
 
 ## 배포 상태
 

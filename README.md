@@ -4,7 +4,7 @@
 
 ShelfDock is a floating, always-on-top shelf for Windows. Collect files, screenshots, and text; drag them into the app where you need them.
 
-[한국어](README.ko.md) · [User guide](USER-GUIDE.md) · [Releases](https://github.com/Mintflavor/shelfdock/releases) · [Report an issue](https://github.com/Mintflavor/shelfdock/issues)
+[한국어](README.ko.md) · [User guide](USER-GUIDE.md) · [Privacy policy](PRIVACY.md) · [Releases](https://github.com/Mintflavor/shelfdock/releases) · [Report an issue](https://github.com/Mintflavor/shelfdock/issues)
 
 ## Availability
 

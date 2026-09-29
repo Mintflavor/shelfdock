@@ -10,3 +10,13 @@ This repository (`Mintflavor/shelfdock`) contains public documentation, site con
 - Open a focused PR for tracked changes. After merge, the orchestrator verifies the merge and removes the completed local and remote task branches. Preserve uncommitted, unpushed and ignored work before cleanup.
 - Keep `main`. Keep `gh-pages` while GitHub Pages serves from that branch; change the Pages source and verify the site before considering its removal.
 - Release assets are uploaded only after the platform's exact package, checksum and contents are verified. Drafts remain unpublished until their stated acceptance gates pass. Record Windows and Mac results separately and never infer one platform's runtime result from the other.
+
+## Pre-release note guidelines
+
+When promoting a draft release to a public pre-release (or publishing pre-releases), the release notes must remain concise and user-focused, containing strictly:
+1. **App Introduction (앱 소개)**: Brief 1-2 sentence core philosophy (local-first, 100% freeware, zero-telemetry, zero cloud).
+2. **Key Features (핵심 기능)**: Bulleted summary of primary capabilities (floating dock & hotkey, copy-only non-destructive buffer, 8-digit OTP P2P sharing, privacy).
+3. **What's New (이전 버전 대비 주요 변경사항)**: Simple summary of highlights compared to the previous version.
+4. **Download & Launch Guide (다운로드 및 실행 안내)**: Table with package filename, size, SHA-256 digest, and essential SmartScreen / Gatekeeper right-click bypass tips.
+Do not clutter public pre-release notes with internal test matrices, prompt dumps, or lengthy developer logs.
+

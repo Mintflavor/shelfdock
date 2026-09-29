@@ -1,76 +1,69 @@
-# ShelfDock 0.2.0-beta
+# ShelfDock User Guide (v0.2.4-beta)
 
-8자리 OTP 연결 / OTP pairing: [OTP-GUIDE.md](OTP-GUIDE.md)
+8자리 OTP 연결 / OTP pairing: [OTP-GUIDE.md](OTP-GUIDE.md) · [P2P-GUIDE.md](P2P-GUIDE.md)
 
 ## 한국어
 
-Windows 11 x64용 무료 작업 선반입니다. ZIP 전체를 폴더에 풀고 `ShelfDock.exe`를 실행하세요. .NET 별도 설치, 관리자 권한, 계정은 필요하지 않습니다. 약관을 확인하고 동의하면 시작합니다.
+Windows 11 x64 및 macOS 13+ (Apple Silicon arm64)용 무료 작업 선반입니다. ZIP 전체를 폴더에 풀고 실행하세요. .NET 별도 설치, 관리자 권한, 계정은 필요하지 않습니다. 약관을 확인하고 동의하면 시작합니다.
 
-- `Ctrl+Alt+S`: 선반 열기. 설정에서 변경할 수 있습니다.
-- 파일이나 일반 텍스트를 선반으로 끌어오세요. 캡처 이미지는 선반에서 `Ctrl+V`로 붙여넣으세요.
-- 항목을 선택하고 다른 앱으로 끌어가세요. Ctrl/Shift 클릭으로 다중 선택할 수 있습니다.
-- `Ctrl+C`: 선택한 항목 복사. 캡처 이미지는 이미지와 PNG 파일 형식으로 클립보드에 제공됩니다.
-- `Delete`: 선반에서 제거. 원본 파일은 삭제하지 않습니다.
-- `Ctrl+Z`: 이번 실행 중 제거한 항목 되돌리기.
-- 고정: 자동 정돈에서 제외. 수동 제거는 가능합니다.
-- `Esc` 또는 닫기 버튼: 트레이로 숨기기. 트레이 아이콘 더블클릭으로 다시 여세요. 종료는 트레이 메뉴에서 선택하세요.
+- **실행 및 보안 경고**:
+  - Windows: `ShelfDock.exe` 실행 시 SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
+  - macOS: `ShelfDock.app` 실행 시 Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
+- **선반 열기**: Windows `Ctrl+Alt+S`, macOS `Command+Option+S` 또는 트레이/메뉴바 아이콘 클릭.
+- 파일이나 일반 텍스트를 선반으로 끌어오세요. 캡처 이미지는 선반에서 붙여넣기(`Ctrl+V` / `Command+V`)하세요.
+- 항목을 선택하고 다른 앱으로 끌어가세요. 다중 선택(`Ctrl`/`Command` 또는 `Shift` 클릭)을 지원합니다.
+- 복사(`Ctrl+C` / `Command+C`): 선택한 항목 복사. 캡처 이미지는 이미지와 PNG 파일 형식으로 클립보드에 제공됩니다.
+- 삭제(`Delete` / `Backspace`): 선반에서 참조 제거. 원본 파일은 절대 삭제하지 않습니다.
+- 되돌리기(`Ctrl+Z` / `Command+Z`): 이번 실행 중 제거한 항목 복원.
+- 고정(Pin): 자주 쓰는 항목을 상단에 고정하고 자동 정돈에서 제외.
+- 숨기기(`Esc` 또는 닫기 버튼): 트레이/메뉴바 아이콘으로 숨기기. 종료는 트레이/메뉴바 메뉴에서 선택하세요.
 
-일반 파일은 경로만 기억합니다. 파일 전달은 복사만 허용합니다. 선반 제거는 원본 삭제와 다릅니다. 원본이 이동·삭제되면 다시 추가해 주세요.
+일반 파일은 경로만 기억하며 외부 전달은 복사만 허용합니다. 원본이 이동되거나 삭제되면 다시 추가해 주세요. 원본 파일이나 받은 캐시가 없으면 목록에 연한 빨강으로 표시됩니다.
 
 자동 정돈은 기본 꺼짐입니다. 켜면 대상 앱이 드롭을 수락한 후 고정하지 않은 항목을 제거합니다. 업로드 성공 여부는 대상 앱에서 확인하세요. 실패하거나 취소된 드래그는 항목을 유지합니다.
 
-설정과 선반은 `%LOCALAPPDATA%\ShelfDock`에 저장합니다. 앱이 만든 PNG는 항목이 제거된 뒤 7일 이상 지나고 현재 항목·백업·실행 중 되돌리기에서 참조하지 않을 때 정리합니다. 정리는 앱 시작 시 수행합니다. 활성 항목에는 보관 만료가 없습니다.
+설정은 변경 즉시 자동 반영됩니다. 설정과 선반 데이터는 로컬 앱데이터 폴더에 안전하게 보관됩니다. 최대 500개 항목, 텍스트 한 항목 100만 자, 붙여넣는 이미지 4천만 화소까지 지원합니다.
 
-최대 500개 항목, 텍스트 한 항목 100만 자, 붙여넣는 이미지 4천만 화소까지 지원합니다. 이미지 파일 미리보기는 32MB 이하에서 생성하며 나머지는 파일로 전달할 수 있습니다.
+기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 8자리 OTP 페어링, 공개 DHT 검색, 자체 릴레이를 설정할 수 있습니다. 독립 외부망(WAN) 간 파일 전송 검증이 완료되었습니다. 자세한 내용은 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
 
-이 버전은 미서명 베타입니다. Windows가 게시자를 확인하지 못할 수 있습니다. 보안 기능을 해제하지 마세요. SHA-256은 파일 일치 여부를 확인하며 게시자 신원을 증명하지 않습니다.
+플로팅 아이콘 옵션을 켜면 화면 최상단에 작은 드롭 타깃 아이콘이 유지됩니다. 아이콘에 파일·텍스트를 드롭하면 선반에 추가되며, 클릭 시 메인 선반이 열립니다.
 
-폴더, 가상 메일 첨부파일, 혼합 유형 일괄 드래그, 여러 텍스트의 동시 드래그, 브라우저 이미지 URL 다운로드, 관리자 권한 대상 앱, 독점 전체 화면 위 표시는 지원 대상이 아닙니다. 클라우드 전용 파일은 먼저 로컬에 내려받으세요. 대상 앱이 드래그를 거절하면 복사·붙여넣기를 사용하세요.
+### 수신 파일 캐시 및 보관 정책
 
-업데이트는 GitHub Releases에서 새 ZIP을 다운로드해 종료한 앱의 폴더를 교체합니다. 사용자 데이터 폴더는 유지합니다. 자동 업데이트와 사용 추적은 없습니다.
+다른 기기에서 수신한 파일 항목을 선반에서 직접 제거(`Delete`)하면 앱 전용 수신 캐시 파일도 함께 삭제됩니다. 송신자의 원본 파일과 사용자가 다른 폴더로 복사·내보낸 파일은 그대로 유지됩니다. 되돌리기는 항목 메타데이터를 복원하며, 삭제된 파일 내용은 송신 기기가 온라인일 때 다시 다운로드할 수 있습니다. 드롭 후 자동 정돈 시에는 대상 앱의 파일 읽기/업로드 완료를 보호하기 위해 기존 보관 정책(7일 유예)을 유지합니다.
 
-기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 페어링·인터넷 DHT·사용자 운영 릴레이를 설정합니다. 원격 파일을 한 번 끌어 놓으면 대상 앱의 데이터 요청 시 다운로드·검증 후 전달합니다. 원형 진행 표시를 확인하세요. 대상 앱이 기다리거나 거부하면 다운로드 버튼으로 먼저 받은 뒤 드래그하세요. 전체 설명과 외부망 검증 상태는 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
+### Polar 후원 및 라이선스 키 활성화
 
-설정에서 **ShelfDock 아이콘을 화면에 항상 표시**를 켜면 작은 아이콘이 최상단에 유지됩니다. 아이콘에 파일·텍스트를 드롭하면 선반에 추가되며 가볍게 흔들립니다. 클릭하면 메인 선반을 열고 닫기/Esc를 누르면 아이콘으로 돌아갑니다. 아이콘을 끌어 위치를 옮길 수 있고 위치는 저장됩니다. Windows에서 애니메이션을 꺼 두면 흔들림도 생략합니다. 옵션을 끄면 기존 트레이 방식으로 돌아갑니다.
+ShelfDock의 모든 기능은 100% 무료이며 기능 제한이 없습니다. 개발자를 응원하고자 하는 사용자는 Settings -> About 탭의 Polar 후원 링크를 통해 후원할 수 있습니다. 발급받은 후원 라이선스 키는 딥링크(`shelfdock://license?key=YOUR_KEY`) 또는 앱 내 라이선스 입력창을 통해 자동으로 등록·인증할 수 있습니다.
+
+---
 
 ## English
 
-A free temporary work shelf for Windows 11 x64. Extract the entire ZIP and run `ShelfDock.exe`. No separate .NET install, administrator rights, or account required. Read and accept the license on first launch.
+A free temporary work shelf for Windows 11 x64 and macOS 13+ (Apple Silicon arm64). Extract the entire ZIP and run the application. No separate runtime install, administrator rights, or account required.
 
-- `Ctrl+Alt+S`: open the shelf; customize in Settings.
-- Drop local files or plain text. Use `Ctrl+V` to paste a screenshot.
-- Select and drag items into another app. Ctrl/Shift-click selects multiple items.
-- `Ctrl+C`: copy. Captures offer both bitmap and PNG-file clipboard formats.
-- `Delete`: remove references from the shelf, never the original files.
-- `Ctrl+Z`: undo removals during the current session.
-- Pin keeps items out of automatic cleanup. Manual removal is still available.
-- `Esc` / Close hides to the tray. Double-click the tray icon to return; use its menu to Quit.
+- **Launch & Security**:
+  - Windows: On SmartScreen prompt, click "More info" -> "Run anyway".
+  - macOS: On Gatekeeper prompt, right-click (Control-click) `ShelfDock.app` in Finder and select "Open".
+- **Open Shelf**: Windows `Ctrl+Alt+S`, macOS `Command+Option+S`, or click the tray/menubar icon.
+- Drop local files or plain text. Paste screenshots with `Ctrl+V` (Windows) / `Command+V` (macOS).
+- Select and drag items into target apps. Multi-selection supported via `Ctrl`/`Command` or `Shift` click.
+- Copy (`Ctrl+C` / `Command+C`): Captures offer both bitmap and PNG formats to clipboard.
+- Remove (`Delete` / `Backspace`): Removes references from the shelf; never deletes original files.
+- Undo (`Ctrl+Z` / `Command+Z`): Restores items removed during the current session.
+- Pin: Keeps items at the top and protects them from automatic cleanup.
+- Hide (`Esc` or Close button): Hides to the system tray / menu bar.
 
-File items retain paths only. Outgoing transfers allow Copy only. Moved/deleted originals must be added again. Auto-remove is off by default; if enabled, an accepted drop removes unpinned shelf items. Accepted does NOT mean an upload has completed. Cancelled/rejected drops retain items.
+File items retain paths only. Outgoing transfers allow Copy only. Pinned items appear first; missing files appear with a soft red background. Settings apply automatically without manual save buttons. Limits: 500 items, 1 million characters per text item, 40 megapixels per image.
 
-State is saved in `%LOCALAPPDATA%\ShelfDock`. Generated PNGs become eligible for cleanup seven days after removal, only when not referenced by the active shelf, recovery backup or session undo. Cleanup runs on startup. Active items do not expire. Limits: 500 items, 1 million characters per text item, 40 megapixels per pasted image. Thumbnails are generated for image files up to 32MB; other files can still be transferred.
+P2P sharing is off by default. Open ⇄ Devices to configure 8-digit OTP pairing, public DHT discovery, and self-hosted relays. Verified on independent real-world public networks (WAN). See [P2P-GUIDE.md](P2P-GUIDE.md).
 
-Unsigned beta: Windows may not verify the publisher. Do not disable security features. SHA-256 verifies file identity, not publisher authenticity.
+Floating icon mode keeps a minimal topmost drop target on screen. Drag items onto it to add them, or click to expand the full shelf.
 
-Unsupported: folders, virtual mail attachments, mixed-type batch drags, multiple text items in a drag, remote image-URL downloads, elevated target apps, exclusive fullscreen overlays. Download cloud-only files locally first. If an app rejects drag-and-drop, try Copy/Paste.
+### Received Cache & Retention Policy
 
-Updates are manual: quit, download the next ZIP from Releases, and replace the application folder. Keep the user-data folder. No automatic telemetry or updates.
+Explicitly removing a received file via Delete also removes the corresponding app-owned download cache from disk. Sender originals and exported copies remain untouched. Undo restores metadata; deleted contents can be re-downloaded while the remote peer is online. Accepted-drop auto-remove maintains delayed retention to protect target application reading and uploading.
 
-Official releases and feedback: https://github.com/Mintflavor/shelfdock
+### Polar Sponsorship & License Deep-link
 
-Paired-device sharing is off by default. Open ⇄ to configure pairing, public DHT discovery and your own relay. Drag a remote file once to download, verify and deliver when the target requests data. Circular progress shows reception. Targets may wait or reject delayed data; use Download first as a fallback. See [P2P-GUIDE.md](P2P-GUIDE.md) for privacy, relay operation and pending external-network validation.
-
-Enable **Keep a floating ShelfDock icon on screen** in Settings for a persistent topmost drop target. Drop files/text onto it, click to open the shelf, and Close/Esc to return to the icon. Drag the icon to reposition it; its position is saved. The subtle drag animation follows Windows animation preferences. Disabling the option restores tray-only behavior. Docker relay setup: [RELAY-DOCKER.md](RELAY-DOCKER.md).
-License: LICENSE.txt (English governs); LICENSE.ko.md explains it in Korean.
-
-## 0.1.3 변경 / Changes
-설정은 변경 즉시 반영됩니다(텍스트는 입력을 잠시 멈춘 뒤 적용). 잘못된 단축키나 연결 실패는 오류로 표시합니다. 고정 항목은 맨 위에, 원본 또는 받은 캐시가 없으면 연한 빨강으로 표시합니다.
-Settings apply automatically, text fields after a short pause. Invalid shortcuts/failed connections display errors. Pinned items appear first; missing local files are pale red. See CHANGELOG.md.
-
-## 0.1.4 수신 캐시 / Received cache
-
-다른 피어에서 받은 항목을 Delete/제거 버튼으로 지우면 AppData의 해당 수신 파일도 삭제합니다. 송신자의 원본과 다른 폴더로 복사한 파일은 그대로입니다. 되돌리기는 항목을 복원하며 삭제한 파일은 상대가 온라인일 때 다시 받아야 합니다. 사용 중이라 삭제하지 못한 파일은 다음 앱 시작 시 재시도합니다. 다른 선반 항목이 같은 파일을 참조하면 보존합니다.
-
-드롭 후 자동 정돈은 대상 앱의 읽기·업로드를 보호하기 위해 기존 7일 보관 정책을 유지합니다. 이전 버전에서 이미 제거한 캐시를 이번 업데이트가 일괄 삭제하지는 않습니다.
-
-Explicit Remove/Delete also deletes the corresponding app-owned received file. Sender originals and exported copies remain untouched. Undo restores metadata; deleted content must be fetched again while the sender is available. Locked files retry on restart; another live reference protects the file. Accepted-drop auto-remove keeps the prior seven-day retention to protect target readers. No retroactive bulk cleanup of old retired caches.
+ShelfDock is 100% freeware with zero paywalls. Supporters may sponsor development via Polar link in Settings -> About. Donor license keys can be activated via direct deep-link (`shelfdock://license?key=YOUR_KEY`) or within the app's About interface.

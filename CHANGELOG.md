@@ -2,6 +2,29 @@
 
 All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work.
 
+## 0.2.6-beta — 2026-09-30 (public beta)
+
+- **Double-Click File Execution**:
+  - Double-clicking any file item on the shelf opens it directly in its default system application.
+  - Remote items not yet downloaded are automatically fetched and SHA-256 integrity-verified before opening. Missing files and errors fail gracefully without app crashes or corrupting originals.
+- **P2P LAN Auto-Connect**:
+  - Optional local network (LAN) auto-connect: reciprocal peer discovery and automatic pairing over mDNS without requiring 8-digit OTP codes.
+  - Bounded by 16-peer trust limit; requires explicit activation on both peers; disabling preserves existing connections.
+- **OTP UX Alignment**:
+  - Centered 8-digit OTP input field on both Windows and macOS.
+  - Automatic uppercase alphanumeric filtering, auto-hyphen insertion (`XXXX-XXXX`), and smart backspace handling.
+- **Device Unpair Confirmation & Peer Revocation**:
+  - Added confirmation modal/alert before unpairing a device to prevent accidental disconnections.
+  - Implemented `/shelfdock/unpair/1.0.0` protocol: unpairing notifies the remote peer, displaying a clear "Disconnected by remote device" status notice in the trusted devices list.
+- **Cross-Platform UI Polish**:
+  - Main window bottom-left status replaced with dynamic application version (e.g. `v0.2.6-beta`).
+  - Floating icon badge displays item count (dark teal rounded badge, hidden when shelf is empty).
+  - macOS: subtle 420ms rotation wiggle animation when dragging files over the floating icon or dropping items.
+  - Layout cleanups: removed redundant explanatory text in Startup settings and OTP pairing dialogs.
+- **Package Digests**:
+  - Windows 11 x64 Portable ZIP: `ShelfDock-v0.2.6-beta-win-x64.zip` (74,835,330 bytes, SHA-256 `d05324fb7e74fe85dc06b6de064037e7b6f20e579616748dd3af7de5b9f917e4`).
+  - macOS Apple Silicon arm64 ZIP: `ShelfDock-v0.2.6-beta-macOS-arm64.zip` (21,346,046 bytes, SHA-256 `3a8c26fba847f83c4a079956a79ce15870c82f536d467e12775ea26971fa46fd`).
+
 ## 0.2.4-beta — 2026-09-29 (public beta)
 
 - **Official Public Beta Release**: Windows 11 x64 and macOS 13+ (Apple Silicon arm64) binaries published on GitHub Releases.

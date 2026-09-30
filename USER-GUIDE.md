@@ -1,4 +1,4 @@
-# ShelfDock User Guide (v0.2.4-beta)
+# ShelfDock User Guide (v0.2.6-beta)
 
 8자리 OTP 연결 / OTP pairing: [OTP-GUIDE.md](OTP-GUIDE.md) · [P2P-GUIDE.md](P2P-GUIDE.md)
 
@@ -10,6 +10,7 @@ Windows 11 x64 및 macOS 13+ (Apple Silicon arm64)용 무료 작업 선반입니
   - Windows: `ShelfDock.exe` 실행 시 SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
   - macOS: `ShelfDock.app` 실행 시 Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
 - **선반 열기**: Windows `Ctrl+Alt+S`, macOS `Command+Option+S` 또는 트레이/메뉴바 아이콘 클릭.
+- **더블클릭 실행**: 선반의 파일 항목을 더블클릭하면 시스템 기본 프로그램으로 즉시 열립니다. 원격 기기에서 수신한 파일 중 아직 다운로드되지 않은 파일은 안전하게 다운로드 및 SHA-256 무결성 검증을 완료한 후 자동으로 실행됩니다.
 - 파일이나 일반 텍스트를 선반으로 끌어오세요. 캡처 이미지는 선반에서 붙여넣기(`Ctrl+V` / `Command+V`)하세요.
 - 항목을 선택하고 다른 앱으로 끌어가세요. 다중 선택(`Ctrl`/`Command` 또는 `Shift` 클릭)을 지원합니다.
 - 복사(`Ctrl+C` / `Command+C`): 선택한 항목 복사. 캡처 이미지는 이미지와 PNG 파일 형식으로 클립보드에 제공됩니다.
@@ -24,9 +25,9 @@ Windows 11 x64 및 macOS 13+ (Apple Silicon arm64)용 무료 작업 선반입니
 
 설정은 변경 즉시 자동 반영됩니다. 설정과 선반 데이터는 로컬 앱데이터 폴더에 안전하게 보관됩니다. 최대 500개 항목, 텍스트 한 항목 100만 자, 붙여넣는 이미지 4천만 화소까지 지원합니다.
 
-기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 8자리 OTP 페어링, 공개 DHT 검색, 자체 릴레이를 설정할 수 있습니다. 독립 외부망(WAN) 간 파일 전송 검증이 완료되었습니다. 자세한 내용은 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
+기기 간 공유는 기본 꺼짐입니다. ⇄ 버튼에서 8자리 OTP 페어링 외에도 '로컬 네트워크(LAN) 기기 자동 연결'을 켜면 같은 공유기 내 기기와 코드 없이 안전하게 연결할 수 있습니다. 기기 연결 해제 시 확인 모달이 표시되며 상대 기기에도 연결 해제 상태가 즉시 반영됩니다. 자세한 내용은 [P2P-GUIDE.md](P2P-GUIDE.md)를 참고하세요.
 
-플로팅 아이콘 옵션을 켜면 화면 최상단에 작은 드롭 타깃 아이콘이 유지됩니다. 아이콘에 파일·텍스트를 드롭하면 선반에 추가되며, 클릭 시 메인 선반이 열립니다.
+플로팅 아이콘 옵션을 켜면 화면 최상단에 작은 드롭 타깃 아이콘이 유지되며 선반 내 항목 수가 뱃지로 표시됩니다. 아이콘에 파일·텍스트를 드롭하면 선반에 추가(macOS는 흔들림 피드백 제공)되며, 클릭 시 메인 선반이 열립니다.
 
 ### 수신 파일 캐시 및 보관 정책
 
@@ -46,6 +47,7 @@ A free temporary work shelf for Windows 11 x64 and macOS 13+ (Apple Silicon arm6
   - Windows: On SmartScreen prompt, click "More info" -> "Run anyway".
   - macOS: On Gatekeeper prompt, right-click (Control-click) `ShelfDock.app` in Finder and select "Open".
 - **Open Shelf**: Windows `Ctrl+Alt+S`, macOS `Command+Option+S`, or click the tray/menubar icon.
+- **Double-click open**: Double-click any file item on the shelf to launch it in its default system application. Remote items not yet cached are safely downloaded and SHA-256 verified before opening.
 - Drop local files or plain text. Paste screenshots with `Ctrl+V` (Windows) / `Command+V` (macOS).
 - Select and drag items into target apps. Multi-selection supported via `Ctrl`/`Command` or `Shift` click.
 - Copy (`Ctrl+C` / `Command+C`): Captures offer both bitmap and PNG formats to clipboard.
@@ -56,9 +58,9 @@ A free temporary work shelf for Windows 11 x64 and macOS 13+ (Apple Silicon arm6
 
 File items retain paths only. Outgoing transfers allow Copy only. Pinned items appear first; missing files appear with a soft red background. Settings apply automatically without manual save buttons. Limits: 500 items, 1 million characters per text item, 40 megapixels per image.
 
-P2P sharing is off by default. Open ⇄ Devices to configure 8-digit OTP pairing, public DHT discovery, and self-hosted relays. Verified on independent real-world public networks (WAN). See [P2P-GUIDE.md](P2P-GUIDE.md).
+P2P sharing is off by default. Open ⇄ Devices to configure 8-digit OTP pairing, optional local network (LAN) auto-connect, public DHT discovery, and self-hosted relays. Unpairing requires confirmation and notifies the remote peer. Verified on independent real-world public networks (WAN). See [P2P-GUIDE.md](P2P-GUIDE.md).
 
-Floating icon mode keeps a minimal topmost drop target on screen. Drag items onto it to add them, or click to expand the full shelf.
+Floating icon mode keeps a minimal topmost drop target on screen with an item count badge. Drag items onto it to add them (with macOS rotation wiggle feedback), or click to expand the full shelf.
 
 ### Received Cache & Retention Policy
 

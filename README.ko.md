@@ -9,21 +9,22 @@
 
 ## 배포 상태
 
-공개 베타 버전(`v0.2.4-beta`)을 **Windows 11 x64** 및 **macOS arm64 (Apple Silicon)**용으로 [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.4-beta)에서 제공하고 있습니다.
+공개 베타 버전(`v0.2.6-beta`)을 **Windows 11 x64** 및 **macOS arm64 (Apple Silicon)**용으로 [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.6-beta)에서 제공하고 있습니다.
 
-- **Windows 11 x64**: `ShelfDock-v0.2.4-beta-win-x64.zip`을 받아 전체 압축을 풀고 `ShelfDock.exe`를 실행하세요. .NET 별도 설치나 관리자 권한은 필요하지 않습니다. SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
-- **macOS (Apple Silicon)**: `ShelfDock-v0.2.4-beta-macOS-arm64.zip`을 받아 압축을 풀고 `ShelfDock.app`을 실행하세요. Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
-- 기기를 연결하려면 [8자리 OTP](OTP-GUIDE.md)를 입력하고, 60초 이내에 양쪽 기기에서 연결을 승인해야 합니다. 모든 전송은 종단 간 암호화(Noise / TLS)로 보호됩니다.
+- **Windows 11 x64**: `ShelfDock-v0.2.6-beta-win-x64.zip`을 받아 전체 압축을 풀고 `ShelfDock.exe`를 실행하세요. .NET 별도 설치나 관리자 권한은 필요하지 않습니다. SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
+- **macOS (Apple Silicon)**: `ShelfDock-v0.2.6-beta-macOS-arm64.zip`을 받아 압축을 풀고 `ShelfDock.app`을 실행하세요. Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
+- 기기를 연결하려면 [8자리 OTP](OTP-GUIDE.md)를 입력하고 60초 이내에 양쪽 기기에서 연결을 승인하거나, 동일 로컬 네트워크(LAN) 자동 연결을 사용할 수 있습니다. 모든 전송은 종단 간 암호화(Noise / TLS)로 보호됩니다.
 
 ## 주요 기능
 
 - 📂 **파일과 텍스트를 드래그해 넣거나, 캡처한 이미지를 바로 붙여넣기(`Ctrl+V` / `Cmd+V`)하세요.**
+- 🖱️ **선반 항목 더블클릭으로 즉시 실행**: 선반에 있는 파일을 더블클릭하면 기본 프로그램으로 바로 열립니다. 원격 기기의 파일은 안전하게 다운로드 및 SHA-256 검증 후 실행됩니다.
 - 📌 **자주 사용하는 항목은 상단에 고정하고, 실수로 제거한 항목은 앱을 종료하기 전까지 언제든 되돌릴 수 있습니다.**
 - 🗂️ **여러 파일을 한 번에 선택해 원하는 앱으로 끌어다 쓸 수 있습니다.**
-- 🖥️ **원하면 플로팅 아이콘을 화면에 항상 표시할 수 있습니다.** 아이콘에 파일을 드롭하거나 클릭해 선반을 열 수 있으며, 닫으면 다시 아이콘으로 돌아갑니다.
+- 🖥️ **화면 위 플로팅 아이콘**: 현재 항목 수 뱃지가 표시되며, 파일 드롭(macOS 흔들림 효과) 및 클릭으로 선반을 열고 닫을 수 있습니다.
 - ⌨️ **`Ctrl+Alt+S`(Mac은 `Cmd+Opt+S`) 또는 트레이/메뉴바 아이콘으로 언제든 선반을 열 수 있습니다.**
 - 🔄 **앱을 다시 실행해도 선반 목록이 그대로 복원되며, 한국어와 영어를 지원합니다.**
-- ⇄ **선택적으로 켜는 기기 간 P2P 공유**: 메타데이터를 먼저 확인하고 필요한 파일만 다운로드할 수 있습니다. [페어링·릴레이 안내](P2P-GUIDE.md).
+- ⇄ **선택적으로 켜는 기기 간 P2P 공유**: 8자리 OTP 페어링 외에도 로컬 네트워크(LAN) 기기 자동 연결을 지원합니다. 원격 기기에서 연결이 해제되면 상태가 표시됩니다. [페어링·릴레이 안내](P2P-GUIDE.md).
 - 🐳 **자체 릴레이 지원**: Unraid/Linux Docker 릴레이 컨테이너와 [설치 안내](RELAY-DOCKER.md)를 제공합니다.
 
 원본 파일은 원래 위치에 그대로 유지됩니다. ShelfDock은 파일의 경로만 참조하며 복사(Copy) 방식의 전달만 허용합니다. 선반에서 항목을 제거해도 원본 파일은 절대 삭제되지 않습니다.

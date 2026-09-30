@@ -1,6 +1,6 @@
 # ShelfDock Relay — Docker / Unraid
 
-Linux amd64 relay package. The desktop application remains Windows-only.
+Linux amd64 relay package. The desktop application supports Windows 11 x64 and macOS 13+ (Apple Silicon arm64).
 
 ## Unraid 설치
 

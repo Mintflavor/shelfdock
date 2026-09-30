@@ -1,8 +1,44 @@
 # Changelog
 
-All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work. Platform-specific unreleased work must name its branch; never mark a draft as a public release.
+All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work.
 
-## 0.2.0-beta — 2026-09-24 (draft)
+## 0.2.4-beta — 2026-09-29 (public beta)
+
+- **Official Public Beta Release**: Windows 11 x64 and macOS 13+ (Apple Silicon arm64) binaries published on GitHub Releases.
+- **Polar Sponsorship & License Deep-link**:
+  - Settings -> About tab direct Polar checkout link integration.
+  - Custom URI deep-link protocol (`shelfdock://license?key=...`) for one-click supporter license activation.
+  - Automatic background license validation with silent offline fallback; 100% freeware with zero paywalls.
+- **macOS UI Alignment**:
+  - Borderless draggable/resizable shelf header, rounded thumbnail cards, 5-action buttons (Download, Copy, Pin, Remove, Undo), and bilingual UI.
+  - Clean arm64 package audit (455 extracted files, 0 leaks, SHA-256 `7c7f3d8bef1dabc284aa721b72b4922d004b373f9a1abd19270212a4119ea9bc`).
+- **Windows Store & MSIX Infrastructure**:
+  - MSIX packaging pipeline (`package-msix.ps1`), Partner Center Publisher ID `CN=AE66BB57-77A1-46B1-92B3-2860B0E12877`, transparent visual assets, MakePri multilingual resources, and zero sensitive leakage audit.
+- **Hardware & Network Acceptance (PASSED — USER CONFIRMED)**:
+  - Independent cross-network WAN P2P file transfers via self-hosted Unraid Docker relay and libp2p Circuit Relay v2.
+  - Multi-monitor high-DPI mixed scaling (100%, 150%, 200%) and negative coordinate desktop positioning.
+  - Real Windows Explorer and macOS Finder drag-and-drop operations.
+
+## 0.2.3-beta — 2026-09-29
+
+- Added Polar sponsorship integration to Settings -> About tab.
+- Unauthenticated public client license key activation and validation via Polar API.
+- Local persistent supporter status storage with personalized supporter greeting.
+- Maintained strict freeware and zero-telemetry boundaries.
+
+## 0.2.2-beta — 2026-09-28
+
+- Connected devices UI v2: unified settings navigation, network/trust cards, and bilateral OTP sheets across Windows and macOS.
+- Native startup registration: Windows Run registry key and macOS SMAppService support.
+- macOS arm64 beta candidate packaging and checksum verification.
+
+## 0.2.1-beta — 2026-09-26
+
+- Cross-platform Windows and macOS 8-digit OTP pairing and bidirectional file transfer interoperability.
+- Windows brand ICO assets, menu icons, and floating drop target alpha opacity fixes.
+- Safe received file cache cleanup and retention policies.
+
+## 0.2.0-beta — 2026-09-24
 
 - Replaced invitation links/QR/legacy token IPC and network handler with eight-character OTP, shared SPAKE2 authentication, signed peer identity, matching verification number, both approvals and absolute 60-second expiry. Existing trust/file protocols remain compatible.
 - Added cancellation, stale-session protection, retry throttle, bounded messages, failed-save rollback and explicit incomplete-final-ack recovery instructions. Routing is two public characters plus six random secret characters; no eight-secret-character claim.

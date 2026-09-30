@@ -1,6 +1,6 @@
-# ShelfDock 0.2.0 — 8자리 OTP 연결
+# ShelfDock — 8자리 OTP 연결 가이드 / 8-digit OTP Pairing Guide
 
-양쪽 PC에 0.2.0 이상을 실행하세요. 기존에 연결한 기기는 그대로 유지됩니다. 새 연결에는 초대 링크와 QR을 사용하지 않습니다.
+양쪽 기기(Windows 또는 macOS)에 최신 ShelfDock을 실행하세요. 기존에 연결한 기기는 그대로 유지됩니다. 새 연결에는 초대 링크와 QR을 사용하지 않습니다.
 
 1. 양쪽 ⇄ 기기 화면에서 공유를 켭니다.
 2. 한쪽에서 **8자리 코드 만들기**를 누릅니다.
@@ -12,12 +12,12 @@
 
 인증에는 인터넷의 WSS 랑데부 서버가 필요합니다. 서버가 일시 중단돼도 기존 연결의 파일 전송은 기존 직접/DHT/릴레이 경로를 사용합니다. OTP 연결은 파일 릴레이 허용 목록 등록을 대신하지 않습니다.
 
-이전 shelfdock: 링크·QR·초대 토큰은 더 이상 수락하지 않습니다. 새 버전은 자신이 등록했던 Windows URL 연결을 정리합니다. 이전 버전과 새 버전 사이의 신규 페어링은 지원하지 않으므로 양쪽을 업데이트하세요. 기존 신뢰 목록과 선반 데이터는 유지합니다.
+이전 초대 토큰은 더 이상 수락하지 않습니다. 이전 버전과 새 버전 사이의 신규 페어링은 지원하지 않으므로 양쪽을 최신 버전으로 업데이트하세요. 기존 신뢰 목록과 선반 데이터는 유지합니다.
 
 드물게 최종 저장 확인 중 연결이 끊기면 한쪽에만 기기가 남을 수 있습니다. 양쪽 기기 목록을 확인하고 남은 항목을 연결 해제한 뒤 새 코드로 다시 시도하세요. 완료가 불확실한 상태를 성공으로 표시하지 않습니다.
 
 ## English
 
-Run 0.2.0+ on both PCs. Enable sharing in Devices, generate a code on one, and enter it on the other. Compare device names, Peer IDs and the verification number on both screens; check the confirmation box and approve on BOTH devices within the original 60-second deadline. Retry with a new code after rejection, cancellation, failure or expiry. Retry interval is at least five seconds.
+Run ShelfDock on both devices (Windows or macOS). Enable sharing in Devices, generate a code on one, and enter it on the other. Compare device names, Peer IDs and the verification number on both screens; check the confirmation box and approve on BOTH devices within the original 60-second deadline. Retry with a new code after rejection, cancellation, failure or expiry. Retry interval is at least five seconds.
 
-Invitation URLs/QR and old tokens are no longer accepted. Existing paired devices and shelf data remain intact. WSS rendezvous is needed for new pairing; bulk files still use direct/DHT/libp2p relay transport and relay allowlisting is separate. If final acknowledgement is interrupted, review both device lists, unpair any incomplete entry, and retry. No automatic reconnection of an unapproved session.
+Legacy invitation formats and old tokens are no longer accepted. Existing paired devices and shelf data remain intact. WSS rendezvous is needed for new pairing; bulk files still use direct/DHT/libp2p relay transport and relay allowlisting is separate. If final acknowledgement is interrupted, review both device lists, unpair any incomplete entry, and retry. No automatic reconnection of an unapproved session.

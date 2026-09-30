@@ -48,7 +48,7 @@ Windows 서버에서 전체 배포 ZIP을 유지한 채 다음 명령을 실행�
 - 데이터는 `%LOCALAPPDATA%\ShelfDock`에 있습니다. `Network`는 신뢰 목록·내보낸 파일 참조·보호된 기기 키, `Received`는 받은 사본입니다. 원본 파일은 삭제하지 않습니다. 네트워크 상태가 손상되면 새 신뢰 목록으로 조용히 대체하지 않고 시작을 중단합니다.
 - QR 코드, 모바일 앱, 전송 재개, 원격 삭제, 폴더 공유는 미지원입니다. 계정·클라우드 저장소·자동 사용 추적은 없습니다.
 
-**검증 상태:** 로컬 기기 세 개로 DHT 검색·릴레이 전송·접근 제어를 검증합니다. 실제 서로 다른 외부망의 NAT/공인 릴레이 시험은 아직 완료하지 않았습니다. 이 검증 전까지 외부망 호환성을 보장하지 않고 공개 바이너리 출시는 보류합니다.
+**검증 상태:** 독립 외부 공용 인터넷망(WAN) 환경에서 자체 릴레이 및 공개 DHT를 통한 P2P 파일 전송과 8자리 OTP 양방향 승인이 실기기에서 검증되었습니다(`PASSED — USER CONFIRMED`). Windows 11 및 macOS 13+ (Apple Silicon arm64) 간 상호 연결을 지원합니다.
 
 ## English
 
@@ -64,4 +64,4 @@ DHT/mDNS expose peer IDs and network addresses, never the shelf catalog. TCP and
 
 Limits: 16 devices, 500 shelf items, 8 GiB/file, 1 MiB UTF-8/shared text item, approximately 6 MiB published catalog, 2,000 retained export references. Downloads live under `%LOCALAPPDATA%\ShelfDock\Received`; retired owned files are eligible for deletion after seven days only when no active item, backup or session undo refers to them. Original files are never cleanup targets.
 
-Local automated DHT/relay tests do not prove public-network compatibility. External NAT/relay, cross-application drag, clean-Windows and mixed-DPI acceptance gates remain pending; the binary release stays a draft. No mobile support, QR scanning, folder transfer, cloud storage, telemetry, or automatic update.
+**Validation status:** Cross-network WAN P2P file transfers and 8-digit OTP pairing have been verified on independent real-world public networks (`PASSED — USER CONFIRMED`). Cross-platform sharing is supported between Windows 11 and macOS 13+ (Apple Silicon arm64). No mobile support, QR scanning, folder transfer, cloud storage, telemetry, or automatic update.

@@ -8,21 +8,22 @@ ShelfDock is a lightweight desktop shelf for Windows and macOS. Collect files, s
 
 ## Availability
 
-The official public beta (`v0.2.4-beta`) is available for **Windows 11 x64** and **macOS arm64 (Apple Silicon)** on [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.4-beta).
+The official public beta (`v0.2.6-beta`) is available for **Windows 11 x64** and **macOS arm64 (Apple Silicon)** on [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.6-beta).
 
-- **Windows 11 x64**: Download `ShelfDock-v0.2.4-beta-win-x64.zip`, extract completely, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. If prompted by Windows SmartScreen, click *More info* -> *Run anyway*.
-- **macOS (Apple Silicon)**: Download `ShelfDock-v0.2.4-beta-macOS-arm64.zip`, extract, and launch `ShelfDock.app`. If blocked by Gatekeeper, right-click (or Control+click) `ShelfDock.app` in Finder and select *Open*.
-- Device-to-device sharing uses an [8-character OTP](OTP-GUIDE.md) with mutual two-way approval within 60 seconds. All transfers are end-to-end encrypted (Noise / TLS).
+- **Windows 11 x64**: Download `ShelfDock-v0.2.6-beta-win-x64.zip`, extract completely, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. If prompted by Windows SmartScreen, click *More info* -> *Run anyway*.
+- **macOS (Apple Silicon)**: Download `ShelfDock-v0.2.6-beta-macOS-arm64.zip`, extract, and launch `ShelfDock.app`. If blocked by Gatekeeper, right-click (or Control+click) `ShelfDock.app` in Finder and select *Open*.
+- Device-to-device sharing uses an [8-character OTP](OTP-GUIDE.md) with mutual two-way approval within 60 seconds, or optional automatic local network (LAN) pairing. All transfers are end-to-end encrypted (Noise / TLS).
 
 ## What it does
 
 - **Drop in, drag out**: Drop files and text onto the shelf, or paste screenshots directly from your clipboard (`Ctrl+V` / `Cmd+V`). Drag them out wherever you need them.
-- **Floating drop target**: An optional floating icon stays on screen, accepts drops, and opens the shelf when clicked. Closing the shelf returns it to the icon.
+- **Double-click to open**: Double-click any shelf item to launch it in its default app. Remote files are safely downloaded and verified before opening.
+- **Floating drop target**: An optional floating icon stays on screen, shows item count badge, accepts drops (with macOS wiggle feedback), and opens the shelf when clicked. Closing the shelf returns it to the icon.
 - **Quick access**: Open your shelf anytime with `Ctrl+Alt+S` (macOS: `Cmd+Opt+S`) or via the tray/menu bar icon.
 - **Batch selection**: Select multiple items and drag them out together in a single gesture.
 - **Pin & Undo**: Pin frequently used items to keep them at hand; undo accidental removals anytime before quitting.
 - **Session restore**: Your shelf is restored after restarting. Both English and Korean are supported.
-- **Private P2P sharing**: Optionally mirror your shelf across paired devices, with metadata-first transfers and verified downloads. See [device and relay setup](P2P-GUIDE.md).
+- **Private P2P sharing**: Optionally mirror your shelf across paired devices, with metadata-first transfers and verified downloads. Supports optional LAN auto-connect and unpair revocation notices. See [device and relay setup](P2P-GUIDE.md).
 - **Self-hosted relay**: Run your own Linux Docker relay on Unraid or any server; see [Docker setup](RELAY-DOCKER.md).
 
 Your original files stay where they are. ShelfDock stores file references and allows Copy-only outgoing transfers. Removing an item from the shelf never deletes the original file.

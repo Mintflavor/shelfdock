@@ -27,5 +27,6 @@ When releasing a new version or promoting a pre-release:
 - Delete obsolete one-off release notes (e.g. `RELEASE-*.md`) and retired protocol memos (e.g. `INVITATIONS.md`, `OTP-REVIEW.md`).
 - Replace historical draft disclaimers ("binary held as draft", "untested on external WAN") with verified acceptance results once passed.
 - Ensure `CHANGELOG.md`, `USER-GUIDE.md`, `QA.md`, and `P2P-GUIDE.md` reflect multi-platform support and confirmed real-world validation.
+- Audit and synchronize the GitHub Pages site (`gh-pages` branch `index.html`) on every version bump and release: verify header version tag (`header-version`), hero/card download buttons, package notices, fallback JavaScript variables (`activeVersion`, `activeTag`, `activePackageName`), and bilingual translation dictionaries (`translations.ko` / `translations.en`) match the active release.
 
 

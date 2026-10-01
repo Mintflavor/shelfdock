@@ -13,12 +13,13 @@ This repository (`Mintflavor/shelfdock`) contains public documentation, site con
 
 ## Pre-release note guidelines
 
-When promoting a draft release to a public pre-release (or publishing pre-releases), the release notes must remain concise and user-focused, containing strictly:
-1. **App Introduction (앱 소개)**: Brief 1-2 sentence core philosophy (local-first, 100% freeware, zero-telemetry, zero cloud).
-2. **Key Features (핵심 기능)**: Bulleted summary of primary capabilities (floating dock & hotkey, copy-only non-destructive buffer, 8-digit OTP P2P sharing, privacy).
-3. **What's New (이전 버전 대비 주요 변경사항)**: Simple summary of highlights compared to the previous version.
-4. **Download & Launch Guide (다운로드 및 실행 안내)**: Table with package filename, size, SHA-256 digest, and essential SmartScreen / Gatekeeper right-click bypass tips.
-Do not clutter public pre-release notes with internal test matrices, prompt dumps, or lengthy developer logs.
+When promoting a draft release to a public pre-release (or publishing releases), the release notes must remain concise, professional, and strictly user-focused:
+1. **App Introduction (앱 소개 축약)**: Keep to a single 1-2 sentence core philosophy (local-first, 100% freeware, zero-telemetry, zero cloud). Do not repeat the entire feature list or specifications already covered in README or landing pages.
+2. **What's New (사용자 가치 우선 주요 변경사항)**: List 3-5 key highlights focused strictly on "how user workflow improved", using user-facing terms (e.g. "한국어/영어 UI 지원", "앱 안정성 개선") rather than internal implementation jargon ("통합 다국어 스트링 테이블 도입", "무중단 안전 폴백 메커니즘").
+3. **Collapsible Technical & Secondary Details (<details> 접기 활용)**:
+   - **Download & Launch Guide (보안 경고 안내)**: Place OS unsigned executable launch instructions (SmartScreen / Gatekeeper right-click bypass) inside a `<details>` tag.
+   - **Checksums (SHA-256 체크섬 표 간소화)**: Checksum tables must be placed inside a `<details>` collapsible section (assets already include `SHA256SUMS.txt`).
+4. **Complete Elimination of Internal QA / Test Notes (내부 테스트 메모 완전 삭제)**: Never include internal developer QA checklists, verification status ("NOT RUN", "PASSED"), ad-hoc signing disclaimers, prompt dumps, or test matrices in public release notes.
 
 ## Public documentation hygiene and legacy pruning
 

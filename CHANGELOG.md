@@ -2,7 +2,7 @@
 
 All future changes must be recorded here by version before delivery. Entries distinguish implemented behavior, validation, and pending work.
 
-## 0.2.7-beta — 2026-10-01 (draft)
+## 0.2.7-beta — 2026-10-01 (public beta)
 
 - **Centralized Localization & Unified String Tables**:
   - Unified bilingual (Korean/English) string tables introduced across Windows and macOS clients with shared semantic namespaces and dynamic format tokens (`{count}`, `{selected}`, `{peer}`, `{bytes}`, `{left}`, `{version}`, `{supporter}`).

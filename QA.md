@@ -1,9 +1,14 @@
-# Release Acceptance — v0.2.6-beta (Public Beta)
+# Release Acceptance — v0.2.7-beta (Draft)
 
-Validation date: 2026-09-30 (Asia/Seoul). **Windows 11 x64 and macOS 13+ arm64 official public beta.**
+Validation date: 2026-10-01 (Asia/Seoul). **Windows 11 x64 and macOS 13+ arm64 release candidate.**
 
 ## Completed & User-Confirmed Gates
 
+- **Centralized Localization & Unified String Tables (PASSED)**:
+  - Unified bilingual (Korean/English) string tables across Windows and macOS clients with shared semantic namespaces.
+  - Category B consensus wording applied and verified: "ShelfDock 열기" / "Open ShelfDock", "ShelfDock 종료" / "Quit ShelfDock", "설정…" / "Settings…", "동의하고 시작" / "Accept and start", "다운로드" / "Download", etc.
+  - Safe fallback mechanisms and dynamic format token replacements verified without crashes.
+  - macOS live language switching on settings change verified without requiring application restart.
 - **Double-Click File Execution (PASSED)**:
   - Double-clicking any file item on the shelf launches the file directly in its default associated application.
   - Remote items not yet cached are safely fetched and SHA-256 verified before opening; missing files and invalid associations fail gracefully without crashing or altering originals.
@@ -30,13 +35,14 @@ Validation date: 2026-09-30 (Asia/Seoul). **Windows 11 x64 and macOS 13+ arm64 o
   - Settings -> About direct Polar checkout integration and custom URI protocol (`shelfdock://license?key=...`).
   - Automatic activation, background validation, silent offline fallback, and strict zero-telemetry invariant.
 - **Windows Packaging & Store Readiness (PASSED)**:
-  - Standalone portable ZIP (`ShelfDock-v0.2.6-beta-win-x64.zip`, 74,835,330 bytes, SHA-256 `d05324fb7e74fe85dc06b6de064037e7b6f20e579616748dd3af7de5b9f917e4`).
-  - Store MSIX upload package (`ShelfDock-0.2.6.0-win-x64.msixupload`) with Partner Center Publisher ID `CN=AE66BB57-77A1-46B1-92B3-2860B0E12877`.
+  - Standalone portable ZIP (`ShelfDock-v0.2.7-beta-win-x64.zip`, 77,133,879 bytes, SHA-256 `1ebfe7ba15b787b5b31343cb65b145f51687a9bc482fd107bdbbb085cb56e44e`).
+  - Store MSIX upload package (`ShelfDock-0.2.7.0-win-x64.msixupload`) with Partner Center Publisher ID `CN=AE66BB57-77A1-46B1-92B3-2860B0E12877`.
   - Zero sensitive source/debug leakage verified (0 leaks).
-- **macOS Apple Silicon arm64 Native Beta (PASSED)**:
+- **macOS Apple Silicon arm64 Native Release (PASSED)**:
   - Swift & AppKit native UI aligned with Windows cards, rounded thumbnails, and action layout.
-  - Clean arm64 package audit (455 extracted files, `ShelfDock-v0.2.6-beta-macOS-arm64.zip`, 21,346,046 bytes, SHA-256 `3a8c26fba847f83c4a079956a79ce15870c82f536d467e12775ea26971fa46fd`).
-  - Xcode Release suite (1 aggregate XCTest, 66 Polar checks), native synthetic screenshot verification, and CUA double-click & icon badge/wiggle tests.
+  - Clean arm64 package audit (455 extracted files, `ShelfDock-v0.2.7-beta-macOS-arm64.zip`, 21,355,705 bytes, SHA-256 `33a8e5c9007014c193e3747c731912b6a27ac3d4c6f206feba86b28155ddf6b9`).
+  - Bundle version format: strictly `0.2.7` without build numbers (`CFBundleShortVersionString` and `CFBundleVersion` both `0.2.7`).
+  - Xcode Release suite, string table check suites, and zero sensitive leakage verified.
 
 ## Core Safety & Invariants
 

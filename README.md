@@ -8,10 +8,10 @@ ShelfDock is a lightweight desktop shelf for Windows and macOS. Collect files, s
 
 ## Availability
 
-The official public beta (`v0.2.6-beta`) is available for **Windows 11 x64** and **macOS arm64 (Apple Silicon)** on [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.6-beta).
+The official beta (`v0.2.7-beta`) is available for **Windows 11 x64** and **macOS arm64 (Apple Silicon)** on [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases).
 
-- **Windows 11 x64**: Download `ShelfDock-v0.2.6-beta-win-x64.zip`, extract completely, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. If prompted by Windows SmartScreen, click *More info* -> *Run anyway*.
-- **macOS (Apple Silicon)**: Download `ShelfDock-v0.2.6-beta-macOS-arm64.zip`, extract, and launch `ShelfDock.app`. If blocked by Gatekeeper, right-click (or Control+click) `ShelfDock.app` in Finder and select *Open*.
+- **Windows 11 x64**: Download `ShelfDock-v0.2.7-beta-win-x64.zip`, extract completely, and run `ShelfDock.exe`. No separate .NET installation or administrator rights are required. If prompted by Windows SmartScreen, click *More info* -> *Run anyway*.
+- **macOS (Apple Silicon)**: Download `ShelfDock-v0.2.7-beta-macOS-arm64.zip`, extract, and launch `ShelfDock.app`. If blocked by Gatekeeper, right-click (or Control+click) `ShelfDock.app` in Finder and select *Open*.
 - Device-to-device sharing uses an [8-character OTP](OTP-GUIDE.md) with mutual two-way approval within 60 seconds, or optional automatic local network (LAN) pairing. All transfers are end-to-end encrypted (Noise / TLS).
 
 ## What it does

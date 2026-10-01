@@ -9,10 +9,10 @@
 
 ## 배포 상태
 
-공개 베타 버전(`v0.2.6-beta`)을 **Windows 11 x64** 및 **macOS arm64 (Apple Silicon)**용으로 [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases/tag/v0.2.6-beta)에서 제공하고 있습니다.
+베타 버전(`v0.2.7-beta`)을 **Windows 11 x64** 및 **macOS arm64 (Apple Silicon)**용으로 [GitHub Releases](https://github.com/Mintflavor/shelfdock/releases)에서 제공하고 있습니다.
 
-- **Windows 11 x64**: `ShelfDock-v0.2.6-beta-win-x64.zip`을 받아 전체 압축을 풀고 `ShelfDock.exe`를 실행하세요. .NET 별도 설치나 관리자 권한은 필요하지 않습니다. SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
-- **macOS (Apple Silicon)**: `ShelfDock-v0.2.6-beta-macOS-arm64.zip`을 받아 압축을 풀고 `ShelfDock.app`을 실행하세요. Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
+- **Windows 11 x64**: `ShelfDock-v0.2.7-beta-win-x64.zip`을 받아 전체 압축을 풀고 `ShelfDock.exe`를 실행하세요. .NET 별도 설치나 관리자 권한은 필요하지 않습니다. SmartScreen 경고가 나타나면 [추가 정보] -> [실행]을 클릭하세요.
+- **macOS (Apple Silicon)**: `ShelfDock-v0.2.7-beta-macOS-arm64.zip`을 받아 압축을 풀고 `ShelfDock.app`을 실행하세요. Gatekeeper 경고 발생 시 Finder에서 마우스 우클릭(Control+클릭) 후 [열기]를 선택하세요.
 - 기기를 연결하려면 [8자리 OTP](OTP-GUIDE.md)를 입력하고 60초 이내에 양쪽 기기에서 연결을 승인하거나, 동일 로컬 네트워크(LAN) 자동 연결을 사용할 수 있습니다. 모든 전송은 종단 간 암호화(Noise / TLS)로 보호됩니다.
 
 ## 주요 기능

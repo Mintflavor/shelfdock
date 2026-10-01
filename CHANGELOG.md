@@ -12,11 +12,12 @@ All future changes must be recorded here by version before delivery. Entries dis
     - Pairing OTP & Sharing: "8자리 코드 만들기" / "Create 8-character code", "이 창을 닫고 연결된 기기에서 먼저 공유를 켜세요." / "Close this window and enable sharing in Connected devices first.", "연결 완료. 양쪽 기기에서 승인과 저장을 확인했습니다." / "Paired. Both devices approved and confirmed saving.".
     - Floating drop icon & shelf controls: "화면에 플로팅 드롭 아이콘 항상 표시" / "Keep a floating drop icon on screen", "다운로드" / "Download", "닫기" / "Close", "숨기기" / "Hide", "백업에서 선반을 복원했습니다." / "Restored the backup shelf.".
 - **Live Language Switching & Fault-Tolerant Fallback**:
-  - macOS: dynamic live UI language switching without app restarts upon changing the language preference in Settings.
+  - macOS: dynamic live UI language switching without app restarts upon changing the language preference in Settings, refreshing AppKit shelf cards, window titles, menus, and floating controls immediately.
+  - Aligned macOS About tab structure with Windows: standardized app and version copy, direct Releases and Issues shortcut buttons, and removed redundant notes.
   - Crash-resilient safe fallback: missing keys or format discrepancies return original key strings safely without crashing or dropping user shelf items.
 - **Package Digests**:
   - Windows 11 x64 Portable ZIP: `ShelfDock-v0.2.7-beta-win-x64.zip` (77,133,879 bytes, SHA-256 `1ebfe7ba15b787b5b31343cb65b145f51687a9bc482fd107bdbbb085cb56e44e`).
-  - macOS Apple Silicon arm64 ZIP: `ShelfDock-v0.2.7-beta-macOS-arm64.zip` (21,355,705 bytes, SHA-256 `33a8e5c9007014c193e3747c731912b6a27ac3d4c6f206feba86b28155ddf6b9`).
+  - macOS Apple Silicon arm64 ZIP: `ShelfDock-v0.2.7-beta-macOS-arm64.zip` (21,356,752 bytes, SHA-256 `6f4e3db748a28f12bfb9ef4820825e8a575cd292760beaede4fb1bdeacf5976d`).
 
 ## 0.2.6-beta — 2026-09-30 (public beta)
 

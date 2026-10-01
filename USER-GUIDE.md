@@ -1,4 +1,4 @@
-# ShelfDock User Guide (v0.2.6-beta)
+# ShelfDock User Guide (v0.2.7-beta)
 
 8자리 OTP 연결 / OTP pairing: [OTP-GUIDE.md](OTP-GUIDE.md) · [P2P-GUIDE.md](P2P-GUIDE.md)
 
